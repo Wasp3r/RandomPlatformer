@@ -12,12 +12,6 @@ public class MovementController : MonoBehaviour
     private float _accelerationSpeed = 10f;
 
     /// <summary>
-    ///     The speed at which the player decelerates.
-    /// </summary>
-    [SerializeField] 
-    private float _decelerationSpeed = 300f;
-    
-    /// <summary>
     ///     The maximum speed at which the player can move.
     /// </summary>
     [SerializeField] 
@@ -35,6 +29,9 @@ public class MovementController : MonoBehaviour
     [SerializeField] 
     private Rigidbody2D _rigidbody2D;
 
+    /// <summary>
+    ///     The layer mask of the objects that the player can jump on.
+    /// </summary>
     [SerializeField] 
     private LayerMask _jumpingLayerMask;
     
@@ -46,14 +43,14 @@ public class MovementController : MonoBehaviour
     /// <summary>
     ///     The height of the player.
     /// </summary>
-    private float _playerHeight;
+    private Vector2 _playerSize;
 
     /// <summary>
     ///     We get the player height in the Start method.
     /// </summary>
     private void Start()
     {
-        _playerHeight = GetComponent<BoxCollider2D>().size.y;
+        _playerSize = GetComponent<BoxCollider2D>().size;
     }
 
     /// <summary>
@@ -62,7 +59,6 @@ public class MovementController : MonoBehaviour
     private void Update()
     {
         _currentSpeed = _rigidbody2D.velocity.magnitude;
-        transform.rotation = Quaternion.identity;
         HorizontalMovement();
         
         if (!ShouldJump())
@@ -71,6 +67,9 @@ public class MovementController : MonoBehaviour
         Jump();
     }
 
+    /// <summary>
+    ///     We handle horizontal movement.
+    /// </summary>
     private void HorizontalMovement()
     {
         switch (Input.GetAxisRaw("Horizontal"))
@@ -84,6 +83,10 @@ public class MovementController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    ///     We accelerate the player in the given direction.
+    /// </summary>
+    /// <param name="direction">Acceleration direction</param>
     private void Accelerate(Vector2 direction)
     {
         if (_currentSpeed >= _maxSpeed)
@@ -92,18 +95,32 @@ public class MovementController : MonoBehaviour
         _rigidbody2D.AddForce(direction * _accelerationSpeed);
     }
 
+    /// <summary>
+    ///     We check if the player should jump.
+    ///     We need it to check if the player is on the ground and if the player pressed the jump button.
+    /// </summary>
+    /// <returns>True for jump and false for no jump.</returns>
     private bool ShouldJump() => Input.GetButtonDown("Jump") && CanJump();
 
+    /// <summary>
+    ///     Jumping method. We add an impulse force to the player.
+    /// </summary>
     private void Jump()
     {
-        Debug.Log("### - Jumping");
         _rigidbody2D.AddForce(Vector2.up * _jumpingForce, ForceMode2D.Impulse);
     }
 
+    /// <summary>
+    ///     We check if the player can jump from current position.
+    ///     We do it by casting two rays from the player's left and right side.
+    /// </summary>
+    /// <returns>True for valid position, and false for invalid.</returns>
     private bool CanJump()
     {
-        var raycast = Physics2D.Raycast(_rigidbody2D.position, Vector2.down, _playerHeight + 0.01f, _jumpingLayerMask);
-        Debug.Log($"### - Collider: {raycast.collider}");
-        return raycast.collider != null;
+        var raycastLeft = Physics2D.Raycast(_rigidbody2D.position - Vector2.left * _playerSize.x / 2, 
+            Vector2.down, _playerSize.y / 2 + 0.01f, _jumpingLayerMask);
+        var raycastRight = Physics2D.Raycast(_rigidbody2D.position + Vector2.left * _playerSize.x / 2, 
+            Vector2.down, _playerSize.y / 2 + 0.01f, _jumpingLayerMask);
+        return raycastLeft.collider != null || raycastRight.collider != null;
     }
 }
