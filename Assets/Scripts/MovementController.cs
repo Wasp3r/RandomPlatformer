@@ -11,6 +11,9 @@ public class MovementController : MonoBehaviour
     [SerializeField] 
     private float _accelerationSpeed = 10f;
 
+    [SerializeField] 
+    private float _decelerationTime = 0.3f;
+
     /// <summary>
     ///     The maximum speed at which the player can move.
     /// </summary>
@@ -46,6 +49,18 @@ public class MovementController : MonoBehaviour
     private Vector2 _playerSize;
 
     /// <summary>
+    ///     The movement input of the player.
+    /// </summary>
+    private float _movementInput;
+
+    /// <summary>
+    ///     The jump input of the player.
+    /// </summary>
+    private bool _shouldJump;
+
+    private float _decelerationTimePassed;
+
+    /// <summary>
     ///     We get the player height in the Start method.
     /// </summary>
     private void Start()
@@ -58,13 +73,18 @@ public class MovementController : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        _currentSpeed = _rigidbody2D.velocity.magnitude;
-        HorizontalMovement();
-        
+        _movementInput = Input.GetAxisRaw("Horizontal");
+
         if (!ShouldJump())
             return;
         
         Jump();
+    }
+
+    private void FixedUpdate()
+    {
+        _currentSpeed = _rigidbody2D.velocity.magnitude;
+        HorizontalMovement();
     }
 
     /// <summary>
@@ -72,13 +92,16 @@ public class MovementController : MonoBehaviour
     /// </summary>
     private void HorizontalMovement()
     {
-        switch (Input.GetAxisRaw("Horizontal"))
+        switch (_movementInput)
         {
             case 1:
                 Accelerate(Vector2.right);
                 break;
             case -1:
                 Accelerate(Vector2.left);
+                break;
+            default:
+                Decelerate();
                 break;
         }
     }
@@ -92,7 +115,17 @@ public class MovementController : MonoBehaviour
         if (_currentSpeed >= _maxSpeed)
             return;
         
-        _rigidbody2D.AddForce(direction * _accelerationSpeed);
+        _decelerationTimePassed = 0;
+        _rigidbody2D.AddForce(direction * _accelerationSpeed, ForceMode2D.Impulse);
+    }
+
+    private void Decelerate()
+    {
+        var velocity = _rigidbody2D.velocity;
+        velocity.x = Mathf.Lerp(velocity.x, 0, _decelerationTimePassed / _decelerationTime);
+        _decelerationTimePassed += Time.fixedDeltaTime;
+                
+        _rigidbody2D.velocity = velocity;
     }
 
     /// <summary>

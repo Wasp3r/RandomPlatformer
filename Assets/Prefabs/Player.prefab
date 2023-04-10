@@ -130,7 +130,7 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
@@ -146,9 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01b00f8a9fd1c94c9f2570aaf5d2aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _accelerationSpeed: 10
-  _maxSpeed: 10
-  _jumpingForce: 7
+  _accelerationSpeed: 0.5
+  _decelerationTime: 0.5
+  _maxSpeed: 7
+  _jumpingForce: 5
   _rigidbody2D: {fileID: 1835380256921214753}
   _jumpingLayerMask:
     serializedVersion: 2
