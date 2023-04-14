@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MovementController : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class MovementController : MonoBehaviour
     ///     The layer mask of the objects that the player can jump on.
     /// </summary>
     [SerializeField] 
-    private LayerMask _jumpingLayerMask;
+    private LayerMask _solidMask;
     
     /// <summary>
     ///     The current speed of the player.
@@ -114,11 +115,21 @@ public class MovementController : MonoBehaviour
     {
         if (_currentSpeed >= _maxSpeed)
             return;
-        
+
+        if (!CanAccelerate(direction))
+        {
+            _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+            return;
+        }
+
         _decelerationTimePassed = 0;
         _rigidbody2D.AddForce(direction * _accelerationSpeed, ForceMode2D.Impulse);
     }
 
+    /// <summary>
+    ///     We decelerate the player.
+    ///     We do it by lerping the player's velocity to zero.
+    /// </summary>
     private void Decelerate()
     {
         var velocity = _rigidbody2D.velocity;
@@ -151,9 +162,24 @@ public class MovementController : MonoBehaviour
     private bool CanJump()
     {
         var raycastLeft = Physics2D.Raycast(_rigidbody2D.position - Vector2.left * _playerSize.x / 2, 
-            Vector2.down, _playerSize.y / 2 + 0.01f, _jumpingLayerMask);
+            Vector2.down, _playerSize.y / 2 + 0.01f, _solidMask);
         var raycastRight = Physics2D.Raycast(_rigidbody2D.position + Vector2.left * _playerSize.x / 2, 
-            Vector2.down, _playerSize.y / 2 + 0.01f, _jumpingLayerMask);
+            Vector2.down, _playerSize.y / 2 + 0.01f, _solidMask);
         return raycastLeft.collider != null || raycastRight.collider != null;
+    }
+
+    /// <summary>
+    ///     We check if the player can accelerate in the given direction.
+    ///     We do it by casting 2 rays from the player position in the given direction.
+    /// </summary>
+    /// <param name="direction">Movement direction.</param>
+    /// <returns>Can user move in given direction.</returns>
+    private bool CanAccelerate(Vector3 direction)
+    {
+        var raycastUpper = Physics2D.Raycast(_rigidbody2D.position + Vector2.up * _playerSize.y / 2, 
+            direction, _playerSize.x / 2 + 0.01f, _solidMask);
+        var raycastLower = Physics2D.Raycast(_rigidbody2D.position - Vector2.up * _playerSize.y / 2, 
+            direction, _playerSize.x / 2 + 0.01f, _solidMask);
+        return raycastUpper.collider == null && raycastLower.collider == null;
     }
 }

@@ -151,6 +151,6 @@ MonoBehaviour:
   _maxSpeed: 7
   _jumpingForce: 5
   _rigidbody2D: {fileID: 1835380256921214753}
-  _jumpingLayerMask:
+  _solidMask:
     serializedVersion: 2
     m_Bits: 192

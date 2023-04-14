@@ -278,6 +278,10 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 1835380256921214755, guid: 4b519393d0f1d67459a223da6fe9aed0, type: 3}
+      propertyPath: _solidMask.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
     - target: {fileID: 1835380256921214764, guid: 4b519393d0f1d67459a223da6fe9aed0, type: 3}
       propertyPath: m_Name
       value: Player
