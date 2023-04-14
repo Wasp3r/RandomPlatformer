@@ -150,6 +150,7 @@ MonoBehaviour:
   _decelerationTime: 0.5
   _maxSpeed: 7
   _jumpingForce: 5
+  _maxJumpCount: 2
   _rigidbody2D: {fileID: 1835380256921214753}
   _solidMask:
     serializedVersion: 2

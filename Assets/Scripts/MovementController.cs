@@ -28,6 +28,12 @@ public class MovementController : MonoBehaviour
     private float _jumpingForce = 30f;
 
     /// <summary>
+    ///     The maximum number of jumps the player can make in air.
+    /// </summary>
+    [SerializeField] 
+    private int _maxJumpCount = 1;
+
+    /// <summary>
     ///     The rigidbody2D component of the player.
     /// </summary>
     [SerializeField] 
@@ -59,7 +65,25 @@ public class MovementController : MonoBehaviour
     /// </summary>
     private bool _shouldJump;
 
+    /// <summary>
+    ///     The number of jumps the player has made in air.
+    /// </summary>
+    private int _jumpCount;
+
+    /// <summary>
+    ///     The time passed since the player started decelerating.
+    /// </summary>
     private float _decelerationTimePassed;
+
+    /// <summary>
+    ///     Indicates if the player is touching the ground.
+    /// </summary>
+    private bool _isGrounded;
+    
+    /// <summary>
+    ///     The coroutine that handles the grounded state.
+    /// </summary>
+    private Coroutine _groundedCoroutine;
 
     /// <summary>
     ///     We get the player height in the Start method.
@@ -67,6 +91,7 @@ public class MovementController : MonoBehaviour
     private void Start()
     {
         _playerSize = GetComponent<BoxCollider2D>().size;
+        _jumpCount = 0;
     }
 
     /// <summary>
@@ -76,7 +101,12 @@ public class MovementController : MonoBehaviour
     {
         _movementInput = Input.GetAxisRaw("Horizontal");
 
-        if (!ShouldJump())
+        UpdateIsGrounded();
+        
+        if (!Input.GetButtonDown("Jump"))
+            return;
+
+        if (!CanJump())
             return;
         
         Jump();
@@ -86,6 +116,18 @@ public class MovementController : MonoBehaviour
     {
         _currentSpeed = _rigidbody2D.velocity.magnitude;
         HorizontalMovement();
+    }
+
+    private void UpdateIsGrounded()
+    {
+        if (_isGrounded)
+            return;
+        
+        _isGrounded = IsGrounded();
+        if (!_isGrounded)
+            return;
+        
+        _jumpCount = 0;
     }
 
     /// <summary>
@@ -140,18 +182,16 @@ public class MovementController : MonoBehaviour
     }
 
     /// <summary>
-    ///     We check if the player should jump.
-    ///     We need it to check if the player is on the ground and if the player pressed the jump button.
-    /// </summary>
-    /// <returns>True for jump and false for no jump.</returns>
-    private bool ShouldJump() => Input.GetButtonDown("Jump") && CanJump();
-
-    /// <summary>
     ///     Jumping method. We add an impulse force to the player.
     /// </summary>
     private void Jump()
     {
+        _jumpCount++;
         _rigidbody2D.AddForce(Vector2.up * _jumpingForce, ForceMode2D.Impulse);
+        
+        if (_groundedCoroutine != null)
+            StopCoroutine(_groundedCoroutine);
+        _groundedCoroutine = StartCoroutine(GroundedCoroutine());
     }
 
     /// <summary>
@@ -161,11 +201,14 @@ public class MovementController : MonoBehaviour
     /// <returns>True for valid position, and false for invalid.</returns>
     private bool CanJump()
     {
-        var raycastLeft = Physics2D.Raycast(_rigidbody2D.position - Vector2.left * _playerSize.x / 2, 
-            Vector2.down, _playerSize.y / 2 + 0.01f, _solidMask);
-        var raycastRight = Physics2D.Raycast(_rigidbody2D.position + Vector2.left * _playerSize.x / 2, 
-            Vector2.down, _playerSize.y / 2 + 0.01f, _solidMask);
-        return raycastLeft.collider != null || raycastRight.collider != null;
+        if (_jumpCount < _maxJumpCount && !_isGrounded)
+        {
+            Debug.Log("### - Double jump");
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
+            return true;
+        }
+        
+        return IsGrounded();
     }
 
     /// <summary>
@@ -181,5 +224,20 @@ public class MovementController : MonoBehaviour
         var raycastLower = Physics2D.Raycast(_rigidbody2D.position - Vector2.up * _playerSize.y / 2, 
             direction, _playerSize.x / 2 + 0.01f, _solidMask);
         return raycastUpper.collider == null && raycastLower.collider == null;
+    }
+
+    private bool IsGrounded()
+    {
+        var raycastLeft = Physics2D.Raycast(_rigidbody2D.position - Vector2.left * _playerSize.x / 2,
+            Vector2.down, _playerSize.y / 2 + 0.01f, _solidMask);
+        var raycastRight = Physics2D.Raycast(_rigidbody2D.position + Vector2.left * _playerSize.x / 2,
+            Vector2.down, _playerSize.y / 2 + 0.01f, _solidMask);
+        return raycastLeft.collider != null || raycastRight.collider != null;
+    }
+
+    private IEnumerator GroundedCoroutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        _isGrounded = false;
     }
 }
