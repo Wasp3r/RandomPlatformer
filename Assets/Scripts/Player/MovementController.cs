@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
-namespace RandomPlatformer
+namespace RandomPlatformer.Player
 {
     public class MovementController : MonoBehaviour
     {
