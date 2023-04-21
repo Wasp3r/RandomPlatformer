@@ -1,4 +1,6 @@
-﻿namespace RandomPlatformer.ScoringSystem
+﻿using System;
+
+namespace RandomPlatformer.ScoringSystem
 {
     /// <summary>
     ///     A class that represents a score entry.
@@ -8,22 +10,28 @@
         /// <summary>
         ///     The name of the player.
         /// </summary>
-        public string UserName { get; private set; }
+        public string UserName { get; }
         
         /// <summary>
         ///     The score of the player.
         /// </summary>
-        public int Score { get; private set; }
+        public int Score { get; }
+
+        /// <summary>
+        ///     The date of the score.
+        /// </summary>
+        public DateTime ScoreDate { get; }
 
         /// <summary>
         ///     The score entry constructor.
         /// </summary>
         /// <param name="score">Score of the player.</param>
         /// <param name="userName">Name of the player.</param>
-        public ScoreEntry(int score, string userName)
+        public ScoreEntry(int score, string userName, DateTime scoreDate)
         {
             Score = score;
             UserName = userName;
+            ScoreDate = scoreDate;
         }
     }
 }

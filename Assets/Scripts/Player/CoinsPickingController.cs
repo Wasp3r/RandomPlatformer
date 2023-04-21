@@ -22,13 +22,13 @@ namespace RandomPlatformer.Player
         /// <summary>
         ///     The collider to pick up coins.
         /// </summary>
-        /// <param name="collision"></param>
-        private void OnCollisionEnter(Collision collision)
+        /// <param name="other"></param>
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            if (_coinMask != (_coinMask | (1 << collision.gameObject.layer))) 
+            if (_coinMask != (_coinMask | (1 << other.gameObject.layer))) 
                 return;
             
-            var coin = collision.collider.GetComponent<Coin>();
+            var coin = other.GetComponent<Coin>();
             if (coin == null) 
                 return;
             

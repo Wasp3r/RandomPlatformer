@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -45,8 +46,17 @@ namespace RandomPlatformer.ScoringSystem
         {
             Debug.Log("### - Getting scores");
             var scores = GetLeaderboard();
-            scores.Add(new ScoreEntry(CurrentScore, userName));
-
+            var userScore = scores.Find(x => x.UserName == userName);
+            if (userScore != null)
+            {
+                if (CurrentScore <= userScore.Score)
+                {
+                    Debug.Log("### - New high score lower or equal to the old one. Not saving.");
+                    return;
+                }
+            }
+            
+            scores.Add(new ScoreEntry(CurrentScore, userName, DateTime.Now));
             PlayerPrefs.SetString("Scores", JsonConvert.SerializeObject(scores));
         }
         
@@ -62,6 +72,15 @@ namespace RandomPlatformer.ScoringSystem
             var scoreEntries = JsonConvert.DeserializeObject<List<ScoreEntry>>(scores) ?? new List<ScoreEntry>();
             scoreEntries.Sort((x, y) => y.Score.CompareTo(x.Score));
             return scoreEntries;
+        }
+
+        /// <summary>
+        ///     Clears the leaderboard.
+        ///     We need it to clear the leaderboard when the player wants to.
+        /// </summary>
+        public void ClearHighScores()
+        {
+            PlayerPrefs.SetString("Scores", "");
         }
     }
 }
