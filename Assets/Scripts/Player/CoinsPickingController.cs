@@ -10,14 +10,19 @@ namespace RandomPlatformer.Player
     public class CoinsPickingController : MonoBehaviour
     {
         /// <summary>
-        ///     Score controller to add points and save the high score.
-        /// </summary>
-        [SerializeField] private ScoreController _scoreController;
-
-        /// <summary>
         ///     The layer mask of the objects that the player can pick up.
         /// </summary>
         [SerializeField] private LayerMask _coinMask;
+        
+        /// <summary>
+        ///     Score controller to add points and save the high score.
+        /// </summary>
+        private ScoreController _scoreController;
+
+        private void OnEnable()
+        {
+            _scoreController = GameController.Instance.ScoreController;
+        }
 
         /// <summary>
         ///     The collider to pick up coins.
