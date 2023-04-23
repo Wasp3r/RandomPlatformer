@@ -44,7 +44,7 @@ namespace RandomPlatformer
         private void StartNewGame()
         {
             _mainMenu.Disable();
-            SceneManager.LoadScene("Level_0");
+            SceneManager.LoadScene("Level_0", LoadSceneMode.Additive);
         }
     }
 }

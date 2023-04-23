@@ -86,7 +86,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6664319468230059559}
   - component: {fileID: 4561863338398989485}
-  - component: {fileID: 8386660855634908937}
   m_Layer: 0
   m_Name: FadableMenu
   m_TagString: Untagged
@@ -133,25 +132,3 @@ MonoBehaviour:
   _chooseLevelButton: {fileID: 0}
   _leaderboardButton: {fileID: 0}
   _exitButton: {fileID: 0}
---- !u!223 &8386660855634908937
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6664319468230059556}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
