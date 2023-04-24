@@ -31,16 +31,20 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         [SerializeField] private Button _exitButton;
 
+        /// <summary>
+        ///     Input actions.
+        ///     We need it for the controller/keyboard support.
+        /// </summary>
+        private DefaultInputActions _inputActions;
+        
         public event Action OnStartGame;
         public event Action OnChooseLevel;
         public event Action OnLeaderboard;
         public event Action OnExitGame;
-        
-        private DefaultInputActions _inputActions;
 
-        private void Awake()
+        private void Start()
         {
-            _inputActions = new DefaultInputActions();
+            _inputActions = GameController.Instance.InputActions;
         }
 
         private void OnEnable()
@@ -62,6 +66,7 @@ namespace RandomPlatformer.UI.Menus
         public void Enable()
         {
             FadeIn();
+            GameController.Instance.UpdateGameState(GameState.Menu);
         }
         
         public void Disable()
@@ -87,12 +92,8 @@ namespace RandomPlatformer.UI.Menus
         private void ExitGame()
         {
             OnExitGame?.Invoke();
-            
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
-            Application.Quit();
-#endif
+            Disable();
+            GameController.Instance.UpdateGameState(GameState.Exit);
         }
     }
 }

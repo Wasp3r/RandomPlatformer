@@ -44,7 +44,7 @@ namespace RandomPlatformer.Player
         /// <summary>
         ///     The input system actions.
         /// </summary>
-        [SerializeField] private DefaultInputActions _actions;
+        private DefaultInputActions _actions;
 
         /// <summary>
         ///     The current speed of the player.
