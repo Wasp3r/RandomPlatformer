@@ -86,6 +86,7 @@ namespace RandomPlatformer.UI.Menus
         
         private void Leaderboard()
         {
+            GameController.Instance.UpdateGameState(GameState.Leaderboard);
             OnLeaderboard?.Invoke();
         }
         

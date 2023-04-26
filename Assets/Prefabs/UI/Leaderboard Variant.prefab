@@ -211,7 +211,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6664319468230059556, guid: 1879799f278eaee40a8b394ee1d053a4, type: 3}
       propertyPath: m_Name
-      value: Leaderboard
+      value: Leaderboard Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6664319468230059559, guid: 1879799f278eaee40a8b394ee1d053a4, type: 3}
       propertyPath: m_Pivot.x
@@ -306,6 +306,38 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 399576953}
   m_SourcePrefab: {fileID: 100100000, guid: 1879799f278eaee40a8b394ee1d053a4, type: 3}
+--- !u!114 &4297470277654081337 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3732439893648359777, guid: 1879799f278eaee40a8b394ee1d053a4, type: 3}
+  m_PrefabInstance: {fileID: 607955421104615000}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &6058343168127273084 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6664319468230059556, guid: 1879799f278eaee40a8b394ee1d053a4, type: 3}
+  m_PrefabInstance: {fileID: 607955421104615000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4123023385705827506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6058343168127273084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 656702b78bf84577bd612c3365ddb7a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _backgroundImage: {fileID: 4297470277654081337}
+  _fadeTime: 1
+  _container: {fileID: 358654550}
+  _leaderBoardItemPrefab: {fileID: 7421112403279403118, guid: 90657a61b2c51014e9f3ba91e9ecd235, type: 3}
 --- !u!224 &6058343168127273087 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6664319468230059559, guid: 1879799f278eaee40a8b394ee1d053a4, type: 3}

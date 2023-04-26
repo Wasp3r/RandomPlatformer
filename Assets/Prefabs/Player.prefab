@@ -108,7 +108,7 @@ Rigidbody2D:
   m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1835380256921214766
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -168,7 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a2f40c53ba4ff688a237156dce0e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreController: {fileID: 0}
   _coinMask:
     serializedVersion: 2
     m_Bits: 256

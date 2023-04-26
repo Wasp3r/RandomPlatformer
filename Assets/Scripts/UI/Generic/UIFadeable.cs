@@ -33,7 +33,8 @@ namespace RandomPlatformer.UI.Generic
             if (_fadeCoroutine != null)
                 StopCoroutine(_fadeCoroutine);
             
-            _fadeCoroutine = StartCoroutine(FadeCoroutine(1, Enable));
+            Enable();
+            _fadeCoroutine = StartCoroutine(FadeCoroutine(0.3f));
         }
         
         /// <summary>
@@ -68,14 +69,14 @@ namespace RandomPlatformer.UI.Generic
         /// </summary>
         /// <param name="targetAlpha">Target alpha value.</param>
         /// <param name="callback">Callback to invoke when the fade is done.</param>
-        private IEnumerator FadeCoroutine(float targetAlpha, Action callback)
+        private IEnumerator FadeCoroutine(float targetAlpha, Action callback = null)
         {
             var startAlpha = _backgroundImage.color.a;
             var time = 0f;
             
             while (time < _fadeTime)
             {
-                time += Time.deltaTime;
+                time += Time.unscaledDeltaTime;
                 var alpha = Mathf.Lerp(startAlpha, targetAlpha, time / _fadeTime);
                 _backgroundImage.color = new Color(_backgroundImage.color.r, _backgroundImage.color.g, _backgroundImage.color.b, alpha);
                 yield return null;

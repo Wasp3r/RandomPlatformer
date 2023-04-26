@@ -91,7 +91,7 @@ namespace RandomPlatformer.Player
         /// </summary>
         private void Awake()
         {
-            _actions = new DefaultInputActions();
+            _actions = GameController.Instance.InputActions;
             _actions.Player.Jump.performed += OnJump;
             
             _playerSize = GetComponent<BoxCollider2D>().size;

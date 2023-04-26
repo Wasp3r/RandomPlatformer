@@ -5,6 +5,7 @@ using RandomPlatformer.UI.Menus;
 using RandomPlatformer.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 
 namespace RandomPlatformer
@@ -26,9 +27,16 @@ namespace RandomPlatformer
         [SerializeField] private PauseMenu _pauseMenu;
 
         /// <summary>
+        ///     Game over menu reference.
+        /// </summary>
+        [SerializeField] private LeaderBoard _leaderBoard;
+
+        /// <summary>
         ///    Score controller reference.
         /// </summary>
         [SerializeField] private ScoreController _scoreController;
+
+        [SerializeField] private InputSystemUIInputModule _inputModule;
 
         /// <summary>
         ///     Score controller getter.
@@ -68,7 +76,9 @@ namespace RandomPlatformer
         /// <param name="gameState">New game state.</param>
         public void UpdateGameState(GameState gameState)
         {
-            _gameState = gameState;
+            if (gameState == _gameState)
+                return;
+            
             switch (gameState)
             {
                 case GameState.Active:
@@ -82,9 +92,15 @@ namespace RandomPlatformer
                 case GameState.Exit:
                     ExitGame();
                     break;
+                case GameState.Leaderboard:
+                    _mainMenu.Disable();
+                    _leaderBoard.Enable();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gameState), gameState, null);
             }
+            
+            _gameState = gameState;
         }
 
         /// <summary>
@@ -102,7 +118,7 @@ namespace RandomPlatformer
         /// </summary>
         private void ListenToInput()
         {
-            _inputActions.UI.Cancel.performed += OnCancel;
+            _inputModule.cancel.action.performed += OnCancel;
         }
         
         /// <summary>
@@ -115,7 +131,7 @@ namespace RandomPlatformer
             switch (_gameState)
             {
                 case GameState.Active:
-                    _pauseMenu.Enable();
+                    UpdateGameState(GameState.Paused);
                     break;
                 case GameState.Paused:
                     _pauseMenu.Disable();
@@ -125,6 +141,7 @@ namespace RandomPlatformer
                     ExitGame();
                     break;
                 case GameState.Leaderboard:
+                    _leaderBoard.Disable();
                     _mainMenu.Enable();
                     break;
             }
