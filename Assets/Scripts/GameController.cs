@@ -36,6 +36,11 @@ namespace RandomPlatformer
         /// </summary>
         [SerializeField] private ScoreController _scoreController;
 
+        /// <summary>
+        ///     Camera controller reference.
+        /// </summary>
+        [SerializeField] private CameraController _cameraController;
+
         [SerializeField] private InputSystemUIInputModule _inputModule;
 
         /// <summary>
@@ -47,6 +52,11 @@ namespace RandomPlatformer
         ///     Input actions getter.
         /// </summary>
         public DefaultInputActions InputActions => _inputActions;
+        
+        /// <summary>
+        ///     Camera controller getter.
+        /// </summary>
+        public CameraController CameraController => _cameraController;
         
         /// <summary>
         ///     Input actions.
@@ -125,6 +135,7 @@ namespace RandomPlatformer
             if (SceneManager.sceneCount == 1)
                 return;
             
+            _cameraController.StopFollowing();
             SceneManager.UnloadSceneAsync("Level_0");
         }
 

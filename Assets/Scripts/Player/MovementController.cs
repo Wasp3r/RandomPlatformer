@@ -122,6 +122,7 @@ namespace RandomPlatformer.Player
         private void OnEnable()
         {
             _actions.Player.Enable();
+            GameController.Instance.CameraController.FollowObject(transform);
         }
         
         /// <summary>
