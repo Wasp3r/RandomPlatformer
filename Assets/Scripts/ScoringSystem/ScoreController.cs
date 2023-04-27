@@ -27,7 +27,6 @@ namespace RandomPlatformer.ScoringSystem
         {
             CurrentScore += score;
             ScoreChanged?.Invoke(CurrentScore);
-            Debug.Log($"### - Got points ({score}. Current score: {CurrentScore}");
         }
         
         /// <summary>
@@ -36,7 +35,6 @@ namespace RandomPlatformer.ScoringSystem
         /// </summary>
         public void ResetScore()
         {
-            Debug.Log("### - Resetting score");
             ScoreChanged?.Invoke(0);
             CurrentScore = 0;
         }
@@ -48,16 +46,12 @@ namespace RandomPlatformer.ScoringSystem
         /// <param name="userName">The name of the user.</param>
         public void SaveScore(string userName)
         {
-            Debug.Log("### - Getting scores");
             var scores = GetLeaderboard();
             var userScore = scores.Find(x => x.UserName == userName);
             if (userScore != null)
             {
                 if (CurrentScore <= userScore.Score)
-                {
-                    Debug.Log("### - New high score lower or equal to the old one. Not saving.");
                     return;
-                }
             }
             
             scores.Add(new ScoreEntry(CurrentScore, userName, DateTime.Now));
@@ -71,7 +65,6 @@ namespace RandomPlatformer.ScoringSystem
         /// <returns>The leaderboard.</returns>
         public List<ScoreEntry> GetLeaderboard()
         {
-            Debug.Log("### - Getting scores");
             var scores = PlayerPrefs.GetString("Scores", "");
             var scoreEntries = JsonConvert.DeserializeObject<List<ScoreEntry>>(scores) ?? new List<ScoreEntry>();
             scoreEntries.Sort((x, y) => y.Score.CompareTo(x.Score));

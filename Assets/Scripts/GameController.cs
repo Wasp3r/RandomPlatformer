@@ -76,6 +76,7 @@ namespace RandomPlatformer
         /// <param name="gameState">New game state.</param>
         public void UpdateGameState(GameState gameState)
         {
+            Debug.Log($"### - Changing state {_gameState} => {gameState}");
             if (gameState == _gameState)
                 return;
             
@@ -99,7 +100,8 @@ namespace RandomPlatformer
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gameState), gameState, null);
             }
-            
+
+            Debug.Log("### - State changed");
             _gameState = gameState;
         }
 

@@ -16,11 +16,26 @@ namespace RandomPlatformer.UI.Menus
         ///     Container for the leaderboard items.
         /// </summary>
         [SerializeField] private VerticalLayoutGroup _container;
+
+        /// <summary>
+        ///     Clear button to remove all the scores.
+        /// </summary>
+        [SerializeField] private Button _clearButton;
+
+        /// <summary>
+        ///     Back button to go back to the main menu.
+        /// </summary>
+        [SerializeField] private Button _backButton;
         
         /// <summary>
         ///     Leaderboard item prefab.
         /// </summary>
         [SerializeField] private LeaderBoardItem _leaderBoardItemPrefab;
+
+        /// <summary>
+        ///     Max high scores to show.
+        /// </summary>
+        [SerializeField] private int _containerSize;
 
         /// <summary>
         ///     Score controller to get the scores.
@@ -31,6 +46,24 @@ namespace RandomPlatformer.UI.Menus
         ///     Is the leaderboard initialized.
         /// </summary>
         private bool _isInitialized;
+
+        /// <summary>
+        ///     Listen to button events.
+        /// </summary>
+        private void OnEnable()
+        {
+            _clearButton.onClick.AddListener(ClearHighScores);
+            _backButton.onClick.AddListener(GoToMenu);
+        }
+
+        /// <summary>
+        ///     Stop listening to button events.
+        /// </summary>
+        private void OnDisable()
+        {
+            _clearButton.onClick.RemoveListener(ClearHighScores);
+            _backButton.onClick.RemoveListener(GoToMenu);
+        }
 
         /// <summary>
         ///     Fades in the leaderboard and reloads the scores.
@@ -63,7 +96,7 @@ namespace RandomPlatformer.UI.Menus
             }
             
             var scores = _scoreController.GetLeaderboard();
-            for (var i = 0; i < scores.Count; i++)
+            for (var i = 0; i < _containerSize; i++)
             {
                 var score = scores[i];
                 var leaderBoardItem = Instantiate(_leaderBoardItemPrefab, _container.transform);
@@ -97,6 +130,24 @@ namespace RandomPlatformer.UI.Menus
         {
             _scoreController = GameController.Instance.ScoreController;
             _isInitialized = true;
+        }
+        
+        /// <summary>
+        ///     Go back to the main menu.
+        /// </summary>
+        private void GoToMenu()
+        {
+            Disable();
+            GameController.Instance.UpdateGameState(GameState.Menu);
+        }
+
+        /// <summary>
+        ///     Removes all the high scores and reloads the leaderboard.
+        /// </summary>
+        private void ClearHighScores()
+        {
+            _scoreController.ClearHighScores();
+            ReloadScores();
         }
     }
 }
