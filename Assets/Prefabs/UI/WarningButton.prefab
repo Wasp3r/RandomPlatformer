@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5996841601819198390, guid: 86f2515cd79cada48887bbbac8935d48, type: 3}
       propertyPath: m_Name
-      value: ClearLeaderboard
+      value: WarningButton
       objectReference: {fileID: 0}
     - target: {fileID: 5996841601819198391, guid: 86f2515cd79cada48887bbbac8935d48, type: 3}
       propertyPath: m_Pivot.x
@@ -162,6 +162,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5996841602923235022, guid: 86f2515cd79cada48887bbbac8935d48, type: 3}
       propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996841602923235022, guid: 86f2515cd79cada48887bbbac8935d48, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996841602923235022, guid: 86f2515cd79cada48887bbbac8935d48, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5996841602923235022, guid: 86f2515cd79cada48887bbbac8935d48, type: 3}
+      propertyPath: m_fontColor.r
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

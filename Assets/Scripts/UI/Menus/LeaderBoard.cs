@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI.Generic;
 using UnityEngine;
@@ -96,6 +97,9 @@ namespace RandomPlatformer.UI.Menus
             }
             
             var scores = _scoreController.GetLeaderboard();
+            if (!scores.Any())
+                return;
+            
             for (var i = 0; i < _containerSize; i++)
             {
                 var score = scores[i];

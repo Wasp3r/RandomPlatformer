@@ -66,7 +66,6 @@ namespace RandomPlatformer.UI.Menus
         public void Enable()
         {
             FadeIn();
-            GameController.Instance.UpdateGameState(GameState.Menu);
         }
         
         public void Disable()

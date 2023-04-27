@@ -88,6 +88,7 @@ namespace RandomPlatformer
                     _pauseMenu.Enable();
                     break;
                 case GameState.Menu:
+                    StopGame();
                     _mainMenu.Enable();
                     break;
                 case GameState.Exit:
@@ -116,6 +117,18 @@ namespace RandomPlatformer
         }
 
         /// <summary>
+        ///     Stops the game.
+        ///     We need it to unload the game scene.
+        /// </summary>
+        private void StopGame()
+        {
+            if (SceneManager.sceneCount == 1)
+                return;
+            
+            SceneManager.UnloadSceneAsync("Level_0");
+        }
+
+        /// <summary>
         ///     Listen to input events.
         /// </summary>
         private void ListenToInput()
@@ -137,14 +150,14 @@ namespace RandomPlatformer
                     break;
                 case GameState.Paused:
                     _pauseMenu.Disable();
-                    _gameState = GameState.Active;
+                    UpdateGameState(GameState.Active);
                     break;
                 case GameState.Menu:
                     ExitGame();
                     break;
                 case GameState.Leaderboard:
                     _leaderBoard.Disable();
-                    _mainMenu.Enable();
+                    UpdateGameState(GameState.Menu);
                     break;
             }
         }
