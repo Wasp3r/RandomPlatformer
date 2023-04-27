@@ -173,8 +173,18 @@ namespace RandomPlatformer.Player
         /// <param name="direction">Acceleration direction</param>
         private void Accelerate(Vector2 direction)
         {
+            // We check if new input is in the same direction as the current velocity.
+            // When it is, we shouldn't accelerate more.
             if (_currentSpeed >= _maxSpeed)
-                return;
+            {
+                var currentVelocityX = _rigidbody2D.velocity.x;
+                var directionX = direction.x;
+                if (currentVelocityX > 0 && directionX > 0)
+                    return;
+
+                if (currentVelocityX < 0 && directionX < 0)
+                    return;
+            }
 
             if (!CanAccelerate(direction))
             {
