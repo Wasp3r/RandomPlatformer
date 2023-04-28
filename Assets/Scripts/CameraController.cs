@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,7 +18,12 @@ namespace RandomPlatformer
         /// <summary>
         ///     Camera follow speed.
         /// </summary>
-        [SerializeField] private float _maxFollowSpeed = 5f;
+        [SerializeField] private float _followSpeedMultiplier = 5f;
+
+        /// <summary>
+        ///     Maximum camera follow speed.
+        /// </summary>
+        [SerializeField] private float _maxFollowSpeed = 0.1f;
 
         /// <summary>
         /// Minimum camera Y position.
@@ -43,6 +49,17 @@ namespace RandomPlatformer
         ///     Is camera following target?
         /// </summary>
         private bool _isFollowing;
+        
+        /// <summary>
+        ///     Temporary focus coroutine.
+        ///     Used to change focus on other objects temporarily.
+        /// </summary>
+        private Coroutine _temporaryFocusCoroutine;
+        
+        /// <summary>
+        ///     Cached follow target.
+        /// </summary>
+        private Transform _cachedFollowTarget;
 
         private void Awake()
         {
@@ -59,7 +76,8 @@ namespace RandomPlatformer
             targetPosition.z = cameraPosition.z;
             targetPosition.y = Mathf.Max(targetPosition.y, _minimumY);
             
-            var movementSpeed = GetMovementPosition(targetPosition, cameraPosition);
+            var movementSpeed = GetMovementSpeed(targetPosition, cameraPosition);
+            movementSpeed = Mathf.Min(movementSpeed, _maxFollowSpeed);
             _cameraTransform.position = Vector3.Lerp(cameraPosition, targetPosition, movementSpeed);
         }
 
@@ -71,6 +89,20 @@ namespace RandomPlatformer
         {
             _followTarget = target;
             _isFollowing = true;
+        }
+        
+        /// <summary>
+        ///     Changes camera focus temporarily and then returns to previous target.
+        ///     Used to focus on other objects temporarily to show them.
+        /// </summary>
+        /// <param name="target">New target to focus on.</param>
+        /// <param name="duration">Duration of the focus in seconds.</param>
+        public void ChangeFocusTemporarily(Transform target, float duration)
+        {
+            if (_temporaryFocusCoroutine != null)
+                StopCoroutine(_temporaryFocusCoroutine);
+            
+            _temporaryFocusCoroutine = StartCoroutine(TemporaryFocus(target, duration));
         }
         
         /// <summary>
@@ -89,10 +121,29 @@ namespace RandomPlatformer
         /// <param name="targetPosition">Target position.</param>
         /// <param name="cameraPosition">Camera position.</param>
         /// <returns></returns>
-        private float GetMovementPosition(Vector3 targetPosition, Vector3 cameraPosition)
+        private float GetMovementSpeed(Vector3 targetPosition, Vector3 cameraPosition)
         {
             var distance = Vector2.Distance(targetPosition, cameraPosition);
-            return _movementCurve.Evaluate(distance) * _maxFollowSpeed * Time.deltaTime;
+            return Mathf.Clamp01(_movementCurve.Evaluate(distance) * _followSpeedMultiplier * Time.deltaTime);
+        }
+        
+        /// <summary>
+        ///     Temporary focus coroutine.
+        ///     Used to change focus on other objects temporarily and then return to previous target.
+        /// </summary>
+        /// <param name="target">New target to focus on.</param>
+        /// <param name="duration">Duration of the focus in seconds.</param>
+        private IEnumerator TemporaryFocus(Transform target, float duration)
+        {
+            if (!_cachedFollowTarget)
+            {
+                _cachedFollowTarget = _followTarget;
+            }
+            
+            _followTarget = target;
+            yield return new WaitForSeconds(duration);
+            _followTarget = _cachedFollowTarget;
+            _cachedFollowTarget = null;
         }
     }
 }
