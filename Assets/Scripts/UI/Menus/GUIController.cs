@@ -1,5 +1,6 @@
 ﻿using System;
 using RandomPlatformer.ScoringSystem;
+using RandomPlatformer.UI.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace RandomPlatformer.UI.Menus
     /// <summary>
     ///     This class is responsible for the main GUI.
     /// </summary>
-    public class GUI : MonoBehaviour
+    public class GUIController : MonoBehaviour
     {
         /// <summary>
         ///     The score controller to listen to.
@@ -45,6 +46,23 @@ namespace RandomPlatformer.UI.Menus
         {
             _scoreController.ScoreChanged -= UpdateScore;
         }
+
+        /// <summary>
+        ///     Enables the GUI.
+        /// </summary>
+        public void Enable()
+        {
+            ResetAll();
+            gameObject.SetActive(true);
+        }
+        
+        /// <summary>
+        ///     Disables the GUI.
+        /// </summary>
+        public void Disable()
+        {
+            gameObject.SetActive(false);
+        }
         
         /// <summary>
         ///     Updates the score text.
@@ -54,6 +72,35 @@ namespace RandomPlatformer.UI.Menus
         private void UpdateScore(int score)
         {
             _scoreValue.text = score.ToString();
+        }
+
+        /// <summary>
+        ///     Updates the level number.
+        /// </summary>
+        /// <param name="level">The current level.</param>
+        private void UpdateLevel(int level)
+        {
+            _levelValue.text = level.ToString();
+        }
+        
+        /// <summary>
+        ///     Updates the time left.
+        /// </summary>
+        /// <param name="timeLeft">Time left in seconds.</param>
+        private void UpdateTimeLeft(float timeLeft)
+        {
+            var timespan = TimeSpan.FromSeconds(timeLeft);
+            _timeLeftValue.text = timespan.ToString("mm':'ss");
+        }
+
+        /// <summary>
+        ///     Resets all the values.
+        /// </summary>
+        private void ResetAll()
+        {
+            _scoreValue.text = "0";
+            _levelValue.text = "1";
+            _timeLeftValue.text = "00:00";
         }
     }
 }

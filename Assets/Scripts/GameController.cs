@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
+using GUI = UnityEngine.GUI;
 
 namespace RandomPlatformer
 {
@@ -40,6 +41,11 @@ namespace RandomPlatformer
         ///     Camera controller reference.
         /// </summary>
         [SerializeField] private CameraController _cameraController;
+
+        /// <summary>
+        ///     GUI controller reference.
+        /// </summary>
+        [SerializeField] private GUIController _guiController;
 
         [SerializeField] private InputSystemUIInputModule _inputModule;
 
@@ -93,12 +99,14 @@ namespace RandomPlatformer
             switch (gameState)
             {
                 case GameState.Active:
+                    _guiController.Enable();
                     break;
                 case GameState.Paused:
                     _pauseMenu.Enable();
                     break;
                 case GameState.Menu:
                     StopGame();
+                    _guiController.Disable();
                     _mainMenu.Enable();
                     break;
                 case GameState.Exit:
@@ -122,7 +130,7 @@ namespace RandomPlatformer
         private void StartNewGame()
         {
             _mainMenu.Disable();
-            _gameState = GameState.Active;
+            UpdateGameState(GameState.Active);
             SceneManager.LoadScene("Level_0", LoadSceneMode.Additive);
         }
 

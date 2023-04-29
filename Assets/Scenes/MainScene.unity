@@ -651,6 +651,7 @@ MonoBehaviour:
   _leaderBoard: {fileID: 708122541}
   _scoreController: {fileID: 1257369824}
   _cameraController: {fileID: 1119015908}
+  _guiController: {fileID: 1804591951}
   _inputModule: {fileID: 1831463351}
 --- !u!114 &1658822041 stripped
 MonoBehaviour:
@@ -1227,6 +1228,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 591932716702397414, guid: edb262eada3c27448b9c2ecb6bce4b1a, type: 3}
   m_PrefabInstance: {fileID: 1804591949}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1804591951 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5005804477402591559, guid: edb262eada3c27448b9c2ecb6bce4b1a, type: 3}
+  m_PrefabInstance: {fileID: 1804591949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bcad19939fb4a20bac2fe3336eef9f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1831463347
 GameObject:
   m_ObjectHideFlags: 0
