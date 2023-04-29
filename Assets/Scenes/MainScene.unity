@@ -530,14 +530,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 280418511}
-  _maxFollowSpeed: 5
+  _followSpeedMultiplier: 5
+  _maxFollowSpeed: 0.1
   _minimumY: 0
+  _clampingDistance: 0.01
   _movementCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.3
       inSlope: 2
       outSlope: 2
       tangentMode: 0

@@ -31,6 +31,12 @@ namespace RandomPlatformer
         [SerializeField] private float _minimumY;
 
         /// <summary>
+        ///     Distance on which camera will clamp to the target position.
+        ///     We use it to prevent camera from shaking.
+        /// </summary>
+        [SerializeField] private float _clampingDistance = 0.01f;
+
+        /// <summary>
         ///     Camera movement curve.
         /// </summary>
         [SerializeField] private AnimationCurve _movementCurve = AnimationCurve.Linear(0,0,1,1);
@@ -124,6 +130,9 @@ namespace RandomPlatformer
         private float GetMovementSpeed(Vector3 targetPosition, Vector3 cameraPosition)
         {
             var distance = Vector2.Distance(targetPosition, cameraPosition);
+            if (distance < _clampingDistance)
+                return 1f;
+            
             return Mathf.Clamp01(_movementCurve.Evaluate(distance) * _followSpeedMultiplier * Time.deltaTime);
         }
         
