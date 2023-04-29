@@ -1,4 +1,5 @@
 ﻿using System;
+using RandomPlatformer.LevelSystem;
 using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI;
 using RandomPlatformer.UI.Menus;
@@ -47,6 +48,14 @@ namespace RandomPlatformer
         /// </summary>
         [SerializeField] private GUIController _guiController;
 
+        /// <summary>
+        ///     Level controller reference.
+        /// </summary>
+        [SerializeField] private LevelController _levelController;
+
+        /// <summary>
+        ///     Input module reference.
+        /// </summary>
         [SerializeField] private InputSystemUIInputModule _inputModule;
 
         /// <summary>
@@ -63,6 +72,11 @@ namespace RandomPlatformer
         ///     Camera controller getter.
         /// </summary>
         public CameraController CameraController => _cameraController;
+        
+        /// <summary>
+        ///     Level controller getter.
+        /// </summary>
+        public LevelController LevelController => _levelController;
         
         /// <summary>
         ///     Input actions.
@@ -131,7 +145,7 @@ namespace RandomPlatformer
         {
             _mainMenu.Disable();
             UpdateGameState(GameState.Active);
-            SceneManager.LoadScene("Level_0", LoadSceneMode.Additive);
+            _levelController.OpenLevel(0);
         }
 
         /// <summary>
@@ -144,7 +158,7 @@ namespace RandomPlatformer
                 return;
             
             _cameraController.StopFollowing();
-            SceneManager.UnloadSceneAsync("Level_0");
+            _levelController.UnloadedCurrentLevel();
         }
 
         /// <summary>

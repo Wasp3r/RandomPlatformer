@@ -131,6 +131,7 @@ namespace RandomPlatformer.Player
         private void OnDisable()
         {
             _actions.Player.Disable();
+            _actions.Player.Jump.performed -= OnJump;
         }
 
         /// <summary>

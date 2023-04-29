@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using RandomPlatformer.LevelSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -42,6 +44,11 @@ namespace RandomPlatformer
         [SerializeField] private AnimationCurve _movementCurve = AnimationCurve.Linear(0,0,1,1);
 
         /// <summary>
+        ///     Is camera controller initialized?
+        /// </summary>
+        private bool _isInitialized;
+        
+        /// <summary>
         ///     Camera transform reference.
         /// </summary>
         private Transform _cameraTransform;
@@ -61,20 +68,23 @@ namespace RandomPlatformer
         ///     Used to change focus on other objects temporarily.
         /// </summary>
         private Coroutine _temporaryFocusCoroutine;
-        
+
         /// <summary>
         ///     Cached follow target.
         /// </summary>
         private Transform _cachedFollowTarget;
 
-        private void Awake()
+        /// <summary>
+        ///     Add references to components.
+        /// </summary>
+        private void Start()
         {
             _cameraTransform = _mainCamera.transform;
         }
 
         private void Update()
         {
-            if (!_isFollowing)
+            if (!_isFollowing || _followTarget.IsDestroyed())
                 return;
             
             var targetPosition = _followTarget.position;
