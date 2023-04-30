@@ -70,18 +70,10 @@ namespace RandomPlatformer.UI.Menus
         ///     Fades in the leaderboard and reloads the scores.
         ///     We need it to show the leaderboard and load the scores.
         /// </summary>
-        public void Enable()
+        public override void Enable()
         {
-            FadeIn();
+            base.Enable();
             ReloadScores();
-        }
-
-        /// <summary>
-        ///     Fades out the leaderboard.
-        /// </summary>
-        public void Disable()
-        {
-            FadeOut();
         }
 
         /// <summary>
@@ -102,6 +94,9 @@ namespace RandomPlatformer.UI.Menus
             
             for (var i = 0; i < _containerSize; i++)
             {
+                if (scores.Count <= i)
+                    break;
+                
                 var score = scores[i];
                 var leaderBoardItem = Instantiate(_leaderBoardItemPrefab, _container.transform);
                 leaderBoardItem.SetScoreEntry(score, i + 1);
@@ -132,7 +127,7 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         private void Initialize()
         {
-            _scoreController = GameController.Instance.ScoreController;
+            _scoreController = GameStateController.Instance.ScoreController;
             _isInitialized = true;
         }
         
@@ -142,7 +137,7 @@ namespace RandomPlatformer.UI.Menus
         private void GoToMenu()
         {
             Disable();
-            GameController.Instance.UpdateGameState(GameState.Menu);
+            GameStateController.Instance.UpdateGameState(GameState.Menu);
         }
 
         /// <summary>

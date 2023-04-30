@@ -18,25 +18,25 @@ namespace RandomPlatformer.UI.Generic
         /// <summary>
         ///     Fades in the UI element.
         /// </summary>
-        protected void FadeIn()
+        public virtual void Enable()
         {
             _backgroundImage.color = new Color(_backgroundImage.color.r, _backgroundImage.color.g, _backgroundImage.color.b, 0.7f);
-            Enable();
+            Open();
         }
         
         /// <summary>
         ///     Fades out the UI element.
         /// </summary>
-        protected void FadeOut()
+        public virtual void Disable()
         {
             _backgroundImage.color = new Color(_backgroundImage.color.r, _backgroundImage.color.g, _backgroundImage.color.b, 0f);
-            Disable();
+            Close();
         }
 
         /// <summary>
         ///     Enables the UI element.
         /// </summary>
-        private void Enable()
+        private void Open()
         {
             gameObject.SetActive(true);
         }
@@ -44,7 +44,7 @@ namespace RandomPlatformer.UI.Generic
         /// <summary>
         ///     Disables the UI element.
         /// </summary>
-        private void Disable()
+        private void Close()
         {
             gameObject.SetActive(false);
         }

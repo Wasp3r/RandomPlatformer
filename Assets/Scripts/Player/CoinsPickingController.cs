@@ -19,9 +19,12 @@ namespace RandomPlatformer.Player
         /// </summary>
         private ScoreController _scoreController;
 
+        /// <summary>
+        ///     Assign the score controller.
+        /// </summary>
         private void OnEnable()
         {
-            _scoreController = GameController.Instance.ScoreController;
+            _scoreController = GameStateController.Instance.ScoreController;
         }
 
         /// <summary>

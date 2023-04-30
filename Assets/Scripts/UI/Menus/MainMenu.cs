@@ -44,7 +44,7 @@ namespace RandomPlatformer.UI.Menus
 
         private void Start()
         {
-            _inputActions = GameController.Instance.InputActions;
+            _inputActions = GameStateController.Instance.InputActions;
         }
 
         private void OnEnable()
@@ -62,16 +62,6 @@ namespace RandomPlatformer.UI.Menus
             _leaderboardButton.onClick.RemoveListener(Leaderboard);
             _exitButton.onClick.RemoveListener(ExitGame);
         }
-        
-        public void Enable()
-        {
-            FadeIn();
-        }
-        
-        public void Disable()
-        {
-            FadeOut();
-        }
 
         private void StartGame()
         {
@@ -85,7 +75,7 @@ namespace RandomPlatformer.UI.Menus
         
         private void Leaderboard()
         {
-            GameController.Instance.UpdateGameState(GameState.Leaderboard);
+            GameStateController.Instance.UpdateGameState(GameState.Leaderboard);
             OnLeaderboard?.Invoke();
         }
         
@@ -93,7 +83,7 @@ namespace RandomPlatformer.UI.Menus
         {
             OnExitGame?.Invoke();
             Disable();
-            GameController.Instance.UpdateGameState(GameState.Exit);
+            GameStateController.Instance.UpdateGameState(GameState.Exit);
         }
     }
 }

@@ -27,6 +27,11 @@ namespace RandomPlatformer.LevelSystem
         private string _currentLevelScenePath;
 
         /// <summary>
+        ///     Event that is called when level is loaded.
+        /// </summary>
+        public event Action<LevelInstance> OnLevelLoaded;
+
+        /// <summary>
         ///     Opens level with specified index.
         /// </summary>
         /// <param name="index">Level index.</param>
@@ -90,10 +95,13 @@ namespace RandomPlatformer.LevelSystem
         private void OnSceneLoaded(AsyncOperation operationResult)
         {
             Time.timeScale = 1;
-            if (operationResult.isDone) 
+            if (!operationResult.isDone)
+            {
+                Debug.LogError("### - Scene load failed!");
                 return;
+            }
             
-            Debug.LogError("### - Scene load failed!");
+            OnLevelLoaded?.Invoke(_levels[_currentLevelIndex]);
         }
     }
 }

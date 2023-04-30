@@ -82,19 +82,15 @@ namespace RandomPlatformer
             _cameraTransform = _mainCamera.transform;
         }
 
+        /// <summary>
+        ///     Update camera position.
+        /// </summary>
         private void Update()
         {
             if (!_isFollowing || _followTarget.IsDestroyed())
                 return;
             
-            var targetPosition = _followTarget.position;
-            var cameraPosition = _cameraTransform.position;
-            targetPosition.z = cameraPosition.z;
-            targetPosition.y = Mathf.Max(targetPosition.y, _minimumY);
-            
-            var movementSpeed = GetMovementSpeed(targetPosition, cameraPosition);
-            movementSpeed = Mathf.Min(movementSpeed, _maxFollowSpeed);
-            _cameraTransform.position = Vector3.Lerp(cameraPosition, targetPosition, movementSpeed);
+            _cameraTransform.position = GetFollowingPosition();
         }
 
         /// <summary>
@@ -105,6 +101,16 @@ namespace RandomPlatformer
         {
             _followTarget = target;
             _isFollowing = true;
+            TeleportToTarget();
+        }
+
+        /// <summary>
+        ///     Sets new camera follow target position without lerping.
+        /// </summary>
+        public void TeleportToTarget()
+        {
+            var position = GetFollowingPosition(true);
+            _cameraTransform.position = position;
         }
         
         /// <summary>
@@ -144,6 +150,23 @@ namespace RandomPlatformer
                 return 1f;
             
             return Mathf.Clamp01(_movementCurve.Evaluate(distance) * _followSpeedMultiplier * Time.deltaTime);
+        }
+
+        private Vector3 GetFollowingPosition(bool teleport = false)
+        {
+            var targetPosition = _followTarget.position;
+            var cameraPosition = _cameraTransform.position;
+            targetPosition.z = cameraPosition.z;
+            targetPosition.y = Mathf.Max(targetPosition.y, _minimumY);
+            
+            var movementProgress = GetMovementSpeed(targetPosition, cameraPosition);
+            movementProgress = Mathf.Min(movementProgress, _maxFollowSpeed);
+            if (teleport)
+            {
+                movementProgress = 1;
+            }
+            
+            return Vector3.Lerp(cameraPosition, targetPosition, movementProgress);
         }
         
         /// <summary>

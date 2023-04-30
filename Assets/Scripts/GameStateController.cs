@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using GUI = UnityEngine.GUI;
 
 namespace RandomPlatformer
@@ -16,7 +17,7 @@ namespace RandomPlatformer
     ///     The main game controller.
     ///     It is responsible for managing the game components like UI and game logic.
     /// </summary>
-    public class GameController : MonoBehaviorSingleton<GameController>
+    public class GameStateController : MonoBehaviorSingleton<GameStateController>
     {
         /// <summary>
         ///     Main menu reference.
@@ -32,6 +33,11 @@ namespace RandomPlatformer
         ///     Game over menu reference.
         /// </summary>
         [SerializeField] private LeaderBoard _leaderBoard;
+
+        /// <summary>
+        ///     Game result controller reference.
+        /// </summary>
+        [FormerlySerializedAs("_gameResultController")] [SerializeField] private GameResultUIController gameResultUIController;
 
         /// <summary>
         ///    Score controller reference.
@@ -120,7 +126,6 @@ namespace RandomPlatformer
                     break;
                 case GameState.Menu:
                     StopGame();
-                    _guiController.Disable();
                     _mainMenu.Enable();
                     break;
                 case GameState.Exit:
@@ -129,6 +134,10 @@ namespace RandomPlatformer
                 case GameState.Leaderboard:
                     _mainMenu.Disable();
                     _leaderBoard.Enable();
+                    break;
+                case GameState.Result:
+                    StopGame();
+                    gameResultUIController.ShowResult(false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gameState), gameState, null);
@@ -157,6 +166,7 @@ namespace RandomPlatformer
             if (SceneManager.sceneCount == 1)
                 return;
             
+            _guiController.Disable();
             _cameraController.StopFollowing();
             _levelController.UnloadedCurrentLevel();
         }
@@ -192,6 +202,10 @@ namespace RandomPlatformer
                     _leaderBoard.Disable();
                     UpdateGameState(GameState.Menu);
                     break;
+                case GameState.Result:
+                    gameResultUIController.Disable();
+                    UpdateGameState(GameState.Menu);
+                    break;
             }
         }
 
@@ -214,6 +228,7 @@ namespace RandomPlatformer
         Paused,
         Menu,
         Leaderboard,
+        Result,
         Exit
     }
 }

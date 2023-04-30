@@ -91,7 +91,7 @@ namespace RandomPlatformer.Player
         /// </summary>
         private void Awake()
         {
-            _actions = GameController.Instance.InputActions;
+            _actions = GameStateController.Instance.InputActions;
             _actions.Player.Jump.performed += OnJump;
             
             _playerSize = GetComponent<BoxCollider2D>().size;
@@ -122,7 +122,7 @@ namespace RandomPlatformer.Player
         private void OnEnable()
         {
             _actions.Player.Enable();
-            GameController.Instance.CameraController.FollowObject(transform);
+            GameStateController.Instance.CameraController.FollowObject(transform);
         }
         
         /// <summary>

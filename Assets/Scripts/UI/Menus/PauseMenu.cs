@@ -37,7 +37,7 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         private void Start()
         {
-            _inputActions = GameController.Instance.InputActions;
+            _inputActions = GameStateController.Instance.InputActions;
         }
 
         /// <summary>
@@ -63,18 +63,18 @@ namespace RandomPlatformer.UI.Menus
         /// <summary>
         ///     Enables the pause menu.
         /// </summary>
-        public void Enable()
+        public override void Enable()
         {
-            FadeIn();
+            base.Enable();
             Time.timeScale = 0;
         }
         
         /// <summary>
         ///     Disables the pause menu.
         /// </summary>
-        public void Disable()
+        public override void Disable()
         {
-            FadeOut();
+            base.Disable();
             Time.timeScale = 1;
         }
 
@@ -84,7 +84,7 @@ namespace RandomPlatformer.UI.Menus
         private void ResumeGame()
         {
             Disable();
-            GameController.Instance.UpdateGameState(GameState.Active);
+            GameStateController.Instance.UpdateGameState(GameState.Active);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace RandomPlatformer.UI.Menus
         private void GoToMenu()
         {
             Disable();
-            GameController.Instance.UpdateGameState(GameState.Menu);
+            GameStateController.Instance.UpdateGameState(GameState.Menu);
         }
         
         /// <summary>
@@ -102,7 +102,7 @@ namespace RandomPlatformer.UI.Menus
         private void ExitGame()
         {
             Disable();
-            GameController.Instance.UpdateGameState(GameState.Exit);
+            GameStateController.Instance.UpdateGameState(GameState.Exit);
         }
     }
 }
