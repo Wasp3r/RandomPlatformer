@@ -1,4 +1,5 @@
 ﻿using System;
+using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI.Menus;
 using UnityEngine;
 
@@ -28,6 +29,11 @@ namespace RandomPlatformer.LevelSystem
         ///     Current level time limit.
         /// </summary>
         private float _timeLimit;
+
+        /// <summary>
+        ///     Time left to the end of the level.
+        /// </summary>
+        public float TimeLeft => _timeLimit;
 
         /// <summary>
         ///     Listen to level loaded event to get the time limit.

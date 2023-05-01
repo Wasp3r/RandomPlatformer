@@ -16,6 +16,8 @@ namespace RandomPlatformer.LevelSystem
         /// </summary>
         [SerializeField] private List<LevelInstance> _levels;
         
+        private const string UnlockedLevelsKey = "UnlockedLevels";
+        
         /// <summary>
         ///     Current level index.
         /// </summary>
@@ -30,6 +32,19 @@ namespace RandomPlatformer.LevelSystem
         ///     Event that is called when level is loaded.
         /// </summary>
         public event Action<LevelInstance> OnLevelLoaded;
+
+        /// <summary>
+        ///     Unlocked levels count.
+        /// </summary>
+        public int UnlockedLevels { get; private set; }
+
+        /// <summary>
+        ///     Load unlocked levels count.
+        /// </summary>
+        private void OnEnable()
+        {
+            UnlockedLevels = PlayerPrefs.GetInt(UnlockedLevelsKey, 1);
+        }
 
         /// <summary>
         ///     Opens level with specified index.
@@ -59,6 +74,9 @@ namespace RandomPlatformer.LevelSystem
         public void GoToNextLevel()
         {
             _currentLevelIndex++;
+            UnlockedLevels++;
+            SaveUnlockedLevels();
+            
             Time.timeScale = 0;
             SceneManager.UnloadSceneAsync(_currentLevelScenePath).completed += OnSceneUnloaded;
         }
@@ -103,5 +121,26 @@ namespace RandomPlatformer.LevelSystem
             
             OnLevelLoaded?.Invoke(_levels[_currentLevelIndex]);
         }
+        
+        /// <summary>
+        ///     Save unlocked levels count.
+        /// </summary>
+        private void SaveUnlockedLevels()
+        {
+            PlayerPrefs.SetInt(UnlockedLevelsKey, UnlockedLevels);
+        }
+
+#if UNITY_EDITOR
+
+        /// <summary>
+        ///     Reset unlocked levels count.
+        /// </summary>
+        [ContextMenu("Reset unlocked levels")]
+        private void ResetUnlockedLevels()
+        {
+            PlayerPrefs.DeleteKey(UnlockedLevelsKey);
+        }
+        
+#endif
     }
 }

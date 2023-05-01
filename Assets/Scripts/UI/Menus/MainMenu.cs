@@ -70,6 +70,7 @@ namespace RandomPlatformer.UI.Menus
 
         private void ChooseLevel()
         {
+            GameStateController.Instance.UpdateGameState(GameState.ChooseLevel);
             OnChooseLevel?.Invoke();
         }
         

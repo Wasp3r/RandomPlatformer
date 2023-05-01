@@ -35,9 +35,14 @@ namespace RandomPlatformer
         [SerializeField] private LeaderBoard _leaderBoard;
 
         /// <summary>
+        ///     Choose level menu reference.
+        /// </summary>
+        [SerializeField] private ChooseLevelMenu _chooseLevelMenu;
+
+        /// <summary>
         ///     Game result controller reference.
         /// </summary>
-        [FormerlySerializedAs("_gameResultController")] [SerializeField] private GameResultUIController gameResultUIController;
+        [SerializeField] private GameResultUIController gameResultUIController;
 
         /// <summary>
         ///    Score controller reference.
@@ -135,6 +140,10 @@ namespace RandomPlatformer
                     _mainMenu.Disable();
                     _leaderBoard.Enable();
                     break;
+                case GameState.ChooseLevel:
+                    _mainMenu.Disable();
+                    _chooseLevelMenu.Enable();
+                    break;
                 case GameState.Result:
                     StopGame();
                     gameResultUIController.ShowResult(false);
@@ -206,6 +215,10 @@ namespace RandomPlatformer
                     gameResultUIController.Disable();
                     UpdateGameState(GameState.Menu);
                     break;
+                case GameState.ChooseLevel:
+                    _chooseLevelMenu.Disable();
+                    UpdateGameState(GameState.Menu);
+                    break;
             }
         }
 
@@ -228,6 +241,7 @@ namespace RandomPlatformer
         Paused,
         Menu,
         Leaderboard,
+        ChooseLevel,
         Result,
         Exit
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using RandomPlatformer.LevelSystem;
 using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI.Generic;
 using TMPro;
@@ -16,6 +17,11 @@ namespace RandomPlatformer.UI.Menus
         ///     The score controller.
         /// </summary>
         [SerializeField] private ScoreController _scoreController;
+
+        /// <summary>
+        ///     The time controller.
+        /// </summary>
+        [SerializeField] private TimeController _timeController;
         
         /// <summary>
         ///     The result text.
@@ -45,6 +51,7 @@ namespace RandomPlatformer.UI.Menus
         {
             _backButton.onClick.AddListener(OnBackButtonClicked);
             _userName.text = "";
+            _scoreController.AddPoints(Mathf.RoundToInt(_timeController.TimeLeft));
         }
 
         /// <summary>
