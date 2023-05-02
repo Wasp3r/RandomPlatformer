@@ -762,6 +762,7 @@ MonoBehaviour:
   gameResultUIController: {fileID: 1901001003}
   _scoreController: {fileID: 1257369824}
   _cameraController: {fileID: 1119015908}
+  _livesController: {fileID: 2003759438}
   _guiController: {fileID: 1804591951}
   _levelController: {fileID: 344343782}
   _inputModule: {fileID: 1831463351}
@@ -993,6 +994,7 @@ Transform:
   - {fileID: 1119015907}
   - {fileID: 344343781}
   - {fileID: 1099879664}
+  - {fileID: 2003759437}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1289,6 +1291,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 344343782}
     - target: {fileID: 5005804477402591559, guid: edb262eada3c27448b9c2ecb6bce4b1a, type: 3}
+      propertyPath: _livesController
+      value: 
+      objectReference: {fileID: 2003759438}
+    - target: {fileID: 5005804477402591559, guid: edb262eada3c27448b9c2ecb6bce4b1a, type: 3}
       propertyPath: _scoreController
       value: 
       objectReference: {fileID: 1257369824}
@@ -1448,6 +1454,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbd9c8d9e844e938aff597d5d3a144f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2003759436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2003759437}
+  - component: {fileID: 2003759438}
+  m_Layer: 0
+  m_Name: LivesController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2003759437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003759436}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1744442902}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2003759438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003759436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cdf0589760b49f38e8fec8dfec95c7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultLives: 5
 --- !u!1001 &4574003887587623161
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1456,6 +1507,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1770338778}
     m_Modifications:
+    - target: {fileID: 1287541592, guid: f7b66a0da0f596147bc872463336fbe5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
+      objectReference: {fileID: 0}
     - target: {fileID: 1340832934, guid: f7b66a0da0f596147bc872463336fbe5, type: 3}
       propertyPath: _levelController
       value: 
@@ -1563,6 +1618,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1770338778}
     m_Modifications:
+    - target: {fileID: 1901001003, guid: 315d98f3560da124dab288139873fcb6, type: 3}
+      propertyPath: _timeController
+      value: 
+      objectReference: {fileID: 1099879665}
     - target: {fileID: 1901001003, guid: 315d98f3560da124dab288139873fcb6, type: 3}
       propertyPath: _scoreController
       value: 

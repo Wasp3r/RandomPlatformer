@@ -2,18 +2,13 @@
 using RandomPlatformer.LevelSystem;
 using UnityEngine;
 
-namespace RandomPlatformer.Player
+namespace RandomPlatformer.Player.Detectors
 {
     /// <summary>
     ///     The controller that handles the finishing of the level.
     /// </summary>
-    public class FinishLevelDetector : MonoBehaviour
+    public class FinishLevelDetector : PickingController
     {
-        /// <summary>
-        ///     The layer mask of the objects that the player can finish the level.
-        /// </summary>
-        [SerializeField] private LayerMask _finishMask;
-
         /// <summary>
         ///     The level controller to finish the level.
         /// </summary>
@@ -30,12 +25,8 @@ namespace RandomPlatformer.Player
         /// <summary>
         ///     Detect collision with the finish object and finish the level.
         /// </summary>
-        /// <param name="other">Collider of the object that collided with the player.</param>
-        private void OnTriggerEnter2D(Collider2D other)
+        protected override void OnPickedUp(GameObject other)
         {
-            if (_finishMask != (_finishMask | (1 << other.gameObject.layer))) 
-                return;
-            
             _levelController.GoToNextLevel();
         }
     }

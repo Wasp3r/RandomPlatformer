@@ -1,5 +1,6 @@
 ﻿using System;
 using RandomPlatformer.LevelSystem;
+using RandomPlatformer.Player;
 using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI.Generic;
 using TMPro;
@@ -21,6 +22,12 @@ namespace RandomPlatformer.UI.Menus
         ///     The level controller to listen to.
         /// </summary>
         [SerializeField] private LevelController _levelController;
+        
+        /// <summary>
+        ///     Lives controller to listen to.
+        ///     We need it to update the lives value.
+        /// </summary>
+        [SerializeField] private LivesController _livesController;
 
         /// <summary>
         ///     The text that displays the score.
@@ -38,20 +45,27 @@ namespace RandomPlatformer.UI.Menus
         [SerializeField] private TMP_Text _timeLeftValue;
 
         /// <summary>
+        ///     The text that displays the lives.
+        /// </summary>
+        [SerializeField] private TMP_Text _livesValue;
+
+        /// <summary>
         ///     We listen to the controllers to show the current values.
         /// </summary>
         private void OnEnable()
         {
-            _scoreController.ScoreChanged += UpdateScore;
+            _scoreController.OnScoreChanged += OnUpdateScore;
             _levelController.OnLevelLoaded += OnLevelLoaded;
+            _livesController.OnLivesChanged += OnLivesChanged;
+            _livesValue.text = _livesController.Lives.ToString();
         }
-        
+
         /// <summary>
         ///     We stop listening to the controllers to not update the values when the GUI is not active.
         /// </summary>
         private void OnDisable()
         {
-            _scoreController.ScoreChanged -= UpdateScore;
+            _scoreController.OnScoreChanged -= OnUpdateScore;
             _levelController.OnLevelLoaded -= OnLevelLoaded;
         }
 
@@ -87,7 +101,7 @@ namespace RandomPlatformer.UI.Menus
         ///     We need it to show the current score value.
         /// </summary>
         /// <param name="score">The current score.</param>
-        private void UpdateScore(int score)
+        private void OnUpdateScore(int score)
         {
             _scoreValue.text = score.ToString();
         }
@@ -108,6 +122,14 @@ namespace RandomPlatformer.UI.Menus
         private void OnLevelLoaded(LevelInstance loadedLevel)
         {
             UpdateLevel(loadedLevel.LevelNumber);
+        }
+
+        /// <summary>
+        ///     When the lives are changed we update the lives value.
+        /// </summary>
+        private void OnLivesChanged(int currentLives)
+        {
+            _livesValue.text = currentLives.ToString();
         }
 
         /// <summary>

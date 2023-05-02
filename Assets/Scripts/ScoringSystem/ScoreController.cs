@@ -16,7 +16,7 @@ namespace RandomPlatformer.ScoringSystem
         /// </summary>
         public int CurrentScore { get; private set; }
         
-        public event Action<int> ScoreChanged;
+        public event Action<int> OnScoreChanged;
 
         /// <summary>
         ///     Adds the score to the current score.
@@ -26,7 +26,7 @@ namespace RandomPlatformer.ScoringSystem
         public void AddPoints(int score)
         {
             CurrentScore += score;
-            ScoreChanged?.Invoke(CurrentScore);
+            OnScoreChanged?.Invoke(CurrentScore);
         }
         
         /// <summary>
@@ -35,7 +35,7 @@ namespace RandomPlatformer.ScoringSystem
         /// </summary>
         public void ResetScore()
         {
-            ScoreChanged?.Invoke(0);
+            OnScoreChanged?.Invoke(0);
             CurrentScore = 0;
         }
         

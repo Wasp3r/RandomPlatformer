@@ -45,6 +45,12 @@ namespace RandomPlatformer.Player
         ///     The input system actions.
         /// </summary>
         private DefaultInputActions _actions;
+        
+        /// <summary>
+        ///     The lives controller of the player.
+        ///     We need it to listen to player losing lives.
+        /// </summary>
+        private LivesController _livesController;
 
         /// <summary>
         ///     The current speed of the player.
@@ -80,6 +86,11 @@ namespace RandomPlatformer.Player
         ///     Indicates if the player is touching the ground.
         /// </summary>
         private bool _isGrounded;
+        
+        /// <summary>
+        ///     The initial position of the player.
+        /// </summary>
+        private Vector3 _checkpointPosition;
 
         /// <summary>
         ///     The coroutine that handles the grounded state.
@@ -91,6 +102,7 @@ namespace RandomPlatformer.Player
         /// </summary>
         private void Awake()
         {
+            _livesController = GameStateController.Instance.LivesController;
             _actions = GameStateController.Instance.InputActions;
             _actions.Player.Jump.performed += OnJump;
             
@@ -122,9 +134,11 @@ namespace RandomPlatformer.Player
         private void OnEnable()
         {
             _actions.Player.Enable();
+            _checkpointPosition = transform.position;
             GameStateController.Instance.CameraController.FollowObject(transform);
+            _livesController.OnLostLive += ResetPosition;
         }
-        
+
         /// <summary>
         ///     We disable the input system actions.
         /// </summary>
@@ -132,6 +146,7 @@ namespace RandomPlatformer.Player
         {
             _actions.Player.Disable();
             _actions.Player.Jump.performed -= OnJump;
+            _livesController.OnLostLive -= ResetPosition;
         }
 
         /// <summary>
@@ -282,6 +297,14 @@ namespace RandomPlatformer.Player
             var raycastRight = Physics2D.Raycast(_rigidbody2D.position + Vector2.left * _playerSize.x / 2,
                 Vector2.down, _playerSize.y / 2 + 0.01f, _solidMask);
             return raycastLeft.collider != null || raycastRight.collider != null;
+        }
+        
+        /// <summary>
+        ///     Reset player position to the last checkpoint.
+        /// </summary>
+        private void ResetPosition()
+        {
+            transform.position = _checkpointPosition;
         }
 
         /// <summary>

@@ -51,7 +51,6 @@ namespace RandomPlatformer.UI.Menus
         {
             _backButton.onClick.AddListener(OnBackButtonClicked);
             _userName.text = "";
-            _scoreController.AddPoints(Mathf.RoundToInt(_timeController.TimeLeft));
         }
 
         /// <summary>
@@ -70,6 +69,11 @@ namespace RandomPlatformer.UI.Menus
         {
             _resultText.text = won ? "You Won!" : "You Lost!";
             _score.text = _scoreController.CurrentScore.ToString();
+            if (won)
+            {
+                _scoreController.AddPoints(Mathf.RoundToInt(_timeController.TimeLeft));
+            }
+            
             Enable();
         }
 

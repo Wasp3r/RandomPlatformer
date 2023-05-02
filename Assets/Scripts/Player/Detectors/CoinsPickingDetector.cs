@@ -2,18 +2,13 @@
 using RandomPlatformer.ScoringSystem;
 using UnityEngine;
 
-namespace RandomPlatformer.Player
+namespace RandomPlatformer.Player.Detectors
 {
     /// <summary>
     ///     The controller that handles the picking up of coins.
     /// </summary>
-    public class CoinsPickingController : MonoBehaviour
+    public class CoinsPickingDetector : PickingController
     {
-        /// <summary>
-        ///     The layer mask of the objects that the player can pick up.
-        /// </summary>
-        [SerializeField] private LayerMask _coinMask;
-        
         /// <summary>
         ///     Score controller to add points and save the high score.
         /// </summary>
@@ -28,14 +23,12 @@ namespace RandomPlatformer.Player
         }
 
         /// <summary>
-        ///     The collider to pick up coins.
+        ///     Add points to the score controller.
+        ///     We check if the collided object is a coin.
         /// </summary>
-        /// <param name="other"></param>
-        private void OnTriggerEnter2D(Collider2D other)
+        /// <param name="other">Collided object.</param>
+        protected override void OnPickedUp(GameObject other)
         {
-            if (_coinMask != (_coinMask | (1 << other.gameObject.layer))) 
-                return;
-            
             var coin = other.GetComponent<Coin>();
             if (coin == null) 
                 return;

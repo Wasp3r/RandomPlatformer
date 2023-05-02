@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 1835380256921214755}
   - component: {fileID: 4680414036636301087}
   - component: {fileID: 3236143575498029382}
+  - component: {fileID: 3686780477715628459}
+  - component: {fileID: 4989384812797384869}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -169,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a2f40c53ba4ff688a237156dce0e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinMask:
+  _colliderMask:
     serializedVersion: 2
     m_Bits: 256
 --- !u!114 &3236143575498029382
@@ -184,6 +186,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1a15964403483f8a83c397a38d5186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _finishMask:
+  _colliderMask:
     serializedVersion: 2
     m_Bits: 512
+--- !u!114 &3686780477715628459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835380256921214764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f74f8005e6e4850a7963dedca7cf34d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _colliderMask:
+    serializedVersion: 2
+    m_Bits: 1024
+--- !u!114 &4989384812797384869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835380256921214764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373771aceee44cba940390620f133d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _colliderMask:
+    serializedVersion: 2
+    m_Bits: 2048

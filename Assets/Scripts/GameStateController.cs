@@ -1,5 +1,6 @@
 ﻿using System;
 using RandomPlatformer.LevelSystem;
+using RandomPlatformer.Player;
 using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI;
 using RandomPlatformer.UI.Menus;
@@ -55,6 +56,11 @@ namespace RandomPlatformer
         [SerializeField] private CameraController _cameraController;
 
         /// <summary>
+        ///     Lives controller reference.
+        /// </summary>
+        [SerializeField] private LivesController _livesController;
+
+        /// <summary>
         ///     GUI controller reference.
         /// </summary>
         [SerializeField] private GUIController _guiController;
@@ -90,6 +96,11 @@ namespace RandomPlatformer
         public LevelController LevelController => _levelController;
         
         /// <summary>
+        ///     Lives controller getter.
+        /// </summary>
+        public LivesController LivesController => _livesController;
+        
+        /// <summary>
         ///     Input actions.
         ///     It is used to listen to input events.
         /// </summary>
@@ -107,10 +118,11 @@ namespace RandomPlatformer
         {
             Instance = this;
             _mainMenu.OnStartGame += StartNewGame;
+            _livesController.OnAllLivesLost += GameLost;
             _inputActions = new DefaultInputActions();
             ListenToInput();
         }
-        
+
         /// <summary>
         ///     Updates the current game state.
         /// </summary>
@@ -163,6 +175,7 @@ namespace RandomPlatformer
         {
             _mainMenu.Disable();
             UpdateGameState(GameState.Active);
+            _livesController.ResetLives();
             _levelController.OpenLevel(0);
         }
 
@@ -178,6 +191,15 @@ namespace RandomPlatformer
             _guiController.Disable();
             _cameraController.StopFollowing();
             _levelController.UnloadedCurrentLevel();
+        }
+
+        /// <summary>
+        ///     Player lost the game.
+        /// </summary>
+        private void GameLost()
+        {
+            
+            UpdateGameState(GameState.Result);
         }
 
         /// <summary>
