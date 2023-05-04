@@ -17,12 +17,7 @@ namespace RandomPlatformer.Enemies
         /// <summary>
         ///     Bullet initial speed.
         /// </summary>
-        [SerializeField] private float _bulletInitialForce;
-
-        /// <summary>
-        ///     Bullet shooting direction.
-        /// </summary>
-        [SerializeField] private Vector2 _shootingDirection;
+        [SerializeField] private float _bulletSpeed = 10;
 
         /// <summary>
         ///     Bullet shooting offset.
@@ -39,15 +34,26 @@ namespace RandomPlatformer.Enemies
 #endif
 
         /// <summary>
+        ///     Bullet shooting direction.
+        /// </summary>
+        private Vector2 _shootingDirection;
+        
+        /// <summary>
         ///     Is shooting enabled?
         /// </summary>
         private bool _isShooting;
+
+        /// <summary>
+        ///     Time passed since the last shot.
+        /// </summary>
+        private float _timeSinceLastShot;
 
         /// <summary>
         ///     Start shooting.
         /// </summary>
         private void OnEnable()
         {
+            _shootingDirection = transform.right;
             _isShooting = true;
         }
         
@@ -60,13 +66,29 @@ namespace RandomPlatformer.Enemies
         }
 
         /// <summary>
+        ///     Update the timer and shoot the bullet if it's time to do so.
+        /// </summary>
+        private void Update()
+        {
+            if (!_isShooting)
+                return;
+
+            _timeSinceLastShot += Time.deltaTime;
+            if (!(_timeSinceLastShot >= _shootingInterval)) 
+                return;
+            
+            _timeSinceLastShot = 0;
+            ShootBullet();
+        }
+
+        /// <summary>
         ///     Shoot the bullet.
         /// </summary>
-        [ContextMenu("Shoot")]
         private void ShootBullet()
         {
             var bullet = Instantiate(_bulletPrefab, transform.position + (Vector3) _bulletShootingOffset, Quaternion.identity);
-            bullet.AddForce(_shootingDirection * _bulletInitialForce, ForceMode2D.Impulse);
+            bullet.transform.right = _shootingDirection;
+            bullet.velocity = _bulletSpeed * _shootingDirection;
         }
 
 #if UNITY_EDITOR
@@ -76,6 +98,7 @@ namespace RandomPlatformer.Enemies
             if (!_drawGizmos)
                 return;
             
+            _shootingDirection = transform.right;
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position + (Vector3) _bulletShootingOffset, 0.1f);
             

@@ -33,7 +33,7 @@ Transform:
   - {fileID: 1464299650335665410}
   - {fileID: 3065000337939822715}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1464299650070235651
 BoxCollider2D:
@@ -48,7 +48,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.29, y: 0}
+  m_Offset: {x: 0.29, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -74,9 +74,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 5028329281779397730, guid: 63926a19f0bc6014695a4935669f5629, type: 3}
-  _bulletInitialForce: 3
-  _shootingDirection: {x: -1, y: 0}
-  _bulletShootingOffset: {x: -0.73, y: 0}
+  _bulletSpeed: 15
+  _bulletShootingOffset: {x: 0.73, y: 0}
   _shootingInterval: 3
   _drawGizmos: 1
 --- !u!1 &1464299650335665409
@@ -104,7 +103,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464299650335665409}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.4, y: 0, z: 0}
+  m_LocalPosition: {x: 0.4, y: 0, z: 0}
   m_LocalScale: {x: 0.66, y: 0.23, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

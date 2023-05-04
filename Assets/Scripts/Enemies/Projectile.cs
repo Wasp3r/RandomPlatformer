@@ -10,6 +10,16 @@ namespace RandomPlatformer.Enemies
     public class Projectile : MonoBehaviour
     {
         /// <summary>
+        ///     Projectile life time.
+        /// </summary>
+        [SerializeField] private float _lifeTime = 3;
+        
+        /// <summary>
+        ///     Time passed.
+        /// </summary>
+        private float _timer;
+        
+        /// <summary>
         ///     Destroy the projectile on collision.
         /// </summary>
         /// <param name="other">Any object that collides with the projectile.</param>
@@ -25,6 +35,16 @@ namespace RandomPlatformer.Enemies
         private void OnCollisionEnter2D(Collision2D other)
         {
             Destroy(gameObject);
+        }
+
+        /// <summary>
+        ///     Update the timer and destroy the projectile if it's time to do so.
+        /// </summary>
+        private void Update()
+        {
+            _timer += Time.deltaTime;
+            if (_timer >= _lifeTime)
+                Destroy(gameObject);
         }
     }
 }
