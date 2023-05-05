@@ -15,14 +15,14 @@ namespace RandomPlatformer.Enemies
         [SerializeField] private Rigidbody2D _bulletPrefab;
 
         /// <summary>
+        ///     Bullet shooting point.
+        /// </summary>
+        [SerializeField] private Transform _shootingPoint;
+
+        /// <summary>
         ///     Bullet initial speed.
         /// </summary>
         [SerializeField] private float _bulletSpeed = 10;
-
-        /// <summary>
-        ///     Bullet shooting offset.
-        /// </summary>
-        [SerializeField] private Vector2 _bulletShootingOffset;
 
         /// <summary>
         ///     Time between shots.
@@ -37,6 +37,11 @@ namespace RandomPlatformer.Enemies
         ///     Bullet shooting direction.
         /// </summary>
         private Vector2 _shootingDirection;
+
+        /// <summary>
+        ///     Bullet shooting position.
+        /// </summary>
+        private Vector2 _bulletShootingPosition;
         
         /// <summary>
         ///     Is shooting enabled?
@@ -53,7 +58,8 @@ namespace RandomPlatformer.Enemies
         /// </summary>
         private void OnEnable()
         {
-            _shootingDirection = transform.right;
+            _shootingDirection = _shootingPoint.right;
+            _bulletShootingPosition = _shootingPoint.position;
             _isShooting = true;
         }
         
@@ -86,7 +92,7 @@ namespace RandomPlatformer.Enemies
         /// </summary>
         private void ShootBullet()
         {
-            var bullet = Instantiate(_bulletPrefab, transform.position + (Vector3) _bulletShootingOffset, Quaternion.identity);
+            var bullet = Instantiate(_bulletPrefab, _bulletShootingPosition, Quaternion.identity);
             bullet.transform.right = _shootingDirection;
             bullet.velocity = _bulletSpeed * _shootingDirection;
         }
@@ -98,12 +104,13 @@ namespace RandomPlatformer.Enemies
             if (!_drawGizmos)
                 return;
             
-            _shootingDirection = transform.right;
+            _shootingDirection = _shootingPoint.right;
+            _bulletShootingPosition = _shootingPoint.position;
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position + (Vector3) _bulletShootingOffset, 0.1f);
+            Gizmos.DrawWireSphere(_bulletShootingPosition, 0.1f);
             
             Gizmos.color = Color.blue;
-            Gizmos.DrawLine(transform.position + (Vector3)_bulletShootingOffset, transform.position + (Vector3)_bulletShootingOffset + (Vector3)_shootingDirection);
+            Gizmos.DrawLine(_bulletShootingPosition, _bulletShootingPosition + _shootingDirection);
         }
 
 #endif
