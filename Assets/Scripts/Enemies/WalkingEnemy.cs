@@ -15,11 +15,6 @@ namespace RandomPlatformer.Enemies
         [SerializeField] private float _movementSpeed;
 
         /// <summary>
-        ///     Is enemy walking on the predefined path?
-        /// </summary>
-        [SerializeField] private bool _predefinedPath;
-
-        /// <summary>
         ///     Point A position offset.
         /// </summary>
         [SerializeField] private float _positionAOffset;
@@ -33,6 +28,17 @@ namespace RandomPlatformer.Enemies
         ///     Enemy moving direction.
         /// </summary>
         [SerializeField] private bool _movingToA;
+
+        /// <summary>
+        ///     Max distance from the starting position.
+        /// </summary>
+        [SerializeField] private float _maxDistance;
+
+        /// <summary>
+        ///     Enemy width.
+        ///     We need it to find out if the enemy is at the edge.
+        /// </summary>
+        [SerializeField] private float _enemyWidth;
 
 #if UNITY_EDITOR
         [SerializeField] private bool _drawGizmos;
@@ -65,6 +71,7 @@ namespace RandomPlatformer.Enemies
         {
             _localTransform = transform;
             var position = _localTransform.position;
+
             _positionA = new Vector2(position.x + _positionAOffset, position.y);
             _positionB = new Vector2(position.x + _positionBOffset, position.y);
         }
@@ -93,12 +100,6 @@ namespace RandomPlatformer.Enemies
             if (!_isMoving)
                 return;
 
-            if (!_predefinedPath)
-            {
-                // MoveToEdge();
-                return;
-            }
-
             MoveTowardsDestination();
         }
 
@@ -126,18 +127,47 @@ namespace RandomPlatformer.Enemies
             if (!_drawGizmos)
                 return;
 
-            if (_predefinedPath)
-            {
-                DrawPredefinedPath();
-                return;
-            }
-            
-            DrawEdgeToEdgePath();
+            DrawPredefinedPath();
         }
 
-        private void DrawEdgeToEdgePath()
+        /// <summary>
+        ///     Find the edges of the platform.
+        /// </summary>
+        [ContextMenu("Find Edges")]
+        private void FindEdges()
         {
+            _positionAOffset = FindEdgeInDirection(true, 0.1f);
+            _positionBOffset = FindEdgeInDirection(false, 0.1f);
+        }
+
+        /// <summary>
+        ///     Find the edge in the specified direction.
+        /// </summary>
+        /// <param name="isLeft">Is the direction left?</param>
+        /// <param name="stepSize">Size of each step.</param>
+        /// <returns>Distance to the edge or max distance if edge was not found.</returns>
+        private float FindEdgeInDirection(bool isLeft, float stepSize)
+        {
+            var startingPosition = _localTransform.position;
+            var distance = 0f;
             
+            while (distance < _maxDistance)
+            {
+                var position = startingPosition;
+                position.x += isLeft ? -distance : distance;
+                var hit = Physics2D.Raycast(position, Vector2.down, 1f);
+                if (hit.collider == null)
+                {
+                    Debug.DrawRay(position, Vector2.down, Color.green, 3f);    
+                    break;
+                }
+
+                Debug.DrawRay(position, Vector2.down, Color.red, 3f);
+                distance += stepSize;
+            }
+            
+            distance -= _enemyWidth / 2;
+            return distance * (isLeft ? -1 : 1);
         }
 
         private void DrawPredefinedPath()
