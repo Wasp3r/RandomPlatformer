@@ -35,6 +35,11 @@ namespace RandomPlatformer.Enemies
         /// </summary>
         [SerializeField] private float _waveSpeed = 1;
 
+        /// <summary>
+        ///     Enemy visual.
+        /// </summary>
+        [SerializeField] private Transform _visual;
+
 #if UNITY_EDITOR
         [SerializeField] private bool _drawGizmos;
 #endif
@@ -67,7 +72,7 @@ namespace RandomPlatformer.Enemies
         /// <summary>
         ///     Current wave.
         /// </summary>
-        private float _currentWave;
+        public float _currentWave;
         
         /// <summary>
         ///     Target wave size.
@@ -104,6 +109,11 @@ namespace RandomPlatformer.Enemies
             if (!_isMoving)
                 return;
 
+            if (_waveSize > 0)
+            {
+                UpdateWave();
+            }
+
             var position = _localTransform.position;
             if (Vector2.Distance(position, _targetPosition) < 0.1f)
             {
@@ -112,6 +122,7 @@ namespace RandomPlatformer.Enemies
             }
             
             _localTransform.position = Vector2.MoveTowards(position, _targetPosition, _speed * Time.deltaTime);
+            _visual.position = _localTransform.position + _currentWave * Vector3.up;
         }
 
         /// <summary>
@@ -137,7 +148,7 @@ namespace RandomPlatformer.Enemies
         /// </summary>
         private void UpdateWave()
         {
-            
+            _currentWave = Mathf.Sin(Time.time * _waveSpeed) * _waveSize;
         }
 
 #if UNITY_EDITOR
