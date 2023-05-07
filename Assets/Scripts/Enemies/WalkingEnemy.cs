@@ -12,62 +12,62 @@ namespace RandomPlatformer.Enemies
         /// <summary>
         ///     Enemy movement speed.
         /// </summary>
-        [SerializeField] private float _movementSpeed;
+        [SerializeField] protected float _movementSpeed;
 
         /// <summary>
         ///     Point A position offset.
         /// </summary>
-        [SerializeField] private float _positionAOffset;
+        [SerializeField] protected float _positionAOffset;
 
         /// <summary>
         ///     Point B position offset.
         /// </summary>
-        [SerializeField] private float _positionBOffset;
+        [SerializeField] protected float _positionBOffset;
         
         /// <summary>
         ///     Enemy moving direction.
         /// </summary>
-        [SerializeField] private bool _movingToA;
+        [SerializeField] protected bool _movingToA;
 
         /// <summary>
         ///     Max distance from the starting position.
         /// </summary>
-        [SerializeField] private float _maxDistance;
+        [SerializeField] protected float _maxDistance;
 
         /// <summary>
         ///     Enemy width.
         ///     We need it to find out if the enemy is at the edge.
         /// </summary>
-        [SerializeField] private float _enemyWidth;
+        [SerializeField] protected float _enemyWidth;
 
 #if UNITY_EDITOR
-        [SerializeField] private bool _drawGizmos;
+        [SerializeField] protected bool _drawGizmos;
 #endif
 
         /// <summary>
         ///     Is the enemy moving?
         /// </summary>
-        private bool _isMoving;
+        protected bool _isMoving;
 
         /// <summary>
         ///     Enemy local transform.
         /// </summary>
-        private Transform _localTransform;
+        protected Transform _localTransform;
         
         /// <summary>
         ///     Point A position.
         /// </summary>
-        private Vector2 _positionA;
+        protected Vector2 _positionA;
         
         /// <summary>
         ///     Point B position.
         /// </summary>
-        private Vector2 _positionB;
+        protected Vector2 _positionB;
 
         /// <summary>
         ///     Assign local transform.
         /// </summary>
-        private void Awake()
+        protected virtual void Awake()
         {
             _localTransform = transform;
             var position = _localTransform.position;
@@ -79,7 +79,7 @@ namespace RandomPlatformer.Enemies
         /// <summary>
         ///     Start enemy movement.
         /// </summary>
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             _isMoving = true;
         }
@@ -87,7 +87,7 @@ namespace RandomPlatformer.Enemies
         /// <summary>
         ///     Stop enemy movement.
         /// </summary>
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             _isMoving = false;
         }
@@ -95,7 +95,7 @@ namespace RandomPlatformer.Enemies
         /// <summary>
         ///     Update enemy position.
         /// </summary>
-        private void Update()
+        protected virtual void Update()
         {
             if (!_isMoving)
                 return;
@@ -119,22 +119,12 @@ namespace RandomPlatformer.Enemies
             
             _localTransform.position = Vector2.MoveTowards(position, targetPosition, _movementSpeed * Time.deltaTime);
         }
-
-#if UNITY_EDITOR
-
-        private void OnDrawGizmos()
-        {
-            if (!_drawGizmos)
-                return;
-
-            DrawPredefinedPath();
-        }
-
+        
         /// <summary>
         ///     Find the edges of the platform.
         /// </summary>
         [ContextMenu("Find Edges")]
-        private void FindEdges()
+        protected void FindEdges()
         {
             _positionAOffset = FindEdgeInDirection(true, 0.1f);
             _positionBOffset = FindEdgeInDirection(false, 0.1f);
@@ -149,6 +139,7 @@ namespace RandomPlatformer.Enemies
         private float FindEdgeInDirection(bool isLeft, float stepSize)
         {
             var startingPosition = _localTransform.position;
+            _localTransform = transform;
             var distance = 0f;
             
             while (distance < _maxDistance)
@@ -168,6 +159,16 @@ namespace RandomPlatformer.Enemies
             
             distance -= _enemyWidth / 2;
             return distance * (isLeft ? -1 : 1);
+        }
+
+#if UNITY_EDITOR
+
+        protected virtual void OnDrawGizmos()
+        {
+            if (!_drawGizmos)
+                return;
+
+            DrawPredefinedPath();
         }
 
         private void DrawPredefinedPath()
