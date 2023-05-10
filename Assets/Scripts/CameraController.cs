@@ -44,6 +44,12 @@ namespace RandomPlatformer
         [SerializeField] private AnimationCurve _movementCurve = AnimationCurve.Linear(0,0,1,1);
 
         /// <summary>
+        ///     Should camera movement be snapped?
+        ///     When set to true camera will move only by full digits.
+        /// </summary>
+        [SerializeField] private bool _snapCameraMovement;
+
+        /// <summary>
         ///     Is camera controller initialized?
         /// </summary>
         private bool _isInitialized;
@@ -89,8 +95,14 @@ namespace RandomPlatformer
         {
             if (!_isFollowing || _followTarget.IsDestroyed())
                 return;
-            
-            _cameraTransform.position = GetFollowingPosition();
+
+            var targetPosition = GetFollowingPosition();
+            if (_snapCameraMovement)
+            {
+                targetPosition.x = Mathf.RoundToInt(targetPosition.x);
+                targetPosition.y = Mathf.RoundToInt(targetPosition.y);
+            }
+            _cameraTransform.position = targetPosition;
         }
 
         /// <summary>

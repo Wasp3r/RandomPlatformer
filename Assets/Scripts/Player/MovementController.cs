@@ -35,6 +35,12 @@ namespace RandomPlatformer.Player
         ///     The rigidbody2D component of the player.
         /// </summary>
         [SerializeField] private Rigidbody2D _rigidbody2D;
+        
+        /// <summary>
+        ///     The height of the player.
+        /// </summary>
+        [SerializeField]
+        private Vector2 _playerSize;
 
         /// <summary>
         ///     The layer mask of the objects that the player can jump on.
@@ -56,11 +62,6 @@ namespace RandomPlatformer.Player
         ///     The current speed of the player.
         /// </summary>
         private float _currentSpeed;
-
-        /// <summary>
-        ///     The height of the player.
-        /// </summary>
-        private Vector2 _playerSize;
 
         /// <summary>
         ///     The movement input of the player.
@@ -105,8 +106,6 @@ namespace RandomPlatformer.Player
             _livesController = GameStateController.Instance.LivesController;
             _actions = GameStateController.Instance.InputActions;
             _actions.Player.Jump.performed += OnJump;
-            
-            _playerSize = GetComponent<BoxCollider2D>().size;
             _jumpCount = 0;
         }
 
@@ -281,8 +280,12 @@ namespace RandomPlatformer.Player
         {
             var raycastUpper = Physics2D.Raycast(_rigidbody2D.position + Vector2.up * _playerSize.y / 2,
                 direction, _playerSize.x / 2 + 0.01f, _solidMask);
+            Debug.DrawRay(_rigidbody2D.position + Vector2.up * _playerSize.y / 2,
+                direction, Color.red);
             var raycastLower = Physics2D.Raycast(_rigidbody2D.position - Vector2.up * _playerSize.y / 2,
                 direction, _playerSize.x / 2 + 0.01f, _solidMask);
+            Debug.DrawRay(_rigidbody2D.position - Vector2.up * _playerSize.y / 2,
+                direction, Color.red);
             return raycastUpper.collider == null && raycastLower.collider == null;
         }
 
