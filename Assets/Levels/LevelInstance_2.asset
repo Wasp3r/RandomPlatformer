@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd89bd48ea514e97a0e783a27c14d5d2, type: 3}
-  m_Name: LevelInstance_1
+  m_Name: LevelInstance_2
   m_EditorClassIdentifier: 
-  LevelNumber: 2
-  Time: 300
-  ScenePath: Assets/Scenes/Levels/Level_1.unity
-  SceneReference: {fileID: 102900000, guid: c4235827f5fad824986d055f3ee17691, type: 3}
+  LevelNumber: 3
+  Time: 500
+  ScenePath: Assets/Scenes/Levels/Level_2.unity
+  SceneReference: {fileID: 102900000, guid: 49e50d3ae1114e2469df437e4ac30167, type: 3}

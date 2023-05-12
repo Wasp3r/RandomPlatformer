@@ -254,6 +254,7 @@ MonoBehaviour:
   _levels:
   - {fileID: 11400000, guid: 6c894d93c7015a646b03db0c56c2db5a, type: 2}
   - {fileID: 11400000, guid: d83a024325f618a43977c87d082a0005, type: 2}
+  - {fileID: 11400000, guid: 6b3f22fcfaa1ad64bb4f4f19f3e235fa, type: 2}
 --- !u!1001 &708122539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1166,8 +1167,8 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 182497895
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &1770338778
 RectTransform:
