@@ -710,7 +710,7 @@ MonoBehaviour:
   _mainCamera: {fileID: 280418511}
   _followSpeedMultiplier: 5
   _maxFollowSpeed: 0.1
-  _minimumY: -2
+  _minimumY: -5
   _clampingDistance: 0.01
   _movementCurve:
     serializedVersion: 2
