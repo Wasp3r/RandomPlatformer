@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd89bd48ea514e97a0e783a27c14d5d2, type: 3}
+  m_Name: LevelInstance_3
+  m_EditorClassIdentifier: 
+  LevelNumber: 4
+  Time: 600
+  ScenePath: Assets/Scenes/Levels/Level_3.unity
+  SceneReference: {fileID: 102900000, guid: f5be0a5535f4fd844aba97df89862055, type: 3}
