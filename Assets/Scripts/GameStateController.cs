@@ -119,6 +119,7 @@ namespace RandomPlatformer
             Instance = this;
             _mainMenu.OnStartGame += StartNewGame;
             _livesController.OnAllLivesLost += GameLost;
+            _levelController.OnFinishedLastLevel += GameWon;
             _inputActions = new DefaultInputActions();
             ListenToInput();
         }
@@ -156,9 +157,13 @@ namespace RandomPlatformer
                     _mainMenu.Disable();
                     _chooseLevelMenu.Enable();
                     break;
-                case GameState.Result:
+                case GameState.Failed:
                     StopGame();
                     gameResultUIController.ShowResult(false);
+                    break;
+                case GameState.Won:
+                    StopGame();
+                    gameResultUIController.ShowResult(true);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gameState), gameState, null);
@@ -185,9 +190,6 @@ namespace RandomPlatformer
         /// </summary>
         private void StopGame()
         {
-            if (SceneManager.sceneCount == 1)
-                return;
-            
             _guiController.Disable();
             _cameraController.StopFollowing();
             _levelController.UnloadedCurrentLevel();
@@ -198,8 +200,15 @@ namespace RandomPlatformer
         /// </summary>
         private void GameLost()
         {
-            
-            UpdateGameState(GameState.Result);
+            UpdateGameState(GameState.Failed);
+        }
+
+        /// <summary>
+        ///     Player won the game.
+        /// </summary>
+        private void GameWon()
+        {
+            UpdateGameState(GameState.Won);
         }
 
         /// <summary>
@@ -233,7 +242,7 @@ namespace RandomPlatformer
                     _leaderBoard.Disable();
                     UpdateGameState(GameState.Menu);
                     break;
-                case GameState.Result:
+                case GameState.Failed:
                     gameResultUIController.Disable();
                     UpdateGameState(GameState.Menu);
                     break;
@@ -264,7 +273,8 @@ namespace RandomPlatformer
         Menu,
         Leaderboard,
         ChooseLevel,
-        Result,
+        Failed,
+        Won,
         Exit
     }
 }

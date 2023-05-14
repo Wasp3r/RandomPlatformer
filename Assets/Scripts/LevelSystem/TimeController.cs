@@ -65,7 +65,7 @@ namespace RandomPlatformer.LevelSystem
             {
                 _enabled = false;
                 _timeLimit = 0;
-                GameStateController.Instance.UpdateGameState(GameState.Result);
+                GameStateController.Instance.UpdateGameState(GameState.Failed);
             }
             
             _guiController.UpdateTimeLeft(_timeLimit);
