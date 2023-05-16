@@ -232,9 +232,6 @@ namespace RandomPlatformer.Player
         /// <param name="context">Input system context.</param>
         private void OnJump(InputAction.CallbackContext context)
         {
-            if (!Input.GetButtonDown("Jump"))
-                return;
-
             if (!CanJump())
                  return;
 
