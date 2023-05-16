@@ -141,6 +141,9 @@ namespace RandomPlatformer.Enemies
         {
             if (!_showGizmos)
                 return;
+
+            if (Application.isPlaying)
+                return;
             
             _startingPosition = transform.position;
             _targetPosition = _startingPosition + _targetOffset;

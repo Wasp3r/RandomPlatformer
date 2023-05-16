@@ -59,6 +59,7 @@ namespace RandomPlatformer.Player
             if (_currentLives > 0)
                 return;
             
+            ResetLives();
             OnAllLivesLost?.Invoke();
         }
 

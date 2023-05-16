@@ -236,7 +236,7 @@ namespace RandomPlatformer.Player
                 return;
 
             if (!CanJump())
-                return;
+                 return;
 
             Jump();
         }
@@ -249,12 +249,12 @@ namespace RandomPlatformer.Player
         private bool CanJump()
         {
             if (_jumpCount < _maxJumpCount && !_isGrounded)
-            {
-                _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
                 return true;
-            }
+            
+            if (_jumpCount >= _maxJumpCount)
+                return false;
 
-            return IsGrounded();
+            return true;
         }
 
         /// <summary>
@@ -263,6 +263,7 @@ namespace RandomPlatformer.Player
         private void Jump()
         {
             _jumpCount++;
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
             _rigidbody2D.AddForce(Vector2.up * _jumpingForce, ForceMode2D.Impulse);
 
             if (_groundedCoroutine != null)
