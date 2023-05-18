@@ -35,6 +35,14 @@ namespace RandomPlatformer.UI
             
             ControllerChecker.Instance.OnControllerConnected += ShowIndicator;
             ControllerChecker.Instance.OnControllerDisconnected += HideIndicator;
+            if (!ControllerChecker.Instance.ControllerConnected)
+            {
+                HideIndicator();
+                return;
+            }
+            
+            MapButtons();
+            ShowIndicator();
         }
 
         /// <summary>
@@ -54,7 +62,7 @@ namespace RandomPlatformer.UI
         /// </summary>
         private void Start()
         {
-            var inputActions = GameStateController.Instance.InputActions;
+            var inputActions = GameStateController.Instance.InputModule;
             _parent = transform.parent;
             MapButtons();
 
@@ -66,8 +74,8 @@ namespace RandomPlatformer.UI
             
             ControllerChecker.Instance.OnControllerConnected += ShowIndicator;
             ControllerChecker.Instance.OnControllerDisconnected += HideIndicator;
-            inputActions.UI.Move.performed += MovePerformed;
-            inputActions.UI.Submit.performed += SubmitPerformed;
+            inputActions.move.action.performed += MovePerformed;
+            inputActions.submit.action.performed += SubmitPerformed;
             _currentButtonIndex = 0;
         }
         
@@ -76,6 +84,7 @@ namespace RandomPlatformer.UI
         /// </summary>
         private void MapButtons()
         {
+            _buttons.Clear();
             for (var i = 0; i < transform.childCount; i++)
             {
                 var child = transform.GetChild(i);
@@ -125,7 +134,7 @@ namespace RandomPlatformer.UI
             
             _enabled = true;
             _controllerIndicator.gameObject.SetActive(true);
-            _controllerIndicator.position = _buttons[_currentButtonIndex].transform.position;
+            UpdatePosition();
         }
 
         /// <summary>
@@ -153,7 +162,7 @@ namespace RandomPlatformer.UI
             else
                 _currentButtonIndex--;
 
-            Debug.Log($"### - Move up! {_currentButtonIndex}");
+            UpdatePosition();
         }
 
         /// <summary>
@@ -169,7 +178,15 @@ namespace RandomPlatformer.UI
             else
                 _currentButtonIndex++;
             
-            Debug.Log($"### - Move down! {_currentButtonIndex}");
+            UpdatePosition();
+        }
+
+        /// <summary>
+        ///     Update the indicator position.
+        /// </summary>
+        private void UpdatePosition()
+        {
+            _controllerIndicator.position = _buttons[_currentButtonIndex].transform.position;
         }
     }
 }

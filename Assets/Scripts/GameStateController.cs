@@ -81,6 +81,11 @@ namespace RandomPlatformer
         public ScoreController ScoreController => _scoreController;
         
         /// <summary>
+        ///     Input module getter.
+        /// </summary>
+        public InputSystemUIInputModule InputModule => _inputModule;
+        
+        /// <summary>
         ///     Input actions getter.
         /// </summary>
         public DefaultInputActions InputActions => _inputActions;

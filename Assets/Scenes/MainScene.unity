@@ -1121,13 +1121,13 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1519036488}
+  - {fileID: 2122506116}
   - {fileID: 1257369825}
   - {fileID: 840311900}
   - {fileID: 1119015907}
   - {fileID: 344343781}
   - {fileID: 1099879664}
   - {fileID: 2003759437}
-  - {fileID: 2122506116}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1676,6 +1676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e15e35f1fa442793e2b5f0fc811d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _checkingInterval: 1
 --- !u!1001 &4574003887587623161
 PrefabInstance:
   m_ObjectHideFlags: 0
