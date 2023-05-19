@@ -40,12 +40,9 @@ namespace RandomPlatformer.UI.Menus
         [SerializeField] private Button _backButton;
 
         /// <summary>
-        ///     Removes the references to the level buttons.
+        ///     Event to invoke when the back button is clicked.
         /// </summary>
-        private void OnDisable()
-        {
-            _backButton.onClick.RemoveListener(BackButtonClicked);
-        }
+        public event Action OnBack;
 
         /// <summary>
         ///     Enable the menu and populate the level buttons.
@@ -56,6 +53,14 @@ namespace RandomPlatformer.UI.Menus
             _backButton.onClick.AddListener(BackButtonClicked);
             PopulateLevelButtons();
             StartCoroutine(InitializeControllerIndicator());
+        }
+
+        /// <summary>
+        ///     Removes the references to the level buttons.
+        /// </summary>
+        private void OnDisable()
+        {
+            _backButton.onClick.RemoveListener(BackButtonClicked);
         }
 
         /// <summary>
@@ -105,8 +110,7 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         private void BackButtonClicked()
         {
-            Disable();
-            GameStateController.Instance.UpdateGameState(GameState.Menu);
+            OnBack?.Invoke();
         }
         
         /// <summary>

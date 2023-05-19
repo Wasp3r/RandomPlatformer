@@ -89,10 +89,16 @@ namespace RandomPlatformer.MainSceneMachine
         private DefaultInputActions _inputActions;
 
         /// <summary>
+        ///     Input module getter.
+        /// </summary>
+        public InputSystemUIInputModule InputModule => _inputModule;
+
+        /// <summary>
         ///     Initialize the state machine.
         /// </summary>
         private void Awake()
         {
+            Instance = this;
             InitializeStates();
             _inputActions = new DefaultInputActions();
             _inputModule.cancel.action.performed += OnCancel;
@@ -122,6 +128,7 @@ namespace RandomPlatformer.MainSceneMachine
             if (_currentState == null)
             {
                 Debug.Log("### - Current state is null. It should only happen on the beginning of the game.");
+                _currentState = targetState;
                 return;
             }
             
@@ -135,6 +142,7 @@ namespace RandomPlatformer.MainSceneMachine
         private void InitializeStates()
         {
             _statesDictionary.Add(State.MainMenu, new MainMenuState(_mainMenu));
+            _statesDictionary.Add(State.ChooseLevel, new ChooseLevelState(_chooseLevelMenu));
 
             foreach (var state in _statesDictionary)
             {

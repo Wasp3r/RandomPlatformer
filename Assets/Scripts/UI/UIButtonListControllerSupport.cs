@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RandomPlatformer.MainSceneMachine;
 using RandomPlatformer.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -74,7 +75,7 @@ namespace RandomPlatformer.UI
             if (_initialized)
                 return;
             
-            var inputActions = GameStateController.Instance.InputModule;
+            var inputActions = GameStateMachine.Instance.InputModule;
             _parent = transform.parent;
             MapButtons();
 

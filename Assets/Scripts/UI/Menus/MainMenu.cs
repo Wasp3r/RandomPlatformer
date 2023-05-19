@@ -1,4 +1,5 @@
 ﻿using System;
+using RandomPlatformer.MainSceneMachine;
 using RandomPlatformer.UI.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,21 +32,10 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         [SerializeField] private Button _exitButton;
 
-        /// <summary>
-        ///     Input actions.
-        ///     We need it for the controller/keyboard support.
-        /// </summary>
-        private DefaultInputActions _inputActions;
-        
         public event Action OnStartGame;
         public event Action OnChooseLevel;
         public event Action OnLeaderboard;
         public event Action OnExitGame;
-
-        private void Start()
-        {
-            _inputActions = GameStateController.Instance.InputActions;
-        }
 
         private void OnEnable()
         {
@@ -70,21 +60,17 @@ namespace RandomPlatformer.UI.Menus
 
         private void ChooseLevel()
         {
-            GameStateController.Instance.UpdateGameState(GameState.ChooseLevel);
             OnChooseLevel?.Invoke();
         }
         
         private void Leaderboard()
         {
-            GameStateController.Instance.UpdateGameState(GameState.Leaderboard);
             OnLeaderboard?.Invoke();
         }
         
         private void ExitGame()
         {
             OnExitGame?.Invoke();
-            Disable();
-            GameStateController.Instance.UpdateGameState(GameState.Exit);
         }
     }
 }
