@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 837750399}
   - component: {fileID: 837750400}
+  - component: {fileID: 8071959293433079695}
   m_Layer: 0
   m_Name: Buttons
   m_TagString: Untagged
@@ -66,6 +67,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8071959293433079695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837750398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744564044c05440286ccc48d17da0903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controllerIndicatorPrefab: {fileID: 2812455613149470603, guid: eb20a5ad1f6379f489398bb18c60f3eb, type: 3}
 --- !u!1001 &4099319286707371013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -76,7 +90,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6664319468230059556, guid: 1879799f278eaee40a8b394ee1d053a4, type: 3}
       propertyPath: m_Name
-      value: PauseMenu Variant
+      value: PauseMenu
       objectReference: {fileID: 0}
     - target: {fileID: 6664319468230059559, guid: 1879799f278eaee40a8b394ee1d053a4, type: 3}
       propertyPath: m_Pivot.x
@@ -181,7 +195,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backgroundImage: {fileID: 806143658040622436}
-  _fadeTime: 1
   _resumeButton: {fileID: 7771729193083621786}
   _goToMenuButton: {fileID: 7771729193172715997}
   _exitButton: {fileID: 7771729192452109330}

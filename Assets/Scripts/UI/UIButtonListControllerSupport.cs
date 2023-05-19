@@ -22,6 +22,7 @@ namespace RandomPlatformer.UI
         private Transform _controllerIndicator;
         private Transform _parent;
         private bool _enabled;
+        private bool _initialized;
         private List<GameObject> _buttons = new();
         private int _currentButtonIndex;
 
@@ -35,6 +36,14 @@ namespace RandomPlatformer.UI
             
             ControllerChecker.Instance.OnControllerConnected += ShowIndicator;
             ControllerChecker.Instance.OnControllerDisconnected += HideIndicator;
+            if (!ControllerChecker.Instance.ControllerConnected)
+            {
+                HideIndicator();
+                return;
+            }
+            
+            MapButtons();
+            ShowIndicator();
         }
 
         /// <summary>
@@ -54,7 +63,18 @@ namespace RandomPlatformer.UI
         /// </summary>
         private void Start()
         {
-            var inputActions = GameStateController.Instance.InputActions;
+            Initialize();
+        }
+
+        /// <summary>
+        ///     Maps the buttons and shows the controller indicator if the controller is connected.
+        /// </summary>
+        public void Initialize()
+        {
+            if (_initialized)
+                return;
+            
+            var inputActions = GameStateController.Instance.InputModule;
             _parent = transform.parent;
             MapButtons();
 
@@ -64,11 +84,16 @@ namespace RandomPlatformer.UI
                 return;
             }
             
+            _initialized = true;
             ControllerChecker.Instance.OnControllerConnected += ShowIndicator;
             ControllerChecker.Instance.OnControllerDisconnected += HideIndicator;
-            inputActions.UI.Move.performed += MovePerformed;
-            inputActions.UI.Submit.performed += SubmitPerformed;
+            inputActions.move.action.performed += MovePerformed;
+            inputActions.submit.action.performed += SubmitPerformed;
             _currentButtonIndex = 0;
+            
+            if (!ControllerChecker.Instance.ControllerConnected)
+                return;
+            ShowIndicator();
         }
         
         /// <summary>
@@ -76,6 +101,7 @@ namespace RandomPlatformer.UI
         /// </summary>
         private void MapButtons()
         {
+            _buttons.Clear();
             for (var i = 0; i < transform.childCount; i++)
             {
                 var child = transform.GetChild(i);
@@ -120,12 +146,15 @@ namespace RandomPlatformer.UI
         /// </summary>
         private void ShowIndicator()
         {
+            if (!_buttons.Any())
+                return;
+            
             if (!_controllerIndicator)
                 _controllerIndicator = Instantiate(_controllerIndicatorPrefab, _parent).transform;
             
             _enabled = true;
             _controllerIndicator.gameObject.SetActive(true);
-            _controllerIndicator.position = _buttons[_currentButtonIndex].transform.position;
+            UpdatePosition();
         }
 
         /// <summary>
@@ -153,7 +182,7 @@ namespace RandomPlatformer.UI
             else
                 _currentButtonIndex--;
 
-            Debug.Log($"### - Move up! {_currentButtonIndex}");
+            UpdatePosition();
         }
 
         /// <summary>
@@ -169,7 +198,15 @@ namespace RandomPlatformer.UI
             else
                 _currentButtonIndex++;
             
-            Debug.Log($"### - Move down! {_currentButtonIndex}");
+            UpdatePosition();
+        }
+
+        /// <summary>
+        ///     Update the indicator position.
+        /// </summary>
+        private void UpdatePosition()
+        {
+            _controllerIndicator.position = _buttons[_currentButtonIndex].transform.position;
         }
     }
 }

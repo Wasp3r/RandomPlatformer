@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using RandomPlatformer.LevelSystem;
 using RandomPlatformer.UI.Components;
 using RandomPlatformer.UI.Generic;
@@ -17,6 +18,11 @@ namespace RandomPlatformer.UI.Menus
         ///     Level controller reference.
         /// </summary>
         [SerializeField] private LevelController _levelController;
+
+        /// <summary>
+        ///     Controller support reference.
+        /// </summary>
+        [SerializeField] private UIButtonListControllerSupport _controllerSupport;
 
         /// <summary>
         ///     Level button container.
@@ -49,6 +55,7 @@ namespace RandomPlatformer.UI.Menus
             base.Enable();
             _backButton.onClick.AddListener(BackButtonClicked);
             PopulateLevelButtons();
+            StartCoroutine(InitializeControllerIndicator());
         }
 
         /// <summary>
@@ -100,6 +107,16 @@ namespace RandomPlatformer.UI.Menus
         {
             Disable();
             GameStateController.Instance.UpdateGameState(GameState.Menu);
+        }
+        
+        /// <summary>
+        ///     Initializes the controller indicator.
+        ///     We have to wait because buttons in the layout group are not aligned at the start.
+        /// </summary>
+        private IEnumerator InitializeControllerIndicator()
+        {
+            yield return new WaitForSeconds(0.1f);
+            _controllerSupport.Initialize();
         }
     }
 }

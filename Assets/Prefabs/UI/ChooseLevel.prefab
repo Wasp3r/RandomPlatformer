@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 556472443}
   - component: {fileID: 556472445}
   - component: {fileID: 556472444}
+  - component: {fileID: 1676912466989715898}
   m_Layer: 0
   m_Name: ButtonsContainer
   m_TagString: Untagged
@@ -78,6 +79,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &1676912466989715898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 556472442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744564044c05440286ccc48d17da0903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controllerIndicatorPrefab: {fileID: 2812455613149470603, guid: eb20a5ad1f6379f489398bb18c60f3eb, type: 3}
 --- !u!1 &1287541591
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,6 +505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _backgroundImage: {fileID: 916036138041982266}
   _levelController: {fileID: 0}
+  _controllerSupport: {fileID: 1676912466989715898}
   _container: {fileID: 556472445}
   _levelButtonPrefab: {fileID: 771720045, guid: 9a7c37f4774229947adb1905b31da488, type: 3}
   _backButton: {fileID: 7801131649019016199}
