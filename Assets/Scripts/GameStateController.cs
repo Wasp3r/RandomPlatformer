@@ -186,7 +186,7 @@ namespace RandomPlatformer
             _mainMenu.Disable();
             UpdateGameState(GameState.Active);
             _livesController.ResetLives();
-            _levelController.OpenLevel(0);
+            _levelController.StartGame();
         }
 
         /// <summary>

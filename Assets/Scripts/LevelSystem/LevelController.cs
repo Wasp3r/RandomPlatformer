@@ -22,6 +22,11 @@ namespace RandomPlatformer.LevelSystem
         ///     Current level index.
         /// </summary>
         private int _currentLevelIndex;
+
+        /// <summary>
+        ///     Starting level index.
+        /// </summary>
+        private int _startingLevelIndex;
         
         /// <summary>
         ///     Current level scene path.
@@ -52,10 +57,18 @@ namespace RandomPlatformer.LevelSystem
         }
 
         /// <summary>
+        ///     Starting the game from the <see cref="_startingLevelIndex"/> level.
+        /// </summary>
+        public void StartGame()
+        {
+            OpenLevel(_startingLevelIndex);
+        }
+
+        /// <summary>
         ///     Opens level with specified index.
         /// </summary>
         /// <param name="index">Level index.</param>
-        public void OpenLevel(int index)
+        private void OpenLevel(int index)
         {
             if (_levels.Count <= index)
             {
@@ -66,9 +79,18 @@ namespace RandomPlatformer.LevelSystem
             var level = _levels[index];
             _currentLevelIndex = index;
             _currentLevelScenePath = level.ScenePath;
-            Debug.Log($"### - Opening level {level.name}");
             Time.timeScale = 0;
             SceneManager.LoadSceneAsync(level.ScenePath, LoadSceneMode.Additive).completed += OnSceneLoaded;
+        }
+        
+        /// <summary>
+        ///     Sets the starting level index.
+        ///     We need it to be able to set starting level without loading it.
+        /// </summary>
+        /// <param name="levelIndex">Level index.</param>
+        public void SelectStartingLevel(int levelIndex)
+        {
+            _startingLevelIndex = levelIndex;
         }
 
         /// <summary>

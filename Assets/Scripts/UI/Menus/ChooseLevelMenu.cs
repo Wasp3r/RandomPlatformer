@@ -45,6 +45,11 @@ namespace RandomPlatformer.UI.Menus
         public event Action OnBack;
 
         /// <summary>
+        ///     Event to invoke when a level button is clicked.
+        /// </summary>
+        public event Action<int> OnStateLevel;
+
+        /// <summary>
         ///     Enable the menu and populate the level buttons.
         /// </summary>
         public override void Enable()
@@ -88,9 +93,7 @@ namespace RandomPlatformer.UI.Menus
         /// <param name="levelIndex">Level index.</param>
         private void OnLevelClicked(int levelIndex)
         {
-            Disable();
-            GameStateController.Instance.UpdateGameState(GameState.Active);
-            _levelController.OpenLevel(levelIndex);
+            OnStateLevel?.Invoke(levelIndex);
         }
 
         /// <summary>

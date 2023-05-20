@@ -142,7 +142,8 @@ namespace RandomPlatformer.MainSceneMachine
         private void InitializeStates()
         {
             _statesDictionary.Add(State.MainMenu, new MainMenuState(_mainMenu));
-            _statesDictionary.Add(State.ChooseLevel, new ChooseLevelState(_chooseLevelMenu));
+            _statesDictionary.Add(State.ChooseLevel, new ChooseLevelState(_chooseLevelMenu, _levelController));
+            _statesDictionary.Add(State.LeaderBoard, new LeaderBoardState(_leaderBoard, _scoreController));
 
             foreach (var state in _statesDictionary)
             {

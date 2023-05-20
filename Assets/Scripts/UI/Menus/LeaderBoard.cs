@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI.Generic;
@@ -39,14 +40,14 @@ namespace RandomPlatformer.UI.Menus
         [SerializeField] private int _containerSize;
 
         /// <summary>
-        ///     Score controller to get the scores.
+        ///     Event to invoke when the back button is clicked.
         /// </summary>
-        private ScoreController _scoreController;
+        public event Action OnBack;
 
         /// <summary>
-        ///     Is the leaderboard initialized.
+        ///     Event to invoke when the clear button is clicked.
         /// </summary>
-        private bool _isInitialized;
+        public event Action OnClear;
 
         /// <summary>
         ///     Listen to button events.
@@ -67,28 +68,12 @@ namespace RandomPlatformer.UI.Menus
         }
 
         /// <summary>
-        ///     Fades in the leaderboard and reloads the scores.
-        ///     We need it to show the leaderboard and load the scores.
-        /// </summary>
-        public override void Enable()
-        {
-            base.Enable();
-            ReloadScores();
-        }
-
-        /// <summary>
         ///     Reloads the scores.
         ///     We need it to show updated scores.
         /// </summary>
-        private void ReloadScores()
+        public void ReloadScores(List<ScoreEntry> scores)
         {
             ClearScoresContainer();
-            if (!_isInitialized)
-            {
-                Initialize();
-            }
-            
-            var scores = _scoreController.GetLeaderboard();
             if (!scores.Any())
                 return;
             
@@ -120,24 +105,13 @@ namespace RandomPlatformer.UI.Menus
 #endif
             }
         }
-        
-        /// <summary>
-        ///     Initializes the leaderboard.
-        ///     We need it to get the score controller.
-        /// </summary>
-        private void Initialize()
-        {
-            _scoreController = GameStateController.Instance.ScoreController;
-            _isInitialized = true;
-        }
-        
+
         /// <summary>
         ///     Go back to the main menu.
         /// </summary>
         private void GoToMenu()
         {
-            Disable();
-            GameStateController.Instance.UpdateGameState(GameState.Menu);
+            OnBack?.Invoke();
         }
 
         /// <summary>
@@ -145,8 +119,7 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         private void ClearHighScores()
         {
-            _scoreController.ClearHighScores();
-            ReloadScores();
+            OnClear?.Invoke();
         }
     }
 }
