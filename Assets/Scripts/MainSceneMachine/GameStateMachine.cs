@@ -94,6 +94,31 @@ namespace RandomPlatformer.MainSceneMachine
         public InputSystemUIInputModule InputModule => _inputModule;
 
         /// <summary>
+        ///     Lives controller getter.
+        /// </summary>
+        public LivesController LivesController => _livesController;
+
+        /// <summary>
+        ///     Level controller getter.
+        /// </summary>
+        public LevelController LevelController => _levelController;
+
+        /// <summary>
+        ///     Score controller getter.
+        /// </summary>
+        public ScoreController ScoreController => _scoreController;
+
+        /// <summary>
+        ///     Input actions getter.
+        /// </summary>
+        public DefaultInputActions InputActions => _inputActions;
+
+        /// <summary>
+        ///     Camera controller getter.
+        /// </summary>
+        public CameraController CameraController => _cameraController;
+
+        /// <summary>
         ///     Initialize the state machine.
         /// </summary>
         private void Awake()
@@ -141,9 +166,10 @@ namespace RandomPlatformer.MainSceneMachine
         /// </summary>
         private void InitializeStates()
         {
-            _statesDictionary.Add(State.MainMenu, new MainMenuState(_mainMenu));
+            _statesDictionary.Add(State.MainMenu, new MainMenuState(_mainMenu, _levelController));
             _statesDictionary.Add(State.ChooseLevel, new ChooseLevelState(_chooseLevelMenu, _levelController));
             _statesDictionary.Add(State.LeaderBoard, new LeaderBoardState(_leaderBoard, _scoreController));
+            _statesDictionary.Add(State.GameActive, new GameActiveState(_livesController, _levelController, _scoreController, _guiController, _cameraController));
 
             foreach (var state in _statesDictionary)
             {

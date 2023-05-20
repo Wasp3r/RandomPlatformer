@@ -27,18 +27,19 @@ namespace RandomPlatformer.UI.Menus
         [SerializeField] private Button _exitButton;
         
         /// <summary>
-        ///     Input actions.
-        ///     We need it for the controller/keyboard support.
+        ///     Event to invoke when the resume button is clicked.
         /// </summary>
-        private DefaultInputActions _inputActions;
+        public event Action OnResume;
         
         /// <summary>
-        ///     Get the input actions.
+        ///     Event to invoke when the menu button is clicked.
         /// </summary>
-        private void Start()
-        {
-            _inputActions = GameStateController.Instance.InputActions;
-        }
+        public event Action OnGoToMenu;
+        
+        /// <summary>
+        ///     Event to invoke when the exit button is clicked.
+        /// </summary>
+        public event Action OnExit;
 
         /// <summary>
         ///     Listen to events.
@@ -61,30 +62,11 @@ namespace RandomPlatformer.UI.Menus
         }
 
         /// <summary>
-        ///     Enables the pause menu.
-        /// </summary>
-        public override void Enable()
-        {
-            base.Enable();
-            Time.timeScale = 0;
-        }
-        
-        /// <summary>
-        ///     Disables the pause menu.
-        /// </summary>
-        public override void Disable()
-        {
-            base.Disable();
-            Time.timeScale = 1;
-        }
-
-        /// <summary>
         ///     Resumes the game.
         /// </summary>
         private void ResumeGame()
         {
-            Disable();
-            GameStateController.Instance.UpdateGameState(GameState.Active);
+            OnResume?.Invoke();
         }
 
         /// <summary>
@@ -92,8 +74,7 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         private void GoToMenu()
         {
-            Disable();
-            GameStateController.Instance.UpdateGameState(GameState.Menu);
+            OnGoToMenu?.Invoke();
         }
         
         /// <summary>
@@ -101,8 +82,7 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         private void ExitGame()
         {
-            Disable();
-            GameStateController.Instance.UpdateGameState(GameState.Exit);
+            OnExit?.Invoke();
         }
     }
 }

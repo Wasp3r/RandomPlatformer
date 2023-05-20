@@ -1,4 +1,5 @@
-﻿using RandomPlatformer.UI.Menus;
+﻿using RandomPlatformer.LevelSystem;
+using RandomPlatformer.UI.Menus;
 using UnityEngine;
 
 namespace RandomPlatformer.MainSceneMachine.States
@@ -12,14 +13,21 @@ namespace RandomPlatformer.MainSceneMachine.States
         ///     Main menu reference.
         /// </summary>
         private readonly MainMenu _mainMenu;
+        
+        /// <summary>
+        ///     Level controller reference.
+        /// </summary>
+        private readonly LevelController _levelController;
 
         /// <summary>
         ///     Basic constructor.
         /// </summary>
         /// <param name="mainMenu">Main menu reference</param>
-        public MainMenuState(MainMenu mainMenu)
+        /// <param name="levelController">Level controller reference</param>
+        public MainMenuState(MainMenu mainMenu, LevelController levelController)
         {
             _mainMenu = mainMenu;
+            _levelController = levelController;
         }
         
         /// <inheridoc/>
@@ -30,6 +38,7 @@ namespace RandomPlatformer.MainSceneMachine.States
             _mainMenu.OnLeaderboard += GoToLeaderboard;
             _mainMenu.OnChooseLevel += GoToChooseLevel;
             _mainMenu.OnExitGame += ExitGame;
+            _levelController.SelectStartingLevel(0);
         }
 
         /// <inheridoc/>

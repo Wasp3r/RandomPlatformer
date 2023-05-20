@@ -1,5 +1,6 @@
 ﻿using System;
 using RandomPlatformer.LevelSystem;
+using RandomPlatformer.MainSceneMachine;
 using UnityEngine;
 
 namespace RandomPlatformer.Player.Detectors
@@ -19,7 +20,7 @@ namespace RandomPlatformer.Player.Detectors
         /// </summary>
         private void OnEnable()
         {
-            _levelController = GameStateController.Instance.LevelController;
+            _levelController = GameStateMachine.Instance.LevelController;
         }
 
         /// <summary>

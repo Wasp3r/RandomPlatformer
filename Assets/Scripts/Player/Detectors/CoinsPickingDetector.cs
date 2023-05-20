@@ -1,4 +1,5 @@
 ﻿using System;
+using RandomPlatformer.MainSceneMachine;
 using RandomPlatformer.ScoringSystem;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace RandomPlatformer.Player.Detectors
         /// </summary>
         private void OnEnable()
         {
-            _scoreController = GameStateController.Instance.ScoreController;
+            _scoreController = GameStateMachine.Instance.ScoreController;
         }
 
         /// <summary>

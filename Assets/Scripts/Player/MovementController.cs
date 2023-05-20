@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RandomPlatformer.MainSceneMachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -103,8 +104,8 @@ namespace RandomPlatformer.Player
         /// </summary>
         private void Awake()
         {
-            _livesController = GameStateController.Instance.LivesController;
-            _actions = GameStateController.Instance.InputActions;
+            _livesController = GameStateMachine.Instance.LivesController;
+            _actions = GameStateMachine.Instance.InputActions;
             _actions.Player.Jump.performed += OnJump;
             _jumpCount = 0;
         }
@@ -134,7 +135,7 @@ namespace RandomPlatformer.Player
         {
             _actions.Player.Enable();
             _checkpointPosition = transform.position;
-            GameStateController.Instance.CameraController.FollowObject(transform);
+            GameStateMachine.Instance.CameraController.FollowObject(transform);
             _livesController.OnLostLive += ResetPosition;
         }
 
