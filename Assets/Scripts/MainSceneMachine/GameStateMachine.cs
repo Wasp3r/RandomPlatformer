@@ -40,7 +40,7 @@ namespace RandomPlatformer.MainSceneMachine
         /// <summary>
         ///     Game result controller reference.
         /// </summary>
-        [SerializeField] private GameResultUIController gameResultUIController;
+        [SerializeField] private GameResultUIController _gameResultUIController;
 
         /// <summary>
         ///    Score controller reference.
@@ -66,6 +66,11 @@ namespace RandomPlatformer.MainSceneMachine
         ///     Level controller reference.
         /// </summary>
         [SerializeField] private LevelController _levelController;
+
+        /// <summary>
+        ///     Time controller reference.
+        /// </summary>
+        [SerializeField] private TimeController _timeController;
 
         /// <summary>
         ///     Input module reference.
@@ -148,6 +153,12 @@ namespace RandomPlatformer.MainSceneMachine
                 return;
             }
 
+            if (stateToGoTo == State.Pause || _currentState is PauseState)
+            {
+                HandlePause(stateToGoTo == State.Pause, stateToGoTo);
+                return;
+            }
+            
             var targetState = _statesDictionary[stateToGoTo];
             targetState.OnEnterState();
             if (_currentState == null)
@@ -170,11 +181,47 @@ namespace RandomPlatformer.MainSceneMachine
             _statesDictionary.Add(State.ChooseLevel, new ChooseLevelState(_chooseLevelMenu, _levelController));
             _statesDictionary.Add(State.LeaderBoard, new LeaderBoardState(_leaderBoard, _scoreController));
             _statesDictionary.Add(State.GameActive, new GameActiveState(_livesController, _levelController, _scoreController, _guiController, _cameraController));
+            _statesDictionary.Add(State.Pause, new PauseState(_pauseMenu));
+            _statesDictionary.Add(State.Result, new ResultState(_gameResultUIController, _livesController, _scoreController, _timeController));
 
             foreach (var state in _statesDictionary)
             {
                 state.Value.Initialize(this);
             }
+        }
+
+        /// <summary>
+        ///     Special case for pause state.
+        ///     Wee need that because we don't want to exit game state when we enter pause state.
+        /// </summary>
+        /// <param name="entering">Is entering pause state</param>
+        /// <param name="targetState">Target state</param>
+        private void HandlePause(bool entering, State targetState)
+        {
+            if (entering)
+            {
+                // When we enter pause state, we don't want to exit game state.
+                // So we just enter pause state and do nothing else.
+                _statesDictionary[State.Pause].OnEnterState();
+                _currentState = _statesDictionary[State.Pause];
+            }
+            else
+            {
+                // If we are exiting pause state, we need to check if we are going back to game state or not.
+                // If yes, then we do nothing, as pause state is handling game un-pausing.
+                // But if we are not entering game state, we have to exit the game state.
+                // This is only valid because we can go either to game state or to menu state.
+                // This HAVE TO be refactored if we add more states or if we want to change anything.
+                _statesDictionary[State.Pause].OnExitState();
+                _currentState = _statesDictionary[targetState];
+
+                if (targetState == State.GameActive)
+                    return;
+                
+                _statesDictionary[State.GameActive].OnExitState();
+                _currentState.OnEnterState();
+            }
+            
         }
     }
 }

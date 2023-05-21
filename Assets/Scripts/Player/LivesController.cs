@@ -1,4 +1,6 @@
 ﻿using System;
+using RandomPlatformer.MainSceneMachine;
+using RandomPlatformer.MainSceneMachine.States;
 using UnityEngine;
 
 namespace RandomPlatformer.Player
@@ -18,11 +20,6 @@ namespace RandomPlatformer.Player
         /// </summary>
         private int _currentLives;
 
-        /// <summary>
-        ///     Triggered when the player loses all of their lives.
-        /// </summary>
-        public event Action OnAllLivesLost;
-        
         /// <summary>
         ///     Triggered when the player's lives change.
         /// </summary>
@@ -60,7 +57,7 @@ namespace RandomPlatformer.Player
                 return;
             
             ResetLives();
-            OnAllLivesLost?.Invoke();
+            GameStateMachine.Instance.GoToState(State.Result);
         }
 
         /// <summary>

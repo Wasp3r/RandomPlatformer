@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using RandomPlatformer.MainSceneMachine;
+using RandomPlatformer.MainSceneMachine.States;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,11 +41,6 @@ namespace RandomPlatformer.LevelSystem
         public event Action<LevelInstance> OnLevelLoaded;
 
         /// <summary>
-        ///     Event that is called when last level is finished.
-        /// </summary>
-        public event Action OnFinishedLastLevel;
-
-        /// <summary>
         ///     Unlocked levels count.
         /// </summary>
         public int UnlockedLevels { get; private set; }
@@ -72,7 +69,7 @@ namespace RandomPlatformer.LevelSystem
         {
             if (_levels.Count <= index)
             {
-                OnFinishedLastLevel?.Invoke();
+                GameStateMachine.Instance.GoToState(State.Result);
                 return;
             }
             

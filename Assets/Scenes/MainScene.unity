@@ -854,6 +854,7 @@ MonoBehaviour:
   _guiController: {fileID: 1804591951}
   _levelController: {fileID: 344343782}
   _inputModule: {fileID: 1831463351}
+  _gameState: 2
 --- !u!114 &1658822041 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 595668526216898336, guid: daf37878f1f9c664b9d19de8b9ba1a81, type: 3}
@@ -1180,12 +1181,13 @@ MonoBehaviour:
   _pauseMenu: {fileID: 1658822041}
   _leaderBoard: {fileID: 708122541}
   _chooseLevelMenu: {fileID: 1340832934}
-  gameResultUIController: {fileID: 1901001003}
+  _gameResultUIController: {fileID: 1901001003}
   _scoreController: {fileID: 1257369824}
   _cameraController: {fileID: 1119015908}
   _livesController: {fileID: 2003759438}
   _guiController: {fileID: 1804591951}
   _levelController: {fileID: 344343782}
+  _timeController: {fileID: 1099879665}
   _inputModule: {fileID: 1831463351}
 --- !u!1 &1770338776
 GameObject:

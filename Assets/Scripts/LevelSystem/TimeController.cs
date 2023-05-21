@@ -1,4 +1,6 @@
 ﻿using System;
+using RandomPlatformer.MainSceneMachine;
+using RandomPlatformer.MainSceneMachine.States;
 using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI.Menus;
 using UnityEngine;
@@ -65,7 +67,7 @@ namespace RandomPlatformer.LevelSystem
             {
                 _enabled = false;
                 _timeLimit = 0;
-                GameStateController.Instance.UpdateGameState(GameState.Failed);
+                GameStateMachine.Instance.GoToState(State.Result);
             }
             
             _guiController.UpdateTimeLeft(_timeLimit);

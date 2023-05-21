@@ -14,16 +14,6 @@ namespace RandomPlatformer.UI.Menus
     public class GameResultUIController : UIFadable
     {
         /// <summary>
-        ///     The score controller.
-        /// </summary>
-        [SerializeField] private ScoreController _scoreController;
-
-        /// <summary>
-        ///     The time controller.
-        /// </summary>
-        [SerializeField] private TimeController _timeController;
-        
-        /// <summary>
         ///     The result text.
         ///     Here is where we show the user if he won or lost.
         /// </summary>
@@ -43,6 +33,11 @@ namespace RandomPlatformer.UI.Menus
         ///     The back button.
         /// </summary>
         [SerializeField] private Button _backButton;
+
+        /// <summary>
+        ///     The back button action.
+        /// </summary>
+        public Action<string> OnBack;
 
         /// <summary>
         ///     Listen to events.
@@ -65,24 +60,15 @@ namespace RandomPlatformer.UI.Menus
         ///     Show the game result.
         /// </summary>
         /// <param name="won">Is the game won or lost.</param>
-        public void ShowResult(bool won)
+        public void ShowResult(bool won, string score)
         {
             _resultText.text = won ? "You Won!" : "You Lost!";
-            _score.text = _scoreController.CurrentScore.ToString();
-            if (won)
-            {
-                _scoreController.AddPoints(Mathf.RoundToInt(_timeController.TimeLeft));
-            }
-            
-            Enable();
+            _score.text = score;
         }
 
         private void OnBackButtonClicked()
         {
-            _scoreController.SaveScore(_userName.text);
-            _scoreController.ResetScore();
-            Disable();
-            GameStateController.Instance.UpdateGameState(GameState.Menu);
+            OnBack?.Invoke(_userName.text);
         }
     }
 }

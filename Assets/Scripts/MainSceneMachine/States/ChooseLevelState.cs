@@ -56,8 +56,8 @@ namespace RandomPlatformer.MainSceneMachine.States
         /// <param name="levelIndex">Level index</param>
         private void OnLevelSelected(int levelIndex)
         {
-            GameStateMachine.GoToState(State.GameActive);
             _levelController.SelectStartingLevel(levelIndex);
+            GameStateMachine.GoToState(State.GameActive);
         }
     }
 }
