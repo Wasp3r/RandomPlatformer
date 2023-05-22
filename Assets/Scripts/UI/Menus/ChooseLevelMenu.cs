@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using RandomPlatformer.LevelSystem;
+using RandomPlatformer.MainSceneMachine;
 using RandomPlatformer.UI.Components;
 using RandomPlatformer.UI.Generic;
 using UnityEngine;
@@ -14,11 +15,6 @@ namespace RandomPlatformer.UI.Menus
     /// </summary>
     public class ChooseLevelMenu : UIFadable
     {
-        /// <summary>
-        ///     Level controller reference.
-        /// </summary>
-        [SerializeField] private LevelController _levelController;
-
         /// <summary>
         ///     Controller support reference.
         /// </summary>
@@ -40,6 +36,11 @@ namespace RandomPlatformer.UI.Menus
         [SerializeField] private Button _backButton;
 
         /// <summary>
+        ///     Level controller reference.
+        /// </summary>
+        private LevelController _levelController;
+
+        /// <summary>
         ///     Event to invoke when the back button is clicked.
         /// </summary>
         public event Action OnBack;
@@ -48,6 +49,14 @@ namespace RandomPlatformer.UI.Menus
         ///     Event to invoke when a level button is clicked.
         /// </summary>
         public event Action<int> OnStateLevel;
+
+        /// <summary>
+        ///     Get the level controller reference.
+        /// </summary>
+        private void Start()
+        {
+            _levelController = GameStateMachine.Instance.LevelController;
+        }
 
         /// <summary>
         ///     Enable the menu and populate the level buttons.

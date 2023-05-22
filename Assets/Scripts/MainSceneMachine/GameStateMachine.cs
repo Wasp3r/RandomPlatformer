@@ -124,6 +124,11 @@ namespace RandomPlatformer.MainSceneMachine
         public CameraController CameraController => _cameraController;
 
         /// <summary>
+        ///     Time controller getter.
+        /// </summary>
+        public TimeController TimeController => _timeController;
+
+        /// <summary>
         ///     Initialize the state machine.
         /// </summary>
         private void Awake()

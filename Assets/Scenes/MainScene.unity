@@ -663,8 +663,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7462c2bb93cf4132aee8831977ed1eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _guiController: {fileID: 1804591951}
-  _levelController: {fileID: 344343782}
 --- !u!1 &1119015906
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,62 +797,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 387692a992044dc09878906b77f0b282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1519036487
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1519036488}
-  - component: {fileID: 1519036489}
-  m_Layer: 0
-  m_Name: GameController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1519036488
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519036487}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1744442902}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1519036489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519036487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93b5029064364c00a25ba0a78f372ab9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainMenu: {fileID: 1691178784}
-  _pauseMenu: {fileID: 1658822041}
-  _leaderBoard: {fileID: 708122541}
-  _chooseLevelMenu: {fileID: 1340832934}
-  gameResultUIController: {fileID: 1901001003}
-  _scoreController: {fileID: 1257369824}
-  _cameraController: {fileID: 1119015908}
-  _livesController: {fileID: 2003759438}
-  _guiController: {fileID: 1804591951}
-  _levelController: {fileID: 344343782}
-  _inputModule: {fileID: 1831463351}
-  _gameState: 2
 --- !u!114 &1658822041 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 595668526216898336, guid: daf37878f1f9c664b9d19de8b9ba1a81, type: 3}
@@ -1121,7 +1063,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1519036488}
+  - {fileID: 1758368540}
   - {fileID: 2122506116}
   - {fileID: 1257369825}
   - {fileID: 840311900}
@@ -1129,7 +1071,6 @@ Transform:
   - {fileID: 344343781}
   - {fileID: 1099879664}
   - {fileID: 2003759437}
-  - {fileID: 1758368540}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -13,14 +13,9 @@ namespace RandomPlatformer.LevelSystem
     public class TimeController : MonoBehaviour
     {
         /// <summary>
-        ///     GUI controller to update the time.
-        /// </summary>
-        [SerializeField] private GUIController _guiController;
-        
-        /// <summary>
         ///     Level controller to get the current level.
         /// </summary>
-        [SerializeField] private LevelController _levelController;
+        private LevelController _levelController;
 
         /// <summary>
         ///     Is the timer enabled?
@@ -33,15 +28,26 @@ namespace RandomPlatformer.LevelSystem
         private float _timeLimit;
 
         /// <summary>
+        ///     Is the class initialized?
+        /// </summary>
+        private bool _isInitialized;
+
+        /// <summary>
         ///     Time left to the end of the level.
         /// </summary>
         public float TimeLeft => _timeLimit;
+        
+        /// <summary>
+        ///     Event to notify the listeners that the time left has changed.
+        /// </summary>
+        public event Action<float> OnTimeLeftChanged;
 
         /// <summary>
         ///     Listen to level loaded event to get the time limit.
         /// </summary>
         private void OnEnable()
         {
+            Initialize();
             _levelController.OnLevelLoaded += OnLevelLoaded;
         }
 
@@ -70,7 +76,7 @@ namespace RandomPlatformer.LevelSystem
                 GameStateMachine.Instance.GoToState(State.Result);
             }
             
-            _guiController.UpdateTimeLeft(_timeLimit);
+            OnTimeLeftChanged?.Invoke(_timeLimit);
         }
 
         /// <summary>
@@ -81,6 +87,15 @@ namespace RandomPlatformer.LevelSystem
         {
             _enabled = true;
             _timeLimit = loadedLevel.Time;
+        }
+
+        private void Initialize()
+        {
+            if (_isInitialized)
+                return;
+            
+            _isInitialized = true;
+            _levelController = GameStateMachine.Instance.LevelController;
         }
 
 #if UNITY_EDITOR

@@ -1,5 +1,6 @@
 ﻿using System;
 using RandomPlatformer.LevelSystem;
+using RandomPlatformer.MainSceneMachine;
 using RandomPlatformer.Player;
 using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI.Generic;
@@ -14,26 +15,10 @@ namespace RandomPlatformer.UI.Menus
     public class GUIController : MonoBehaviour
     {
         /// <summary>
-        ///     The score controller to listen to.
-        /// </summary>
-        [SerializeField] private ScoreController _scoreController;
-
-        /// <summary>
-        ///     The level controller to listen to.
-        /// </summary>
-        [SerializeField] private LevelController _levelController;
-        
-        /// <summary>
-        ///     Lives controller to listen to.
-        ///     We need it to update the lives value.
-        /// </summary>
-        [SerializeField] private LivesController _livesController;
-
-        /// <summary>
         ///     The text that displays the score.
         /// </summary>
         [SerializeField] private TMP_Text _levelValue;
-        
+
         /// <summary>
         ///     The text that displays the score.
         /// </summary>
@@ -50,13 +35,42 @@ namespace RandomPlatformer.UI.Menus
         [SerializeField] private TMP_Text _livesValue;
 
         /// <summary>
+        ///     The score controller to listen to.
+        /// </summary>
+        private ScoreController _scoreController;
+
+        /// <summary>
+        ///     The level controller to listen to.
+        /// </summary>
+        private LevelController _levelController;
+
+        /// <summary>
+        ///     Lives controller to listen to.
+        ///     We need it to update the lives value.
+        /// </summary>
+        private LivesController _livesController;
+
+        /// <summary>
+        ///     The score controller to listen to.
+        ///     We use that to update the time left.
+        /// </summary>
+        private TimeController _timeController;
+        
+        /// <summary>
+        ///     We use this to check if the GUI is initialized.
+        /// </summary>
+        private bool _isInitialized;
+
+        /// <summary>
         ///     We listen to the controllers to show the current values.
         /// </summary>
         private void OnEnable()
         {
+            Initialize();
             _scoreController.OnScoreChanged += OnUpdateScore;
             _levelController.OnLevelLoaded += OnLevelLoaded;
             _livesController.OnLivesChanged += OnLivesChanged;
+            _timeController.OnTimeLeftChanged += UpdateTimeLeft;
             _livesValue.text = _livesController.Lives.ToString();
         }
 
@@ -65,8 +79,10 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         private void OnDisable()
         {
+            _timeController.OnTimeLeftChanged -= UpdateTimeLeft;
             _scoreController.OnScoreChanged -= OnUpdateScore;
             _levelController.OnLevelLoaded -= OnLevelLoaded;
+            _livesController.OnLivesChanged -= OnLivesChanged;
         }
 
         /// <summary>
@@ -90,7 +106,7 @@ namespace RandomPlatformer.UI.Menus
         ///     Updates the time left.
         /// </summary>
         /// <param name="timeLeft">Time left in seconds.</param>
-        public void UpdateTimeLeft(float timeLeft)
+        private void UpdateTimeLeft(float timeLeft)
         {
             var timespan = TimeSpan.FromSeconds(timeLeft);
             _timeLeftValue.text = timespan.ToString("mm':'ss");
@@ -140,6 +156,21 @@ namespace RandomPlatformer.UI.Menus
             _scoreValue.text = "0";
             _levelValue.text = "1";
             _timeLeftValue.text = "00:00";
+        }
+
+        /// <summary>
+        ///     Initializes the GUI.
+        /// </summary>
+        private void Initialize()
+        {
+            if (_isInitialized)
+                return;
+            
+            _isInitialized = true;
+            _scoreController = GameStateMachine.Instance.ScoreController;
+            _levelController = GameStateMachine.Instance.LevelController;
+            _livesController = GameStateMachine.Instance.LivesController;
+            _timeController = GameStateMachine.Instance.TimeController;
         }
     }
 }
