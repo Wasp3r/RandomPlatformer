@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using RandomPlatformer.LevelSystem;
 using RandomPlatformer.MainSceneMachine;
 using RandomPlatformer.Player;
@@ -35,6 +36,16 @@ namespace RandomPlatformer.UI.Menus
         [SerializeField] private TMP_Text _livesValue;
 
         /// <summary>
+        ///     The plane displayed when the player dies.
+        /// </summary>
+        [SerializeField] private UIFadable _diedPlane;
+
+        /// <summary>
+        ///     The time it takes to show the died plane.
+        /// </summary>
+        [SerializeField] private float _diedPlaneTime = 1f;
+
+        /// <summary>
         ///     The score controller to listen to.
         /// </summary>
         private ScoreController _scoreController;
@@ -60,6 +71,11 @@ namespace RandomPlatformer.UI.Menus
         ///     We use this to check if the GUI is initialized.
         /// </summary>
         private bool _isInitialized;
+        
+        /// <summary>
+        ///     We use this to check if the user lost or gained a life.
+        /// </summary>
+        private int _lastLifeCount;
 
         /// <summary>
         ///     We listen to the controllers to show the current values.
@@ -72,6 +88,7 @@ namespace RandomPlatformer.UI.Menus
             _livesController.OnLivesChanged += OnLivesChanged;
             _timeController.OnTimeLeftChanged += UpdateTimeLeft;
             _livesValue.text = _livesController.Lives.ToString();
+            _lastLifeCount = _livesController.Lives;
         }
 
         /// <summary>
@@ -99,6 +116,7 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         public void Disable()
         {
+            _diedPlane.Disable();
             gameObject.SetActive(false);
         }
 
@@ -145,6 +163,12 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         private void OnLivesChanged(int currentLives)
         {
+            if (_lastLifeCount > currentLives)
+            {
+                StartCoroutine(ShowDiedPlane());
+            }
+            
+            _lastLifeCount = currentLives;
             _livesValue.text = currentLives.ToString();
         }
 
@@ -171,6 +195,18 @@ namespace RandomPlatformer.UI.Menus
             _levelController = GameStateMachine.Instance.LevelController;
             _livesController = GameStateMachine.Instance.LivesController;
             _timeController = GameStateMachine.Instance.TimeController;
+        }
+
+        /// <summary>
+        ///     Shows the died plane for a defined time.
+        /// </summary>
+        private IEnumerator ShowDiedPlane()
+        {
+            _diedPlane.Enable();
+            Time.timeScale = 0f;
+            yield return new WaitForSecondsRealtime(_diedPlaneTime);
+            Time.timeScale = 1f;
+            _diedPlane.Disable();
         }
     }
 }

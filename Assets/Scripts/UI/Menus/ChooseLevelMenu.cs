@@ -51,19 +51,12 @@ namespace RandomPlatformer.UI.Menus
         public event Action<int> OnStateLevel;
 
         /// <summary>
-        ///     Get the level controller reference.
-        /// </summary>
-        private void Start()
-        {
-            _levelController = GameStateMachine.Instance.LevelController;
-        }
-
-        /// <summary>
         ///     Enable the menu and populate the level buttons.
         /// </summary>
         public override void Enable()
         {
             base.Enable();
+            _levelController = GameStateMachine.Instance.LevelController;
             _backButton.onClick.AddListener(BackButtonClicked);
             PopulateLevelButtons();
             StartCoroutine(InitializeControllerIndicator());
