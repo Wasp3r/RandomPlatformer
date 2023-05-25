@@ -29,6 +29,11 @@ namespace RandomPlatformer.Enemies
         /// </summary>
         [SerializeField] private float _shootingInterval = 3f;
 
+        /// <summary>
+        ///     Delay before the first shot.
+        /// </summary>
+        [SerializeField] private float _shootingDelay = 0f;
+
 #if UNITY_EDITOR
         [SerializeField] private bool _drawGizmos;
 #endif
@@ -58,8 +63,9 @@ namespace RandomPlatformer.Enemies
         /// </summary>
         private void OnEnable()
         {
-            _shootingDirection = _shootingPoint.right;
+            _shootingDirection = _shootingPoint.up;
             _bulletShootingPosition = _shootingPoint.position;
+            _timeSinceLastShot -= _shootingDelay;
             _isShooting = true;
         }
         
@@ -93,7 +99,7 @@ namespace RandomPlatformer.Enemies
         private void ShootBullet()
         {
             var bullet = Instantiate(_bulletPrefab, _bulletShootingPosition, Quaternion.identity);
-            bullet.transform.right = _shootingDirection;
+            bullet.transform.up = -_shootingDirection;
             bullet.velocity = _bulletSpeed * _shootingDirection;
         }
 
