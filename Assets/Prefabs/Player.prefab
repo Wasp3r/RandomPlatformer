@@ -153,7 +153,8 @@ MonoBehaviour:
   _accelerationSpeed: 0.5
   _decelerationTime: 0.5
   _maxSpeed: 7
-  _jumpingForce: 5
+  _jumpingForce: 0.7
+  _jumpingForceDecay: 3
   _maxJumpCount: 2
   _rigidbody2D: {fileID: 1835380256921214753}
   _playerSize: {x: 0.5, y: 0.5}

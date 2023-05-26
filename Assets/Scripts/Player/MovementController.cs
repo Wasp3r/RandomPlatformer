@@ -28,6 +28,11 @@ namespace RandomPlatformer.Player
         [SerializeField] private float _jumpingForce = 30f;
 
         /// <summary>
+        ///     The speed at which the jumping force decays.
+        /// </summary>
+        [SerializeField] private float _jumpingForceDecay = 0.5f;
+
+        /// <summary>
         ///     The maximum number of jumps the player can make in air.
         /// </summary>
         [SerializeField] private int _maxJumpCount = 1;
@@ -88,6 +93,17 @@ namespace RandomPlatformer.Player
         ///     Indicates if the player is touching the ground.
         /// </summary>
         private bool _isGrounded;
+
+        /// <summary>
+        ///     Indicates if the player is in the middle of a jump.
+        /// </summary>
+        private bool _isInJump;
+
+        /// <summary>
+        ///     Current jump power.
+        ///     We use it to control the height of the jump and to make the force smaller with time.
+        /// </summary>
+        private float _jumpPower;
         
         /// <summary>
         ///     The initial position of the player.
@@ -106,7 +122,8 @@ namespace RandomPlatformer.Player
         {
             _livesController = GameStateMachine.Instance.LivesController;
             _actions = GameStateMachine.Instance.InputActions;
-            _actions.Player.Jump.performed += OnJump;
+            _actions.Player.Jump.started += OnJumpStart;
+            _actions.Player.Jump.canceled += OnJumpStop;
             _jumpCount = 0;
         }
 
@@ -126,6 +143,7 @@ namespace RandomPlatformer.Player
         {
             _currentSpeed = _rigidbody2D.velocity.magnitude;
             HorizontalMovement();
+            UpdateJump();
         }
 
         /// <summary>
@@ -145,7 +163,7 @@ namespace RandomPlatformer.Player
         private void OnDisable()
         {
             _actions.Player.Disable();
-            _actions.Player.Jump.performed -= OnJump;
+            _actions.Player.Jump.performed -= OnJumpStart;
             _livesController.OnLostLive -= ResetPosition;
         }
 
@@ -162,6 +180,7 @@ namespace RandomPlatformer.Player
             if (!_isGrounded)
                 return;
 
+            _isInJump = false;
             _jumpCount = 0;
         }
 
@@ -231,12 +250,41 @@ namespace RandomPlatformer.Player
         ///     We check if the player can jump from current position.
         /// </summary>
         /// <param name="context">Input system context.</param>
-        private void OnJump(InputAction.CallbackContext context)
+        private void OnJumpStart(InputAction.CallbackContext context)
         {
+            Debug.Log("### - Jump input triggered");
             if (!CanJump())
                  return;
 
-            Jump();
+            Debug.Log("### - Starting jump");
+            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
+            _jumpPower = _jumpingForce;
+            _isInJump = true;
+            _jumpCount++;
+            
+            if (_groundedCoroutine != null)
+                StopCoroutine(_groundedCoroutine);
+            _groundedCoroutine = StartCoroutine(GroundedCoroutine());
+        }
+        
+        private void OnJumpStop(InputAction.CallbackContext context)
+        {
+            Debug.Log("### - Jump input stopped");
+            _isInJump = false;
+        }
+
+        private void UpdateJump()
+        {
+            if (!_isInJump)
+                return;
+            
+            _jumpPower -= _jumpPower * _jumpingForceDecay * Time.fixedDeltaTime;
+            
+            if (_jumpPower <= 0)
+                _isInJump = false;
+
+            Debug.Log("### - Jumping force: " + _jumpPower);
+            _rigidbody2D.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
         }
 
         /// <summary>
@@ -253,20 +301,6 @@ namespace RandomPlatformer.Player
                 return false;
 
             return true;
-        }
-
-        /// <summary>
-        ///     Jumping method. We add an impulse force to the player.
-        /// </summary>
-        private void Jump()
-        {
-            _jumpCount++;
-            _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
-            _rigidbody2D.AddForce(Vector2.up * _jumpingForce, ForceMode2D.Impulse);
-
-            if (_groundedCoroutine != null)
-                StopCoroutine(_groundedCoroutine);
-            _groundedCoroutine = StartCoroutine(GroundedCoroutine());
         }
 
         /// <summary>

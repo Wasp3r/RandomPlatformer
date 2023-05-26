@@ -152,7 +152,7 @@ namespace RandomPlatformer
                     ""name"": """",
                     ""id"": ""02ee14e7-68be-494c-8881-09e8062dc7f8"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=0.05)"",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Jump"",
