@@ -30,7 +30,12 @@ namespace RandomPlatformer.Player
         /// <summary>
         ///     The speed at which the jumping force decays.
         /// </summary>
-        [SerializeField] private float _jumpingForceDecay = 0.5f;
+        [SerializeField] private float _jumpingForceDecaySpeed = 0.5f;
+
+        /// <summary>
+        ///     The curve that controls the jumping force decay.
+        /// </summary>
+        [SerializeField] private AnimationCurve _jumpingForceCurve = AnimationCurve.Linear(0, 1, 1, 0);
 
         /// <summary>
         ///     The maximum number of jumps the player can make in air.
@@ -83,6 +88,11 @@ namespace RandomPlatformer.Player
         ///     The number of jumps the player has made in air.
         /// </summary>
         private int _jumpCount;
+
+        /// <summary>
+        ///     The time passed since the player started jumping.
+        /// </summary>
+        private float _jumpPowerTimePassed;
 
         /// <summary>
         ///     The time passed since the player started decelerating.
@@ -258,6 +268,7 @@ namespace RandomPlatformer.Player
 
             Debug.Log("### - Starting jump");
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
+            _jumpPowerTimePassed = 0;
             _jumpPower = _jumpingForce;
             _isInJump = true;
             _jumpCount++;
@@ -267,20 +278,30 @@ namespace RandomPlatformer.Player
             _groundedCoroutine = StartCoroutine(GroundedCoroutine());
         }
         
+        /// <summary>
+        ///     Stops the jumping process.
+        ///     We use it to stop adding force when the player releases the jump button.
+        /// </summary>
+        /// <param name="context">Input system context.</param>
         private void OnJumpStop(InputAction.CallbackContext context)
         {
             Debug.Log("### - Jump input stopped");
             _isInJump = false;
         }
 
+        /// <summary>
+        ///     Here is the main jumping method. We add force and decay it over time using <see cref="_jumpingForceCurve"/>
+        ///     We use it to have smooth jumping and falling. This also gives us the ability to do small jumps.
+        /// </summary>
         private void UpdateJump()
         {
             if (!_isInJump)
                 return;
+
+            _jumpPower = _jumpingForceCurve.Evaluate(_jumpPowerTimePassed) * _jumpingForce;
+            _jumpPowerTimePassed += Time.fixedDeltaTime * _jumpingForceDecaySpeed;
             
-            _jumpPower -= _jumpPower * _jumpingForceDecay * Time.fixedDeltaTime;
-            
-            if (_jumpPower <= 0)
+            if (_jumpPower <= 0 || _jumpPowerTimePassed >= 1)
                 _isInJump = false;
 
             Debug.Log("### - Jumping force: " + _jumpPower);
