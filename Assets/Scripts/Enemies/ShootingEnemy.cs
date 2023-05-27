@@ -110,10 +110,6 @@ namespace RandomPlatformer.Enemies
             if (!_drawGizmos)
                 return;
 
-#if !UNITY_EDITOR
-            return;
-#endif
-            
             _shootingDirection = _shootingPoint.right;
             _bulletShootingPosition = _shootingPoint.position;
             Gizmos.color = Color.blue;
