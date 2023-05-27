@@ -61,7 +61,7 @@ namespace RandomPlatformer.Enemies
         /// <summary>
         ///     Start shooting.
         /// </summary>
-        private void OnEnable()
+        private void Awake()
         {
             _shootingDirection = _shootingPoint.up;
             _bulletShootingPosition = _shootingPoint.position;

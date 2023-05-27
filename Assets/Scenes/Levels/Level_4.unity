@@ -179,6 +179,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1464299650070235677, guid: fa2fcc395c07fde489470eefa56e367f, type: 3}
+      propertyPath: _shootingDelay
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3065000337939822714, guid: fa2fcc395c07fde489470eefa56e367f, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -1238,6 +1242,10 @@ PrefabInstance:
     - target: {fileID: 1464299650070235676, guid: fa2fcc395c07fde489470eefa56e367f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464299650070235677, guid: fa2fcc395c07fde489470eefa56e367f, type: 3}
+      propertyPath: _shootingDelay
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 3065000337939822714, guid: fa2fcc395c07fde489470eefa56e367f, type: 3}
       propertyPath: m_SortingLayer
@@ -4078,6 +4086,10 @@ PrefabInstance:
     - target: {fileID: 1464299650070235676, guid: fa2fcc395c07fde489470eefa56e367f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1464299650070235677, guid: fa2fcc395c07fde489470eefa56e367f, type: 3}
+      propertyPath: _shootingDelay
+      value: 2.25
       objectReference: {fileID: 0}
     - target: {fileID: 3065000337939822714, guid: fa2fcc395c07fde489470eefa56e367f, type: 3}
       propertyPath: m_SortingLayer

@@ -173,7 +173,8 @@ namespace RandomPlatformer.Player
         private void OnDisable()
         {
             _actions.Player.Disable();
-            _actions.Player.Jump.performed -= OnJumpStart;
+            _actions.Player.Jump.started -= OnJumpStart;
+            _actions.Player.Jump.canceled -= OnJumpStop;
             _livesController.OnLostLive -= ResetPosition;
         }
 
