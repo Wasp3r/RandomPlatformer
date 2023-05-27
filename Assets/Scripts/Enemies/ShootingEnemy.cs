@@ -63,7 +63,7 @@ namespace RandomPlatformer.Enemies
         /// </summary>
         private void Awake()
         {
-            _shootingDirection = _shootingPoint.up;
+            _shootingDirection = _shootingPoint.right;
             _bulletShootingPosition = _shootingPoint.position;
             _timeSinceLastShot -= _shootingDelay;
             _isShooting = true;
@@ -109,6 +109,10 @@ namespace RandomPlatformer.Enemies
         {
             if (!_drawGizmos)
                 return;
+
+#if !UNITY_EDITOR
+            return;
+#endif
             
             _shootingDirection = _shootingPoint.right;
             _bulletShootingPosition = _shootingPoint.position;
