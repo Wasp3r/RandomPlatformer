@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: LevelInstance_4
   m_EditorClassIdentifier: 
   LevelNumber: 5
-  Time: 1200
+  Time: 500
   ScenePath: Assets/Scenes/Levels/Level_4.unity
   SceneReference: {fileID: 102900000, guid: 1d087285fd5309b448e014a8f5f39146, type: 3}
