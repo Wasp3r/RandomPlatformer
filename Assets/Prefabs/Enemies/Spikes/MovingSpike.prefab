@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: 6833689999599414666}
   m_Layer: 7
   m_Name: BaseVisual
-  m_TagString: Untagged
+  m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
