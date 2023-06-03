@@ -28,7 +28,7 @@ namespace RandomPlatformer
         [SerializeField] private float _maxFollowSpeed = 0.1f;
 
         /// <summary>
-        /// Minimum camera Y position.
+        ///     Minimum camera Y position.
         /// </summary>
         [SerializeField] private float _minimumY;
 
