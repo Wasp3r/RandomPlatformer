@@ -165,6 +165,12 @@ namespace RandomPlatformer.MainSceneMachine
             }
             
             var targetState = _statesDictionary[stateToGoTo];
+            if (targetState == _currentState)
+            {
+                Debug.Log("### - Target state is the same as current state. No need to change.");
+                return;
+            }
+            
             targetState.OnEnterState();
             if (_currentState == null)
             {

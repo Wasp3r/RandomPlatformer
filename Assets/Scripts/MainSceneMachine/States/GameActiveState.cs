@@ -2,6 +2,7 @@
 using RandomPlatformer.Player;
 using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI.Menus;
+using UnityEngine;
 
 namespace RandomPlatformer.MainSceneMachine.States
 {

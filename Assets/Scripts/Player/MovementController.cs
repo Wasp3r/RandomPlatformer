@@ -267,7 +267,6 @@ namespace RandomPlatformer.Player
             if (!CanJump())
                  return;
 
-            Debug.Log("### - Starting jump");
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
             _jumpPowerTimePassed = 0;
             _jumpPower = _jumpingForce;
@@ -286,7 +285,6 @@ namespace RandomPlatformer.Player
         /// <param name="context">Input system context.</param>
         private void OnJumpStop(InputAction.CallbackContext context)
         {
-            Debug.Log("### - Jump input stopped");
             _isInJump = false;
         }
 
@@ -305,7 +303,6 @@ namespace RandomPlatformer.Player
             if (_jumpPower <= 0 || _jumpPowerTimePassed >= 1)
                 _isInJump = false;
 
-            Debug.Log("### - Jumping force: " + _jumpPower);
             _rigidbody2D.AddForce(Vector2.up * _jumpPower, ForceMode2D.Impulse);
         }
 
