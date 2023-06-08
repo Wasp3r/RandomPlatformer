@@ -9,6 +9,8 @@ namespace RandomPlatformer.Player.Detectors
     /// </summary>
     public class EnemyTouchedDetector : PickingController
     {
+        [SerializeField] private bool _isImmortal;
+    
         /// <summary>
         ///     Lives controller reference.
         /// </summary>
@@ -28,6 +30,11 @@ namespace RandomPlatformer.Player.Detectors
         /// <param name="other">Enemy object.</param>
         protected override void OnPickedUp(GameObject other)
         {
+            if (_isImmortal)
+            {
+                Debug.Log("### - Lost live");
+                return;
+            }
             _livesController.LoseLive();
         }
     }
