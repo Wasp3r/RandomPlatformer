@@ -32,7 +32,7 @@ namespace RandomPlatformer.Player.Detectors
         {
             if (_isImmortal)
             {
-                Debug.Log("### - Lost live");
+                Debug.Warning("### - Lost live");
                 return;
             }
             _livesController.LoseLive();
