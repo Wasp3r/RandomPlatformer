@@ -20,15 +20,18 @@ namespace RandomPlatformer.ScoringSystem
         /// </summary>
         [SerializeField] private int _points;
 
+        /// <summary>
+        ///     The hash of the cycle offset parameter.
+        ///     We use it to set the random offset of the coin's animation.
+        /// </summary>
         private static readonly int CycleOffset = Animator.StringToHash("CycleOffset");
-        private static readonly int SpinTrigger = Animator.StringToHash("Spin");
-        private static readonly int FloatTrigger = Animator.StringToHash("Float");
 
+        /// <summary>
+        ///     Sets the random offset of the coin's animation.
+        /// </summary>
         private void Start()
         {
-            _animator.SetFloat(CycleOffset, Random.Range(0f,1f));
-            _animator.SetTrigger(SpinTrigger);
-            _animator.SetTrigger(FloatTrigger);
+            _animator.SetFloat(CycleOffset, Random.Range(0f, 1f));
         }
 
         /// <summary>
