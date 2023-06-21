@@ -10,6 +10,12 @@ namespace RandomPlatformer.Enemies
     public class WalkingEnemy : MonoBehaviour
     {
         /// <summary>
+        ///     Animator reference.
+        ///     Used to manage walking animation.
+        /// </summary>
+        [SerializeField] private Animator _animator;
+        
+        /// <summary>
         ///     Enemy movement speed.
         /// </summary>
         [SerializeField] protected float _movementSpeed;
@@ -55,6 +61,11 @@ namespace RandomPlatformer.Enemies
         protected Transform _localTransform;
         
         /// <summary>
+        ///     Enemy local rigidbody.
+        /// </summary>
+        protected Rigidbody _localRigidbody;
+        
+        /// <summary>
         ///     Point A position.
         /// </summary>
         protected Vector2 _positionA;
@@ -65,11 +76,17 @@ namespace RandomPlatformer.Enemies
         protected Vector2 _positionB;
 
         /// <summary>
+        ///     Animator property hash to control the walking animation.
+        /// </summary>
+        private static readonly int MovingLeft = Animator.StringToHash("MovingLeft");
+
+        /// <summary>
         ///     Assign local transform.
         /// </summary>
         protected virtual void Awake()
         {
             _localTransform = transform;
+            _localRigidbody = GetComponent<Rigidbody>();
             var position = _localTransform.position;
 
             _positionA = new Vector2(position.x + _positionAOffset, position.y);
@@ -114,6 +131,7 @@ namespace RandomPlatformer.Enemies
             if (Vector2.Distance(position, targetPosition) < 0.1f)
             {
                 _movingToA = !_movingToA;
+                _animator.SetBool(MovingLeft, _movingToA);
                 return;
             }
             
