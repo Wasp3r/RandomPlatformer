@@ -263,7 +263,6 @@ namespace RandomPlatformer.Player
         /// <param name="context">Input system context.</param>
         private void OnJumpStart(InputAction.CallbackContext context)
         {
-            Debug.Log("### - Jump input triggered");
             if (!CanJump())
                  return;
 

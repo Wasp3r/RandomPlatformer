@@ -29,6 +29,12 @@ namespace RandomPlatformer.Enemies
         /// </summary>
         private Vector2 _playerPosition;
 
+        /// <summary>
+        ///     Is the enemy chasing the player?
+        ///     We use it to manage the animation.
+        /// </summary>
+        private bool _chasing;
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -39,14 +45,23 @@ namespace RandomPlatformer.Enemies
         {
             if (!CheckForPlayer())
             {
+                if (_chasing)
+                {
+                    _chasing = false;
+                    UpdateAnimationDirection();
+                }
+                
                 base.Update();
                 return;
             }
             
             if (_playerPosition == Vector2.zero)
                 return;
-            
-            _localTransform.position = Vector2.MoveTowards(_localTransform.position, _playerPosition, _chasingMovementSpeed * Time.deltaTime);
+
+            var localPosition = _localTransform.position;
+            _chasing = true;
+            _animator.SetBool(MovingLeft, _playerPosition.x < localPosition.x);
+            _localTransform.position = Vector2.MoveTowards(localPosition, _playerPosition, _chasingMovementSpeed * Time.deltaTime);
         }
         
         /// <summary>

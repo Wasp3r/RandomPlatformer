@@ -13,7 +13,7 @@ namespace RandomPlatformer.Enemies
         ///     Animator reference.
         ///     Used to manage walking animation.
         /// </summary>
-        [SerializeField] private Animator _animator;
+        [SerializeField] protected Animator _animator;
         
         /// <summary>
         ///     Enemy movement speed.
@@ -78,7 +78,7 @@ namespace RandomPlatformer.Enemies
         /// <summary>
         ///     Animator property hash to control the walking animation.
         /// </summary>
-        private static readonly int MovingLeft = Animator.StringToHash("MovingLeft");
+        protected static readonly int MovingLeft = Animator.StringToHash("MovingLeft");
 
         /// <summary>
         ///     Assign local transform.
@@ -131,11 +131,20 @@ namespace RandomPlatformer.Enemies
             if (Vector2.Distance(position, targetPosition) < 0.1f)
             {
                 _movingToA = !_movingToA;
-                _animator.SetBool(MovingLeft, _movingToA);
+                UpdateAnimationDirection();
                 return;
             }
             
             _localTransform.position = Vector2.MoveTowards(position, targetPosition, _movementSpeed * Time.deltaTime);
+        }
+
+        /// <summary>
+        ///     Update the walking animation direction.
+        ///     We need it for the <see cref="ChasingEnemy"/> to be able to update direction after chasing stops.
+        /// </summary>
+        protected void UpdateAnimationDirection()
+        {
+            _animator.SetBool(MovingLeft, _movingToA);
         }
         
         /// <summary>
