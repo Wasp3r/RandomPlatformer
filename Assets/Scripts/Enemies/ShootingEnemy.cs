@@ -10,6 +10,12 @@ namespace RandomPlatformer.Enemies
     public class ShootingEnemy : MonoBehaviour
     {
         /// <summary>
+        ///     Animation controller.
+        ///     Used to control idle and shooting animations.
+        /// </summary>
+        [SerializeField] private Animator _animationController;
+        
+        /// <summary>
         ///     Bullet prefab.
         /// </summary>
         [SerializeField] private Rigidbody2D _bulletPrefab;
@@ -59,6 +65,11 @@ namespace RandomPlatformer.Enemies
         private float _timeSinceLastShot;
 
         /// <summary>
+        ///     Shoot key of the animation.
+        /// </summary>
+        private static readonly int ShootKey = Animator.StringToHash("Shoot");
+
+        /// <summary>
         ///     Start shooting.
         /// </summary>
         private void Awake()
@@ -90,13 +101,22 @@ namespace RandomPlatformer.Enemies
                 return;
             
             _timeSinceLastShot = 0;
-            ShootBullet();
+            InitiateShooting();
         }
 
         /// <summary>
-        ///     Shoot the bullet.
+        ///     Initiate shooting animation.
+        ///     We need it so we can shoot the bullet at the right time.
         /// </summary>
-        private void ShootBullet()
+        private void InitiateShooting()
+        {
+            _animationController.SetTrigger(ShootKey);
+        }
+
+        /// <summary>
+        ///     Shoot a bullet.
+        /// </summary>
+        private void Shoot()
         {
             var bullet = Instantiate(_bulletPrefab, _bulletShootingPosition, Quaternion.identity);
             bullet.transform.up = -_shootingDirection;

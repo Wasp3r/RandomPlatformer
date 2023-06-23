@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3e4c598f804253abad2f066288419b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animationController: {fileID: 8745127944334750497}
   _bulletPrefab: {fileID: 5028329281779397730, guid: 63926a19f0bc6014695a4935669f5629, type: 3}
   _shootingPoint: {fileID: 3947020880306553138}
   _bulletSpeed: 15
@@ -257,7 +258,7 @@ SpriteRenderer:
   m_SortingLayerID: 182497895
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7d2536151a7cef64787c1fbd5db34a50, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bad38c471359ab848b96e3602ef5ad44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
