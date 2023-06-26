@@ -11,6 +11,11 @@ namespace RandomPlatformer.Enemies
     public class FlyingEnemy : MonoBehaviour
     {
         /// <summary>
+        ///     Enemy movement animator.
+        /// </summary>
+        [SerializeField] private Animator _movementAnimator;
+        
+        /// <summary>
         ///     Enemy movement speed.
         /// </summary>
         [SerializeField] private float _speed = 1;
@@ -80,6 +85,17 @@ namespace RandomPlatformer.Enemies
         private float _targetWave;
 
         /// <summary>
+        ///     Is enemy facing left?
+        /// </summary>
+        private bool _facingLeft;
+
+        /// <summary>
+        ///     Moving left bool hash.
+        ///     We use it to trigger correct animation.
+        /// </summary>
+        private static readonly int MovingLeft = Animator.StringToHash("MovingLeft");
+
+        /// <summary>
         ///     Assign local transform.
         /// </summary>
         private void Awake()
@@ -123,6 +139,8 @@ namespace RandomPlatformer.Enemies
             
             _localTransform.position = Vector2.MoveTowards(position, _targetPosition, _speed * Time.deltaTime);
             _visual.position = _localTransform.position + _currentWave * Vector3.up;
+            _facingLeft = position.x > _targetPosition.x;
+            _movementAnimator.SetBool(MovingLeft, _facingLeft);
         }
 
         /// <summary>

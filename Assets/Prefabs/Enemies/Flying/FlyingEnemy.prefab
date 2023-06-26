@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 182497895
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 620914797, guid: f688f1c3aae51024bbfcb017ba7f250e, type: 3}
+  m_Sprite: {fileID: 1370666808, guid: f688f1c3aae51024bbfcb017ba7f250e, type: 3}
   m_Color: {r: 0.8980392, g: 0.8759992, b: 0.34901962, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -121,6 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8879722006466821527}
   - component: {fileID: 8879722006466821525}
+  - component: {fileID: 5595451995900159220}
   m_Layer: 11
   m_Name: FlyingEnemy
   m_TagString: Untagged
@@ -156,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64507f4a32c84d96a9a534a69ba824f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _movementAnimator: {fileID: 5595451995900159220}
   _speed: 3
   _positions: []
   _direction: 1
@@ -164,3 +166,23 @@ MonoBehaviour:
   _visual: {fileID: 3385012432417298390}
   _drawGizmos: 1
   _currentWave: 0
+--- !u!95 &5595451995900159220
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8879722006466821523}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8e6fafd44815ef5479718c4d482a6e11, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
