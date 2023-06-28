@@ -4235,6 +4235,42 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2791661635842802508, guid: d696e3ef42d3fa646b6017dc15fa6d39, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944675789651453267, guid: d696e3ef42d3fa646b6017dc15fa6d39, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[7].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944675789651453267, guid: d696e3ef42d3fa646b6017dc15fa6d39, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[11].second.m_AnimationSpeed
+      value: 5.0000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944675789651453267, guid: d696e3ef42d3fa646b6017dc15fa6d39, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[31].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944675789651453267, guid: d696e3ef42d3fa646b6017dc15fa6d39, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[34].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944675789651453267, guid: d696e3ef42d3fa646b6017dc15fa6d39, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[97].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944675789651453267, guid: d696e3ef42d3fa646b6017dc15fa6d39, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[118].second.m_AnimationSpeed
+      value: 5.0000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944675789651453267, guid: d696e3ef42d3fa646b6017dc15fa6d39, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[133].second.m_AnimationSpeed
+      value: 5.0000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3944675789651453267, guid: d696e3ef42d3fa646b6017dc15fa6d39, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[141].second.m_AnimationSpeed
+      value: 5.0000005
+      objectReference: {fileID: 0}
     - target: {fileID: 5493403568635813815, guid: d696e3ef42d3fa646b6017dc15fa6d39, type: 3}
       propertyPath: m_Size.x
       value: 80
