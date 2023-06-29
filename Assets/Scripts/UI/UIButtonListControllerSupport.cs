@@ -20,12 +20,23 @@ namespace RandomPlatformer.UI
         /// </summary>
         [SerializeField] private GameObject _controllerIndicatorPrefab;
 
+        [SerializeField] private ContentSizeFitter _contentSizeFitter;
+
         private Transform _controllerIndicator;
         private Transform _parent;
         private bool _enabled;
         private bool _initialized;
         private List<GameObject> _buttons = new();
         private int _currentButtonIndex;
+        private RectTransform _rectTransform;
+
+        /// <summary>
+        ///     Assign the rect transform.
+        /// </summary>
+        private void Awake()
+        {
+            _rectTransform = GetComponent<RectTransform>();
+        }
 
         /// <summary>
         ///     Subscribe to the controller connected and disconnected events.
@@ -109,6 +120,12 @@ namespace RandomPlatformer.UI
                 if (child.GetComponent<Button>())
                     _buttons.Add(child.gameObject);
             }
+
+            if (_contentSizeFitter is null)
+                return;
+            
+            _contentSizeFitter.SetLayoutVertical();
+            _rectTransform.position = new Vector3(0, -_rectTransform.sizeDelta.y/2, 0);
         }
 
         /// <summary>
