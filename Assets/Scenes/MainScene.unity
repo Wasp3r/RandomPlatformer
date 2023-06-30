@@ -494,8 +494,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreController: {fileID: 1257369824}
-  Name: 
-  HighScore: 
+  Name: TT
+  HighScore: 767
 --- !u!1001 &913826897
 PrefabInstance:
   m_ObjectHideFlags: 0

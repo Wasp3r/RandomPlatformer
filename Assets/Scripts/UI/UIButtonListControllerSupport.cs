@@ -20,7 +20,10 @@ namespace RandomPlatformer.UI
         /// </summary>
         [SerializeField] private GameObject _controllerIndicatorPrefab;
 
-        [SerializeField] private ContentSizeFitter _contentSizeFitter;
+        /// <summary>
+        ///     The element used to position the list on the top of the container.
+        /// </summary>
+        [SerializeField] private ScrollablePositioner _scrollablePositioner;
 
         private Transform _controllerIndicator;
         private Transform _parent;
@@ -121,11 +124,10 @@ namespace RandomPlatformer.UI
                     _buttons.Add(child.gameObject);
             }
 
-            if (_contentSizeFitter is null)
+            if (_scrollablePositioner is null)
                 return;
-            
-            _contentSizeFitter.SetLayoutVertical();
-            _rectTransform.position = new Vector3(0, -_rectTransform.sizeDelta.y/2, 0);
+
+            _scrollablePositioner.UpdatePosition();
         }
 
         /// <summary>

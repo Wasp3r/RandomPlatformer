@@ -35,9 +35,9 @@ namespace RandomPlatformer.UI.Menus
         [SerializeField] private LeaderBoardItem _leaderBoardItemPrefab;
 
         /// <summary>
-        ///     Max high scores to show.
+        ///     Element used to position the list on the top of the container.
         /// </summary>
-        [SerializeField] private int _containerSize;
+        [SerializeField] private ScrollablePositioner _scrollablePositioner;
 
         /// <summary>
         ///     Event to invoke when the back button is clicked.
@@ -77,7 +77,7 @@ namespace RandomPlatformer.UI.Menus
             if (!scores.Any())
                 return;
             
-            for (var i = 0; i < _containerSize; i++)
+            for (var i = 0; i < scores.Count; i++)
             {
                 if (scores.Count <= i)
                     break;
@@ -86,6 +86,8 @@ namespace RandomPlatformer.UI.Menus
                 var leaderBoardItem = Instantiate(_leaderBoardItemPrefab, _container.transform);
                 leaderBoardItem.SetScoreEntry(score, i + 1);
             }
+            
+            _scrollablePositioner.UpdatePosition();
         }
 
         /// <summary>
