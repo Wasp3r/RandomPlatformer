@@ -34,8 +34,8 @@ namespace RandomPlatformer.UI
         /// </summary>
         private IEnumerator UpdatePositionCoroutine()
         {
-            yield return null;
-            _rectTransform.position = new Vector3(0, -_rectTransform.sizeDelta.y/2, 0);
+            yield return new WaitUntil(() => _rectTransform.sizeDelta.y > 0);
+            _rectTransform.position = new Vector3(_rectTransform.position.x, -_rectTransform.sizeDelta.y/2, 0);
         }
     }
 }

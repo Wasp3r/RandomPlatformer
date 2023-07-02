@@ -16,7 +16,9 @@ namespace RandomPlatformer.ScoringSystem
         [ContextMenu("Save Score")]
         private void SaveScore()
         {
-            _scoreController.SaveScore("Player");
+            _scoreController.ResetScore();
+            _scoreController.AddPoints(int.Parse(HighScore));
+            _scoreController.SaveScore(Name);
         }
 
         [ContextMenu("Get High Score")]

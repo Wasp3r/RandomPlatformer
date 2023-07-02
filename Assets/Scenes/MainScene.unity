@@ -430,6 +430,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8622133909994820435, guid: d70958137e3c5a341a46da140aff0280, type: 3}
+      propertyPath: m_HorizontalFit
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: d70958137e3c5a341a46da140aff0280, type: 3}
@@ -494,7 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreController: {fileID: 1257369824}
-  Name: TT
+  Name: uiy
   HighScore: 767
 --- !u!1001 &913826897
 PrefabInstance:
