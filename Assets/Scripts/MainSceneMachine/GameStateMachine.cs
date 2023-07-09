@@ -188,7 +188,7 @@ namespace RandomPlatformer.MainSceneMachine
         /// </summary>
         private void InitializeStates()
         {
-            _statesDictionary.Add(State.MainMenu, new MainMenuState(_mainMenu, _levelController));
+            _statesDictionary.Add(State.MainMenu, new MainMenuState(_mainMenu, _levelController, _cameraController));
             _statesDictionary.Add(State.ChooseLevel, new ChooseLevelState(_chooseLevelMenu, _levelController));
             _statesDictionary.Add(State.LeaderBoard, new LeaderBoardState(_leaderBoard, _scoreController));
             _statesDictionary.Add(State.GameActive, new GameActiveState(_livesController, _levelController, _scoreController, _guiController, _cameraController));

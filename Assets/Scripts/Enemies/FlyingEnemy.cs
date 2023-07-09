@@ -118,6 +118,11 @@ namespace RandomPlatformer.Enemies
         private void OnDisable()
         {
             _isMoving = false;
+            _localTransform.position = _positions[0];
+            _targetPosition = _positions[0];
+            _currentPositionIndex = 0;
+            _targetPositionIndex = 0;
+            _currentWave = 0;
         }
 
         private void Update()

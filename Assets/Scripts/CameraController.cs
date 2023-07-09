@@ -83,7 +83,7 @@ namespace RandomPlatformer
         /// <summary>
         ///     Add references to components.
         /// </summary>
-        private void Start()
+        private void Awake()
         {
             _cameraTransform = _mainCamera.transform;
         }
@@ -149,6 +149,14 @@ namespace RandomPlatformer
         }
 
         /// <summary>
+        ///     Resets camera position to zero.
+        /// </summary>
+        public void ResetCameraPosition()
+        {
+            _mainCamera.transform.position = new Vector3(0,0, -10);
+        }
+
+        /// <summary>
         ///     Get camera movement speed based on the distance between target and camera. We use animation curve to get the
         ///     movement speed.
         /// </summary>
@@ -180,7 +188,7 @@ namespace RandomPlatformer
             
             return Vector3.Lerp(cameraPosition, targetPosition, movementProgress);
         }
-        
+
         /// <summary>
         ///     Temporary focus coroutine.
         ///     Used to change focus on other objects temporarily and then return to previous target.

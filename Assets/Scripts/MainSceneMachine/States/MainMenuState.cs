@@ -18,16 +18,24 @@ namespace RandomPlatformer.MainSceneMachine.States
         ///     Level controller reference.
         /// </summary>
         private readonly LevelController _levelController;
+        
+        /// <summary>
+        ///     Camera controller reference.
+        ///     We need it to be able to reset the camera position.
+        /// </summary>
+        private readonly CameraController _cameraController;
 
         /// <summary>
         ///     Basic constructor.
         /// </summary>
         /// <param name="mainMenu">Main menu reference</param>
         /// <param name="levelController">Level controller reference</param>
-        public MainMenuState(MainMenu mainMenu, LevelController levelController)
+        /// <param name="cameraController">Camera controller reference</param>
+        public MainMenuState(MainMenu mainMenu, LevelController levelController, CameraController cameraController)
         {
             _mainMenu = mainMenu;
             _levelController = levelController;
+            _cameraController = cameraController;
         }
         
         /// <inheridoc/>
@@ -39,6 +47,7 @@ namespace RandomPlatformer.MainSceneMachine.States
             _mainMenu.OnChooseLevel += GoToChooseLevel;
             _mainMenu.OnExitGame += ExitGame;
             _levelController.SelectStartingLevel(0);
+            _cameraController.ResetCameraPosition();
         }
 
         /// <inheridoc/>
