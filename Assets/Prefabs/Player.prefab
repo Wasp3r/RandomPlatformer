@@ -139,6 +139,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _maxJumpCount: 2
   _rigidbody2D: {fileID: 1835380256921214753}
+  _animator: {fileID: 8588117249420821186}
   _playerSize: {x: 0.5, y: 0.5}
   _solidMask:
     serializedVersion: 2
@@ -242,7 +243,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3330201907609423585}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05, y: 0.135, z: 0}
+  m_LocalPosition: {x: 0.05, y: -0.13, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -287,8 +288,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 182497895
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2ca1db4b94096414296f08c360888fb8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

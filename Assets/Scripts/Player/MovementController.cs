@@ -15,6 +15,9 @@ namespace RandomPlatformer.Player
         /// </summary>
         [SerializeField] private float _accelerationSpeed = 10f;
 
+        /// <summary>
+        ///     The speed at which the player decelerates.
+        /// </summary>
         [SerializeField] private float _decelerationTime = 0.3f;
 
         /// <summary>
@@ -46,12 +49,16 @@ namespace RandomPlatformer.Player
         ///     The rigidbody2D component of the player.
         /// </summary>
         [SerializeField] private Rigidbody2D _rigidbody2D;
+
+        /// <summary>
+        ///     The animator component of the player.
+        /// </summary>
+        [SerializeField] private Animator _animator;
         
         /// <summary>
         ///     The height of the player.
         /// </summary>
-        [SerializeField]
-        private Vector2 _playerSize;
+        [SerializeField] private Vector2 _playerSize;
 
         /// <summary>
         ///     The layer mask of the objects that the player can jump on.
@@ -124,6 +131,11 @@ namespace RandomPlatformer.Player
         ///     The coroutine that handles the grounded state.
         /// </summary>
         private Coroutine _groundedCoroutine;
+
+        /// <summary>
+        ///     Movement animation hash.
+        /// </summary>
+        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
         /// <summary>
         ///     We get the player height in the Start method.
@@ -236,11 +248,17 @@ namespace RandomPlatformer.Player
             if (!CanAccelerate(direction))
             {
                 _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+                _animator.SetBool(IsMoving, false);
                 return;
             }
 
             _decelerationTimePassed = 0;
+            transform.rotation = Quaternion.Euler(0, direction.x > 0 ? 0 : 180, 0);
             _rigidbody2D.AddForce(direction * _accelerationSpeed, ForceMode2D.Impulse);
+            if (!_isGrounded)
+                return;
+            
+            _animator.SetBool(IsMoving, true);
         }
 
         /// <summary>
@@ -254,6 +272,7 @@ namespace RandomPlatformer.Player
             _decelerationTimePassed += Time.fixedDeltaTime;
 
             _rigidbody2D.velocity = velocity;
+            _animator.SetBool(IsMoving, false);
         }
 
         /// <summary>
