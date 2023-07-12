@@ -138,6 +138,16 @@ namespace RandomPlatformer.Player
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
         /// <summary>
+        ///     Jump animation hash.
+        /// </summary>
+        private static readonly int Jump = Animator.StringToHash("Jump");
+        
+        /// <summary>
+        ///     Jump finish animation hash.
+        /// </summary>
+        private static readonly int JumpFinish = Animator.StringToHash("JumpFinish");
+
+        /// <summary>
         ///     We get the player height in the Start method.
         /// </summary>
         private void Awake()
@@ -203,6 +213,7 @@ namespace RandomPlatformer.Player
             if (!_isGrounded)
                 return;
 
+            _animator.SetTrigger(JumpFinish);
             _isInJump = false;
             _jumpCount = 0;
         }
@@ -285,6 +296,7 @@ namespace RandomPlatformer.Player
             if (!CanJump())
                  return;
 
+            _animator.SetTrigger(Jump);
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
             _jumpPowerTimePassed = 0;
             _jumpPower = _jumpingForce;
