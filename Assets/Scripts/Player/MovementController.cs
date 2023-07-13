@@ -112,9 +112,14 @@ namespace RandomPlatformer.Player
         private bool _isGrounded;
 
         /// <summary>
-        ///     Indicates if the player is in the middle of a jump.
+        ///     Indicates if the player is in the middle of a jump and not falling.
         /// </summary>
         private bool _isInJump;
+
+        /// <summary>
+        ///     Indicates if the player jumping animation is in the middle.
+        /// </summary>
+        private bool _isInJumpAnimation;
 
         /// <summary>
         ///     Current jump power.
@@ -213,9 +218,14 @@ namespace RandomPlatformer.Player
             if (!_isGrounded)
                 return;
 
-            _animator.SetTrigger(JumpFinish);
             _isInJump = false;
             _jumpCount = 0;
+
+            if (!_isInJumpAnimation)
+                return;
+            
+            _animator.SetTrigger(JumpFinish);
+            _isInJumpAnimation = false;
         }
 
         /// <summary>
@@ -301,6 +311,7 @@ namespace RandomPlatformer.Player
             _jumpPowerTimePassed = 0;
             _jumpPower = _jumpingForce;
             _isInJump = true;
+            _isInJumpAnimation = true;
             _jumpCount++;
             
             if (_groundedCoroutine != null)
