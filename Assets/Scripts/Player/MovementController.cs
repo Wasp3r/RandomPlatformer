@@ -51,11 +51,6 @@ namespace RandomPlatformer.Player
         [SerializeField] private Rigidbody2D _rigidbody2D;
 
         /// <summary>
-        ///     The animator component of the player.
-        /// </summary>
-        [SerializeField] private Animator _animator;
-        
-        /// <summary>
         ///     The height of the player.
         /// </summary>
         [SerializeField] private Vector2 _playerSize;
@@ -64,6 +59,11 @@ namespace RandomPlatformer.Player
         ///     The layer mask of the objects that the player can jump on.
         /// </summary>
         [SerializeField] private LayerMask _solidMask;
+
+        /// <summary>
+        ///     The animation controller of the player.
+        /// </summary>
+        [SerializeField] private PlayerAnimationController _animationController;
 
         /// <summary>
         ///     The input system actions.
@@ -126,7 +126,13 @@ namespace RandomPlatformer.Player
         ///     We use it to control the height of the jump and to make the force smaller with time.
         /// </summary>
         private float _jumpPower;
-        
+
+        /// <summary>
+        ///     Indicates if the player can move.
+        ///     We use it to lock the player when he is dead.
+        /// </summary>
+        private bool _canMove;
+
         /// <summary>
         ///     The initial position of the player.
         /// </summary>
@@ -138,25 +144,11 @@ namespace RandomPlatformer.Player
         private Coroutine _groundedCoroutine;
 
         /// <summary>
-        ///     Movement animation hash.
-        /// </summary>
-        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
-
-        /// <summary>
-        ///     Jump animation hash.
-        /// </summary>
-        private static readonly int Jump = Animator.StringToHash("Jump");
-        
-        /// <summary>
-        ///     Jump finish animation hash.
-        /// </summary>
-        private static readonly int JumpFinish = Animator.StringToHash("JumpFinish");
-
-        /// <summary>
         ///     We get the player height in the Start method.
         /// </summary>
         private void Awake()
         {
+            _canMove = true;
             _livesController = GameStateMachine.Instance.LivesController;
             _actions = GameStateMachine.Instance.InputActions;
             _actions.Player.Jump.started += OnJumpStart;
@@ -169,6 +161,9 @@ namespace RandomPlatformer.Player
         /// </summary>
         private void Update()
         {
+            if (!_canMove)
+                return;
+            
             _movementInput = _actions.Player.Move.ReadValue<Vector2>().x;
             UpdateIsGrounded();
         }
@@ -191,7 +186,6 @@ namespace RandomPlatformer.Player
             _actions.Player.Enable();
             _checkpointPosition = transform.position;
             GameStateMachine.Instance.CameraController.FollowObject(transform);
-            _livesController.OnLostLive += ResetPosition;
         }
 
         /// <summary>
@@ -202,7 +196,15 @@ namespace RandomPlatformer.Player
             _actions.Player.Disable();
             _actions.Player.Jump.started -= OnJumpStart;
             _actions.Player.Jump.canceled -= OnJumpStop;
-            _livesController.OnLostLive -= ResetPosition;
+        }
+        
+        /// <summary>
+        ///     Reset player position to the last checkpoint.
+        /// </summary>
+        public void ResetPosition()
+        {
+            transform.position = _checkpointPosition;
+            UpdateMovementState(true);
         }
 
         /// <summary>
@@ -223,8 +225,8 @@ namespace RandomPlatformer.Player
 
             if (!_isInJumpAnimation)
                 return;
-            
-            _animator.SetTrigger(JumpFinish);
+
+            _animationController.TriggerJumpFinish();
             _isInJumpAnimation = false;
         }
 
@@ -269,7 +271,7 @@ namespace RandomPlatformer.Player
             if (!CanAccelerate(direction))
             {
                 _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
-                _animator.SetBool(IsMoving, false);
+                _animationController.TriggerIsMoving(false);
                 return;
             }
 
@@ -279,7 +281,7 @@ namespace RandomPlatformer.Player
             if (!_isGrounded)
                 return;
             
-            _animator.SetBool(IsMoving, true);
+            _animationController.TriggerIsMoving(true);
         }
 
         /// <summary>
@@ -293,7 +295,7 @@ namespace RandomPlatformer.Player
             _decelerationTimePassed += Time.fixedDeltaTime;
 
             _rigidbody2D.velocity = velocity;
-            _animator.SetBool(IsMoving, false);
+            _animationController.TriggerIsMoving(false);
         }
 
         /// <summary>
@@ -306,7 +308,7 @@ namespace RandomPlatformer.Player
             if (!CanJump())
                  return;
 
-            _animator.SetTrigger(Jump);
+            _animationController.TriggerJump();
             _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 0);
             _jumpPowerTimePassed = 0;
             _jumpPower = _jumpingForce;
@@ -394,14 +396,6 @@ namespace RandomPlatformer.Player
                 Vector2.down, _playerSize.y / 2 + 0.01f, _solidMask);
             return raycastLeft.collider != null || raycastRight.collider != null;
         }
-        
-        /// <summary>
-        ///     Reset player position to the last checkpoint.
-        /// </summary>
-        private void ResetPosition()
-        {
-            transform.position = _checkpointPosition;
-        }
 
         /// <summary>
         ///     We set the grounded state to false after a short delay.
@@ -411,6 +405,19 @@ namespace RandomPlatformer.Player
         {
             yield return new WaitForSeconds(0.1f);
             _isGrounded = false;
+        }
+
+        /// <summary>
+        ///     Updates the movement state. We use it to disable and enable player movement.
+        /// </summary>
+        /// <param name="movementState">Movement state.</param>
+        public void UpdateMovementState(bool movementState)
+        {
+            _canMove = movementState;
+            
+            // Reset velocity to prevent player from moving after respawn.
+            _rigidbody2D.velocity = Vector2.zero;
+            _movementInput = 0f;
         }
     }
 }

@@ -9,12 +9,29 @@ namespace RandomPlatformer.Player.Detectors
     /// </summary>
     public class EnemyTouchedDetector : PickingController
     {
+        /// <summary>
+        ///     Player animation controller reference.
+        ///     We need it to trigger the death animation.
+        /// </summary>
+        [SerializeField] private PlayerAnimationController _animationController;
+
+        /// <summary>
+        ///     Movement controller reference.
+        ///     We need it to lock the movement when the player dies.
+        /// </summary>
+        [SerializeField] private MovementController _movementController;
+
         [SerializeField] private bool _isImmortal;
-    
+
         /// <summary>
         ///     Lives controller reference.
         /// </summary>
         private LivesController _livesController;
+
+        private void Start()
+        {
+            _animationController.OnDeathAnimationFinished += LoseLive;
+        }
 
         /// <summary>
         ///     Get reference to the lives controller.
@@ -32,10 +49,25 @@ namespace RandomPlatformer.Player.Detectors
         {
             if (_isImmortal)
             {
+#if UNITY_EDITOR
                 Debug.LogWarning("### - Lost live");
+#endif
                 return;
             }
+            
+            _movementController.UpdateMovementState(false);
+            _animationController.TriggerDeath();
+            _isImmortal = true;
+        }
+        
+        /// <summary>
+        ///     We use it to take the player's live and make him mortal again.
+        /// </summary>
+        private void LoseLive()
+        {
+            _movementController.ResetPosition();
             _livesController.LoseLive();
+            _isImmortal = false;
         }
     }
 }

@@ -86,6 +86,7 @@ namespace RandomPlatformer.UI.Menus
             _scoreController.OnScoreChanged += OnUpdateScore;
             _levelController.OnLevelLoaded += OnLevelLoaded;
             _livesController.OnLivesChanged += OnLivesChanged;
+            _livesController.OnLostLive += OnLostLive;
             _timeController.OnTimeLeftChanged += UpdateTimeLeft;
             _livesValue.text = _livesController.Lives.ToString();
             _lastLifeCount = _livesController.Lives;
@@ -100,6 +101,7 @@ namespace RandomPlatformer.UI.Menus
             _scoreController.OnScoreChanged -= OnUpdateScore;
             _levelController.OnLevelLoaded -= OnLevelLoaded;
             _livesController.OnLivesChanged -= OnLivesChanged;
+            _livesController.OnLostLive -= OnLostLive;
         }
 
         /// <summary>
@@ -163,13 +165,16 @@ namespace RandomPlatformer.UI.Menus
         /// </summary>
         private void OnLivesChanged(int currentLives)
         {
-            if (_lastLifeCount > currentLives)
-            {
-                StartCoroutine(ShowDiedPlane());
-            }
-            
             _lastLifeCount = currentLives;
             _livesValue.text = currentLives.ToString();
+        }
+        
+        /// <summary>
+        ///     We show the died plane and hide it after a few seconds.
+        /// </summary>
+        private void OnLostLive()
+        {
+            StartCoroutine(ShowDiedPlane());
         }
 
         /// <summary>
