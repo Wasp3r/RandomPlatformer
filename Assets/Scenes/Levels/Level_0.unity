@@ -1724,6 +1724,26 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4081308018262241820, guid: 86730959845026545b50796aeeab0ed6, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[24].second.m_AnimationSpeed
+      value: 5.0000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081308018262241820, guid: 86730959845026545b50796aeeab0ed6, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[34].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081308018262241820, guid: 86730959845026545b50796aeeab0ed6, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[36].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081308018262241820, guid: 86730959845026545b50796aeeab0ed6, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[45].second.m_AnimationSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081308018262241820, guid: 86730959845026545b50796aeeab0ed6, type: 3}
+      propertyPath: m_AnimatedTiles.Array.data[65].second.m_AnimationSpeed
+      value: 5.0000005
+      objectReference: {fileID: 0}
     - target: {fileID: 5033279841268194425, guid: 86730959845026545b50796aeeab0ed6, type: 3}
       propertyPath: m_Name
       value: Grid

@@ -13,6 +13,11 @@ namespace RandomPlatformer.Player
         ///     Animator reference.
         /// </summary>
         [SerializeField] private Animator _animator;
+
+        /// <summary>
+        ///     Jump smoke prefab.
+        /// </summary>
+        [SerializeField] private JumpSmoke _jumpSmokePrefab;
         
         /// <summary>
         ///     Movement animation hash.
@@ -45,6 +50,7 @@ namespace RandomPlatformer.Player
         public void TriggerJump()
         {
             _animator.SetTrigger(Jump);
+            Instantiate(_jumpSmokePrefab, transform.position, Quaternion.identity);
         }
 
         /// <summary>

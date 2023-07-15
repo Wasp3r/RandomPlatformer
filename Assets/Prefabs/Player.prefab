@@ -338,3 +338,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 8588117249420821186}
+  _jumpSmokePrefab: {fileID: 2305371458308327680, guid: a578e2f0713ed184cab53ca8189f2fe2, type: 3}

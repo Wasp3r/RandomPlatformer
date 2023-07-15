@@ -115,6 +115,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -122,10 +134,10 @@ TextureImporter:
       name: Double_Jump_Dust_5_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 3
-        width: 15
-        height: 7
+        x: 0
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,7 +145,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aec17ff89bdc60d44ba8dfe6b704fcd2
+      spriteID: c8e7fcef595e4984683cdac79f30b5c6
       internalID: 1840838484
       vertices: []
       indices: 
@@ -143,10 +155,10 @@ TextureImporter:
       name: Double_Jump_Dust_5_1
       rect:
         serializedVersion: 2
-        x: 36
-        y: 1
-        width: 21
-        height: 7
+        x: 32
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,7 +166,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab35982231e87bf46b2da3f56c3f1fb1
+      spriteID: 5af772dea0736cd4b8814eaf57ef4bc4
       internalID: 696941401
       vertices: []
       indices: 
@@ -164,10 +176,10 @@ TextureImporter:
       name: Double_Jump_Dust_5_2
       rect:
         serializedVersion: 2
-        x: 67
+        x: 64
         y: 0
-        width: 23
-        height: 7
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,7 +187,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbc564ef363e61b4ba7075b9b5471956
+      spriteID: 628d83f542f702f48a0d49d02b1293e8
       internalID: -1613720156
       vertices: []
       indices: 
@@ -185,10 +197,10 @@ TextureImporter:
       name: Double_Jump_Dust_5_3
       rect:
         serializedVersion: 2
-        x: 98
+        x: 96
         y: 0
-        width: 25
-        height: 5
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -196,7 +208,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 64dfbaafb77be0a478067631428d0fb2
+      spriteID: 701e00530f1fe9a49baaf33bfbda2745
       internalID: -2120560678
       vertices: []
       indices: 
@@ -206,10 +218,10 @@ TextureImporter:
       name: Double_Jump_Dust_5_4
       rect:
         serializedVersion: 2
-        x: 130
+        x: 128
         y: 0
-        width: 25
-        height: 3
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -217,7 +229,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71a98ebcc0b5a8246bf9363113245055
+      spriteID: 9a59651a235c67f4d87582deaee9870e
       internalID: -1122578344
       vertices: []
       indices: 
