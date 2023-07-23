@@ -2036,7 +2036,7 @@ TextureImporter:
         x: 0
         y: 32
         width: 16
-        height: 16
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2057,7 +2057,7 @@ TextureImporter:
         x: 16
         y: 32
         width: 16
-        height: 16
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2075,8 +2075,8 @@ TextureImporter:
       name: staticObjects__93
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
+        x: 0
+        y: 128
         width: 16
         height: 16
       alignment: 0
@@ -3178,7 +3178,6 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       staticObjects__99: 842246633
-      staticObjects__36: -867089967
       staticObjects__21: -120761950
       staticObjects__23: 1070287763
       staticObjects__108: -1484378628
@@ -3243,19 +3242,18 @@ TextureImporter:
       staticObjects__97: -1687942817
       staticObjects__113: 55833076
       staticObjects__139: 683162559
-      staticObjects__44: -1707498463
-      staticObjects__142: 437779981
-      staticObjects__75: 1656942727
-      staticObjects__70: 642573653
-      staticObjects__68: 1294409543
-      staticObjects__101: -654765982
       staticObjects__72: 107965587
-      staticObjects__41: 979177284
+      staticObjects__44: -1707498463
+      staticObjects__75: 1656942727
+      staticObjects__142: 437779981
+      staticObjects__101: -654765982
+      staticObjects__68: 1294409543
+      staticObjects__70: 642573653
       staticObjects__45: 361569677
+      staticObjects__65: -1737824153
       staticObjects__116: -237716852
       staticObjects__122: -1546485915
       staticObjects__109: -1334472939
-      staticObjects__65: -1737824153
       staticObjects__11: 1669790478
       staticObjects__83: 301911215
       staticObjects__4: -691839986
@@ -3319,7 +3317,7 @@ TextureImporter:
       staticObjects__46: 720722744
       staticObjects__67: -379782827
       staticObjects__6: 757756120
-      staticObjects__123: 118843770
+      staticObjects__36: -867089967
       staticObjects__95: 650091127
   spritePackingTag: 
   pSDRemoveMatte: 0
