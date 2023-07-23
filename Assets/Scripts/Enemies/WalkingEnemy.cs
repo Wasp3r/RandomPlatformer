@@ -87,7 +87,7 @@ namespace RandomPlatformer.Enemies
         {
             _localTransform = transform;
             _localRigidbody = GetComponent<Rigidbody>();
-            var position = _localTransform.position;
+            var position = _localTransform.localPosition;
 
             _positionA = new Vector2(position.x + _positionAOffset, position.y);
             _positionB = new Vector2(position.x + _positionBOffset, position.y);
@@ -126,7 +126,7 @@ namespace RandomPlatformer.Enemies
         private void MoveTowardsDestination()
         {
             var targetPosition = _movingToA ? _positionA : _positionB;
-            var position = _localTransform.position;
+            var position = _localTransform.localPosition;
             
             if (Vector2.Distance(position, targetPosition) < 0.1f)
             {
@@ -135,7 +135,7 @@ namespace RandomPlatformer.Enemies
                 return;
             }
             
-            _localTransform.position = Vector2.MoveTowards(position, targetPosition, _movementSpeed * Time.deltaTime);
+            _localTransform.localPosition = Vector2.MoveTowards(position, targetPosition, _movementSpeed * Time.deltaTime);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace RandomPlatformer.Enemies
         /// <returns>Distance to the edge or max distance if edge was not found.</returns>
         private float FindEdgeInDirection(bool isLeft, float stepSize)
         {
-            var startingPosition = _localTransform.position;
+            var startingPosition = _localTransform.localPosition;
             _localTransform = transform;
             var distance = 0f;
             
@@ -201,7 +201,7 @@ namespace RandomPlatformer.Enemies
         private void DrawPredefinedPath()
         {
             _localTransform = transform;
-            var position = _localTransform.position;
+            var position = _localTransform.localPosition;
             
             Gizmos.color = Color.red;
             if (_movingToA)
