@@ -41,6 +41,16 @@ namespace RandomPlatformer.LevelSystem
         public event Action<LevelInstance> OnLevelLoaded;
 
         /// <summary>
+        ///     Event triggered when the level is completed.
+        /// </summary>
+        public Action OnLevelComplete;
+
+        /// <summary>
+        ///     Event triggered when the last level is completed.
+        /// </summary>
+        public Action OnFinishLastLevel;
+
+        /// <summary>
         ///     Unlocked levels count.
         /// </summary>
         public int UnlockedLevels { get; private set; }
@@ -70,6 +80,7 @@ namespace RandomPlatformer.LevelSystem
             if (_levels.Count <= index)
             {
                 GameStateMachine.Instance.GoToState(State.Result);
+                OnFinishLastLevel?.Invoke();
                 return;
             }
             
@@ -98,10 +109,14 @@ namespace RandomPlatformer.LevelSystem
         public void GoToNextLevel()
         {
             _currentLevelIndex++;
-            UnlockedLevels++;
-            SaveUnlockedLevels();
-            
+            if (_levels.Count > _currentLevelIndex)
+            {
+                UnlockedLevels++;
+                SaveUnlockedLevels();
+            }
+
             Time.timeScale = 0;
+            OnLevelComplete?.Invoke();
             SceneManager.UnloadSceneAsync(_currentLevelScenePath).completed += OnSceneUnloaded;
         }
         

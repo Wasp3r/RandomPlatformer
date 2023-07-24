@@ -3108,7 +3108,7 @@ Tilemap:
       - {fileID: -1457749358, guid: c22bfa3899e96134b85e33d461ba5c95, type: 3}
       - {fileID: 2029560148, guid: c22bfa3899e96134b85e33d461ba5c95, type: 3}
       - {fileID: -1369600567, guid: c22bfa3899e96134b85e33d461ba5c95, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: -7, y: -4, z: 0}
@@ -3248,7 +3248,7 @@ Tilemap:
       - {fileID: -1457749358, guid: c22bfa3899e96134b85e33d461ba5c95, type: 3}
       - {fileID: 2029560148, guid: c22bfa3899e96134b85e33d461ba5c95, type: 3}
       - {fileID: -1369600567, guid: c22bfa3899e96134b85e33d461ba5c95, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 3, y: -4, z: 0}
@@ -3290,7 +3290,7 @@ Tilemap:
       - {fileID: -1457749358, guid: c22bfa3899e96134b85e33d461ba5c95, type: 3}
       - {fileID: 2029560148, guid: c22bfa3899e96134b85e33d461ba5c95, type: 3}
       - {fileID: -1369600567, guid: c22bfa3899e96134b85e33d461ba5c95, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   - first: {x: 6, y: -4, z: 0}
@@ -3624,6 +3624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1497755100}
   - component: {fileID: 1497755101}
+  - component: {fileID: 1497755102}
   m_Layer: 0
   m_Name: SoundController
   m_TagString: Untagged
@@ -3742,6 +3743,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1497755102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497755099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ee0725ba214fb7bf4c1a972c1f5b45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coinPickSound: {fileID: 0}
+  _heartPickSound: {fileID: 0}
+  _levelCompleteSound: {fileID: 0}
+  _walkingSound: {fileID: 0}
+  _deathSound: {fileID: 0}
+  _looseSound: {fileID: 0}
+  _winSound: {fileID: 0}
+  _scoreController: {fileID: 0}
+  _levelController: {fileID: 0}
+  _livesController: {fileID: 0}
 --- !u!1 &1586634703
 GameObject:
   m_ObjectHideFlags: 0

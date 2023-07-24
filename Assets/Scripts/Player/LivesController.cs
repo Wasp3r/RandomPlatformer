@@ -31,6 +31,16 @@ namespace RandomPlatformer.Player
         public event Action OnLostLive;
 
         /// <summary>
+        ///     Triggered when the player gets a live.
+        /// </summary>
+        public Action OnGainedLive;
+        
+        /// <summary>
+        ///     Triggered when the player loses all lives.
+        /// </summary>
+        public Action OnDeath;
+
+        /// <summary>
         ///     The number of lives the player has.
         /// </summary>
         public int Lives => _currentLives;
@@ -56,6 +66,7 @@ namespace RandomPlatformer.Player
             if (_currentLives > 0)
                 return;
 
+            OnDeath?.Invoke();
             GameStateMachine.Instance.GoToState(State.Result);
             ResetLives();
         }
@@ -67,6 +78,7 @@ namespace RandomPlatformer.Player
         public void AddLive()
         {
             _currentLives++;
+            OnGainedLive?.Invoke();
             OnLivesChanged?.Invoke(_currentLives);
         }
 
