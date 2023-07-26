@@ -26,6 +26,14 @@ namespace RandomPlatformer
         [SerializeField] private LivesController _livesController;
 
         /// <summary>
+        ///     Assign the instance.
+        /// </summary>
+        private void Awake()
+        {
+            Instance = this;
+        }
+
+        /// <summary>
         ///     Listen to all the events to play the sounds.
         /// </summary>
         private void Start()
@@ -33,9 +41,47 @@ namespace RandomPlatformer
             _scoreController.OnScoreChanged += PlayCoinPickSound;
             _livesController.OnGainedLive += PlayHeartPickSound;
             _levelController.OnLevelComplete += PlayLevelCompleteSound;
-            _livesController.OnLostLive += PlayDeathSound;
             _livesController.OnDeath += PlayLooseSound;
             _levelController.OnFinishLastLevel += PlayWinSound;
+        }
+
+        /// <summary>
+        ///     Play walking sound.
+        ///     We use it to play or change the pitch of the walking sound.
+        /// </summary>
+        /// <param name="speed">The speed of the player.</param>
+        public void PlayWakingSound(float speed)
+        {
+            _walkingSound.pitch = speed;
+        
+            if (_walkingSound.isPlaying)
+                return;
+                
+            _walkingSound.Play();
+        }
+        
+        /// <summary>
+        ///     Stop walking sound.
+        /// </summary>
+        public void StopWalkingSound()
+        {
+            _walkingSound.pitch = 0;
+        }
+        
+        /// <summary>
+        ///     Play jumping sound.
+        /// </summary>
+        public void PlayJumpingSound()
+        {
+            _jumpSound.Play();
+        }
+        
+        /// <summary>
+        ///     Sound played when the player looses a live.
+        /// </summary>
+        public void PlayDeathSound()
+        {
+            _deathSound.Play();
         }
 
         /// <summary>
@@ -54,14 +100,6 @@ namespace RandomPlatformer
         {
             StopAllSounds();
             _looseSound.Play();
-        }
-
-        /// <summary>
-        ///     Sound played when the player looses a live.
-        /// </summary>
-        private void PlayDeathSound()
-        {
-            _deathSound.Play();
         }
 
         /// <summary>

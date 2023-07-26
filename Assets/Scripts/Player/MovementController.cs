@@ -247,6 +247,8 @@ namespace RandomPlatformer.Player
                     Decelerate();
                     break;
             }
+
+            SoundController.Instance.PlayWakingSound(_isGrounded ? _currentSpeed / _maxSpeed : 0);
         }
 
         /// <summary>
@@ -319,6 +321,7 @@ namespace RandomPlatformer.Player
             if (_groundedCoroutine != null)
                 StopCoroutine(_groundedCoroutine);
             _groundedCoroutine = StartCoroutine(GroundedCoroutine());
+            SoundController.Instance.PlayJumpingSound();
         }
         
         /// <summary>

@@ -55,6 +55,7 @@ namespace RandomPlatformer.Player.Detectors
                 return;
             }
             
+            SoundController.Instance.PlayDeathSound();
             _movementController.UpdateMovementState(false);
             _animationController.TriggerDeath();
             _isImmortal = true;
