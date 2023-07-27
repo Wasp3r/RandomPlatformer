@@ -359,6 +359,9 @@ namespace RandomPlatformer.Player
         /// <returns>True for valid position, and false for invalid.</returns>
         private bool CanJump()
         {
+            if (!_canMove)
+                return false;
+            
             if (_jumpCount < _maxJumpCount && !_isGrounded)
                 return true;
             

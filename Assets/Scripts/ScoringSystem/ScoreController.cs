@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using RandomPlatformer.LevelSystem;
+using RandomPlatformer.MainSceneMachine;
 using UnityEngine;
 
 namespace RandomPlatformer.ScoringSystem
@@ -16,7 +18,30 @@ namespace RandomPlatformer.ScoringSystem
         /// </summary>
         public int CurrentScore { get; private set; }
         
+        /// <summary>
+        ///     Time controller reference.
+        ///     We need it so we can add the time left to the score.
+        /// </summary>
+        private TimeController _timeController;
+
         public event Action<int> OnScoreChanged;
+
+        /// <summary>
+        ///     Listen to the level complete event.
+        /// </summary>
+        private void Awake()
+        {
+            _timeController = GameStateMachine.Instance.TimeController;
+            GameStateMachine.Instance.LevelController.OnLevelComplete += AddPointsFromTimeLeft;
+        }
+
+        /// <summary>
+        ///     Add points from the time left.
+        /// </summary>
+        private void AddPointsFromTimeLeft()
+        {
+            AddPoints(Mathf.RoundToInt(_timeController.TimeLeft));
+        }
 
         /// <summary>
         ///     Adds the score to the current score.
