@@ -111,7 +111,7 @@ namespace RandomPlatformer.LevelSystem
             _currentLevelIndex++;
             if (_levels.Count > _currentLevelIndex)
             {
-                UnlockedLevels++;
+                UnlockedLevels = _currentLevelIndex + 1;
                 SaveUnlockedLevels();
             }
 
