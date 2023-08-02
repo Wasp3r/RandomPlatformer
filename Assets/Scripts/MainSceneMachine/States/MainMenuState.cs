@@ -44,6 +44,7 @@ namespace RandomPlatformer.MainSceneMachine.States
             _mainMenu.Enable();
             _mainMenu.OnStartGame += GoToGame;
             _mainMenu.OnLeaderboard += GoToLeaderboard;
+            _mainMenu.OnCredits += GoToCredits;
             _mainMenu.OnChooseLevel += GoToChooseLevel;
             _mainMenu.OnExitGame += ExitGame;
             _levelController.SelectStartingLevel(0);
@@ -55,6 +56,7 @@ namespace RandomPlatformer.MainSceneMachine.States
         {
             _mainMenu.OnStartGame -= GoToGame;
             _mainMenu.OnLeaderboard -= GoToLeaderboard;
+            _mainMenu.OnCredits -= GoToCredits;
             _mainMenu.OnChooseLevel -= GoToChooseLevel;
             _mainMenu.OnExitGame -= ExitGame;
             _mainMenu.Disable();
@@ -100,6 +102,14 @@ namespace RandomPlatformer.MainSceneMachine.States
         private void GoToGame()
         {
             GameStateMachine.GoToState(State.GameActive);
+        }
+        
+        /// <summary>
+        ///     Goes to the credits state.
+        /// </summary>
+        private void GoToCredits()
+        {
+            GameStateMachine.GoToState(State.Credits);
         }
     }
 }

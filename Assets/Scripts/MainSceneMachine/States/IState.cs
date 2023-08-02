@@ -10,6 +10,7 @@
         ChooseLevel,
         GameActive,
         Pause,
-        Result
+        Result,
+        Credits
     }
 }

@@ -26,6 +26,11 @@ namespace RandomPlatformer.UI.Menus
         ///     Leaderboard button to show the leaderboard.
         /// </summary>
         [SerializeField] private Button _leaderboardButton;
+
+        /// <summary>
+        ///     Credits button to show the credits.
+        /// </summary>
+        [SerializeField] private Button _creditsButton;
         
         /// <summary>
         ///     Exit button to exit the game.
@@ -35,6 +40,7 @@ namespace RandomPlatformer.UI.Menus
         public event Action OnStartGame;
         public event Action OnChooseLevel;
         public event Action OnLeaderboard;
+        public event Action OnCredits;
         public event Action OnExitGame;
 
         private void OnEnable()
@@ -42,6 +48,7 @@ namespace RandomPlatformer.UI.Menus
             _startButton.onClick.AddListener(StartGame);
             _chooseLevelButton.onClick.AddListener(ChooseLevel);
             _leaderboardButton.onClick.AddListener(Leaderboard);
+            _creditsButton.onClick.AddListener(Credits);
             _exitButton.onClick.AddListener(ExitGame);
         }
 
@@ -50,6 +57,7 @@ namespace RandomPlatformer.UI.Menus
             _startButton.onClick.RemoveListener(StartGame);
             _chooseLevelButton.onClick.RemoveListener(ChooseLevel);
             _leaderboardButton.onClick.RemoveListener(Leaderboard);
+            _creditsButton.onClick.RemoveListener(Credits);
             _exitButton.onClick.RemoveListener(ExitGame);
         }
 
@@ -66,6 +74,11 @@ namespace RandomPlatformer.UI.Menus
         private void Leaderboard()
         {
             OnLeaderboard?.Invoke();
+        }
+        
+        private void Credits()
+        {
+            OnCredits?.Invoke();
         }
         
         private void ExitGame()

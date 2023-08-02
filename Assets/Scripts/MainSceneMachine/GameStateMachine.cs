@@ -38,6 +38,11 @@ namespace RandomPlatformer.MainSceneMachine
         [SerializeField] private ChooseLevelMenu _chooseLevelMenu;
 
         /// <summary>
+        ///     Credits menu reference.
+        /// </summary>
+        [SerializeField] private CreditsMenu _creditsMenu;
+
+        /// <summary>
         ///     Game result controller reference.
         /// </summary>
         [SerializeField] private GameResultUIController _gameResultUIController;
@@ -191,6 +196,7 @@ namespace RandomPlatformer.MainSceneMachine
             _statesDictionary.Add(State.MainMenu, new MainMenuState(_mainMenu, _levelController, _cameraController));
             _statesDictionary.Add(State.ChooseLevel, new ChooseLevelState(_chooseLevelMenu, _levelController));
             _statesDictionary.Add(State.LeaderBoard, new LeaderBoardState(_leaderBoard, _scoreController));
+            _statesDictionary.Add(State.Credits, new CreditsState(_creditsMenu));
             _statesDictionary.Add(State.GameActive, new GameActiveState(_livesController, _levelController, _scoreController, _guiController, _cameraController));
             _statesDictionary.Add(State.Pause, new PauseState(_pauseMenu));
             _statesDictionary.Add(State.Result, new ResultState(_gameResultUIController, _livesController, _scoreController, _timeController));
