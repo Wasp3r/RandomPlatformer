@@ -34,6 +34,12 @@ namespace RandomPlatformer.MainSceneMachine.States
         ///     We need it to read time left and add it to the score.
         /// </summary>
         private readonly TimeController _timeController;
+        
+        /// <summary>
+        ///     Menu background reference.
+        ///     We need it to enable it when we show the menu.
+        /// </summary>
+        private readonly GameObject _menuBackground;
 
         /// <summary>
         ///     Basic constructor.
@@ -41,12 +47,16 @@ namespace RandomPlatformer.MainSceneMachine.States
         /// <param name="gameResultUIController">The game result UI controller.</param>
         /// <param name="livesController">Lives controller reference.</param>
         /// <param name="scoreController">Score controller reference.</param>
-        public ResultState(GameResultUIController gameResultUIController, LivesController livesController, ScoreController scoreController, TimeController timeController)
+        /// <param name="timeController"></param>
+        /// <param name="menuBackground"></param>
+        public ResultState(GameResultUIController gameResultUIController, LivesController livesController,
+            ScoreController scoreController, TimeController timeController, GameObject menuBackground)
         {
             _gameResultUIController = gameResultUIController;
             _livesController = livesController;
             _scoreController = scoreController;
             _timeController = timeController;
+            _menuBackground = menuBackground;
         }
 
         /// <inheridoc/>
@@ -56,6 +66,9 @@ namespace RandomPlatformer.MainSceneMachine.States
             _gameResultUIController.OnBack += SaveScoreAndGoToMainMenu;
             _gameResultUIController.ShowResult(won, GetScore(won));
             _gameResultUIController.Enable();
+            _menuBackground.SetActive(true);
+
+            Time.timeScale = 1;
         }
 
         /// <inheridoc/>

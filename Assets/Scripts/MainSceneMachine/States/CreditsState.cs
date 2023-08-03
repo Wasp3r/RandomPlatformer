@@ -1,4 +1,5 @@
 ﻿using RandomPlatformer.UI.Menus;
+using UnityEngine;
 
 namespace RandomPlatformer.MainSceneMachine.States
 {
@@ -11,20 +12,29 @@ namespace RandomPlatformer.MainSceneMachine.States
         ///     Credits menu reference.
         /// </summary>
         private readonly CreditsMenu _creditsMenu;
+        
+        /// <summary>
+        ///     Menu background reference.
+        ///     We need it to enable it when we enter the main menu state.
+        /// </summary>
+        private readonly GameObject _menuBackground;
 
         /// <summary>
         ///     Basic constructor.
         /// </summary>
         /// <param name="creditsMenu">Credits menu reference</param>
-        public CreditsState(CreditsMenu creditsMenu)
+        /// <param name="menuBackground"></param>
+        public CreditsState(CreditsMenu creditsMenu, GameObject menuBackground)
         {
             _creditsMenu = creditsMenu;
+            _menuBackground = menuBackground;
         }
 
         /// <inheridoc/>
         public override void OnEnterState()
         {
             _creditsMenu.Enable();
+            _menuBackground.SetActive(true);
             _creditsMenu.OnBack += OnCancel;
         }
 

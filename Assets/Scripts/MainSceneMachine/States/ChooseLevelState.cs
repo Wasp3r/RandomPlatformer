@@ -1,5 +1,6 @@
 ﻿using RandomPlatformer.LevelSystem;
 using RandomPlatformer.UI.Menus;
+using UnityEngine;
 
 namespace RandomPlatformer.MainSceneMachine.States
 {
@@ -17,16 +18,25 @@ namespace RandomPlatformer.MainSceneMachine.States
         ///     Level controller reference.
         /// </summary>
         private readonly LevelController _levelController;
+        
+        /// <summary>
+        ///     Menu background reference.
+        ///     We need it to enable it when we enter the main menu state.
+        /// </summary>
+        private readonly GameObject _menuBackground;
 
         /// <summary>
         ///     Basic constructor.
         /// </summary>
         /// <param name="chooseLevelMenu">Choose level menu reference</param>
         /// <param name="levelController">Level controller reference</param>
-        public ChooseLevelState(ChooseLevelMenu chooseLevelMenu, LevelController levelController)
+        /// <param name="menuBackground"></param>
+        public ChooseLevelState(ChooseLevelMenu chooseLevelMenu, LevelController levelController,
+            GameObject menuBackground)
         {
             _chooseLevelMenu = chooseLevelMenu;
             _levelController = levelController;
+            _menuBackground = menuBackground;
         }
 
         /// <inheridoc/>
@@ -35,6 +45,7 @@ namespace RandomPlatformer.MainSceneMachine.States
             _chooseLevelMenu.OnBack += OnCancel;
             _chooseLevelMenu.OnStateLevel += OnLevelSelected;
             _chooseLevelMenu.Enable();
+            _menuBackground.SetActive(true);
         }
 
         /// <inheridoc/>

@@ -24,6 +24,12 @@ namespace RandomPlatformer.MainSceneMachine.States
         ///     We need it to be able to reset the camera position.
         /// </summary>
         private readonly CameraController _cameraController;
+        
+        /// <summary>
+        ///     Menu background reference.
+        ///     We need it to enable it when we enter the main menu state.
+        /// </summary>
+        private readonly GameObject _menuBackground;
 
         /// <summary>
         ///     Basic constructor.
@@ -31,17 +37,21 @@ namespace RandomPlatformer.MainSceneMachine.States
         /// <param name="mainMenu">Main menu reference</param>
         /// <param name="levelController">Level controller reference</param>
         /// <param name="cameraController">Camera controller reference</param>
-        public MainMenuState(MainMenu mainMenu, LevelController levelController, CameraController cameraController)
+        /// <param name="menuBackground"></param>
+        public MainMenuState(MainMenu mainMenu, LevelController levelController, CameraController cameraController,
+            GameObject menuBackground)
         {
             _mainMenu = mainMenu;
             _levelController = levelController;
             _cameraController = cameraController;
+            _menuBackground = menuBackground;
         }
         
         /// <inheridoc/>
         public override void OnEnterState()
         {
             _mainMenu.Enable();
+            _menuBackground.SetActive(true);
             _mainMenu.OnStartGame += GoToGame;
             _mainMenu.OnLeaderboard += GoToLeaderboard;
             _mainMenu.OnCredits += GoToCredits;

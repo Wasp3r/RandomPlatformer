@@ -35,6 +35,12 @@ namespace RandomPlatformer.MainSceneMachine.States
         ///     Camera controller reference.
         /// </summary>
         private readonly CameraController _cameraController;
+        
+        /// <summary>
+        ///     Menu background reference.
+        ///     We need it to disable it when entering the game state.
+        /// </summary>
+        private readonly GameObject _menuBackground;
 
         /// <summary>
         ///     Basic constructor.
@@ -42,13 +48,19 @@ namespace RandomPlatformer.MainSceneMachine.States
         /// <param name="livesController">Lives controller reference</param>
         /// <param name="levelController">Levels controller reference</param>
         /// <param name="scoreController">Score controller reference</param>
-        public GameActiveState(LivesController livesController, LevelController levelController, ScoreController scoreController, GUIController guiController, CameraController cameraController)
+        /// <param name="guiController"></param>
+        /// <param name="cameraController"></param>
+        /// <param name="menuBackground"></param>
+        public GameActiveState(LivesController livesController, LevelController levelController,
+            ScoreController scoreController, GUIController guiController, CameraController cameraController,
+            GameObject menuBackground)
         {
             _livesController = livesController;
             _levelController = levelController;
             _scoreController = scoreController;
             _guiController = guiController;
             _cameraController = cameraController;
+            _menuBackground = menuBackground;
         }
 
         /// <inheridoc/>
@@ -58,6 +70,7 @@ namespace RandomPlatformer.MainSceneMachine.States
             _scoreController.ResetScore();
             _levelController.StartGame();
             _guiController.Enable();
+            _menuBackground.SetActive(false);
         }
 
         /// <inheridoc/>

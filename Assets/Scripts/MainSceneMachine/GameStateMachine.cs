@@ -78,6 +78,12 @@ namespace RandomPlatformer.MainSceneMachine
         [SerializeField] private TimeController _timeController;
 
         /// <summary>
+        ///     Menu background reference.
+        ///     We need it to disable and enable it as menus are shown and hidden.
+        /// </summary>
+        [SerializeField] private GameObject _menuBackground;
+
+        /// <summary>
         ///     Input module reference.
         /// </summary>
         [SerializeField] private InputSystemUIInputModule _inputModule;
@@ -193,13 +199,13 @@ namespace RandomPlatformer.MainSceneMachine
         /// </summary>
         private void InitializeStates()
         {
-            _statesDictionary.Add(State.MainMenu, new MainMenuState(_mainMenu, _levelController, _cameraController));
-            _statesDictionary.Add(State.ChooseLevel, new ChooseLevelState(_chooseLevelMenu, _levelController));
-            _statesDictionary.Add(State.LeaderBoard, new LeaderBoardState(_leaderBoard, _scoreController));
-            _statesDictionary.Add(State.Credits, new CreditsState(_creditsMenu));
-            _statesDictionary.Add(State.GameActive, new GameActiveState(_livesController, _levelController, _scoreController, _guiController, _cameraController));
+            _statesDictionary.Add(State.MainMenu, new MainMenuState(_mainMenu, _levelController, _cameraController, _menuBackground));
+            _statesDictionary.Add(State.ChooseLevel, new ChooseLevelState(_chooseLevelMenu, _levelController, _menuBackground));
+            _statesDictionary.Add(State.LeaderBoard, new LeaderBoardState(_leaderBoard, _scoreController, _menuBackground));
+            _statesDictionary.Add(State.Credits, new CreditsState(_creditsMenu, _menuBackground));
+            _statesDictionary.Add(State.GameActive, new GameActiveState(_livesController, _levelController, _scoreController, _guiController, _cameraController, _menuBackground));
             _statesDictionary.Add(State.Pause, new PauseState(_pauseMenu));
-            _statesDictionary.Add(State.Result, new ResultState(_gameResultUIController, _livesController, _scoreController, _timeController));
+            _statesDictionary.Add(State.Result, new ResultState(_gameResultUIController, _livesController, _scoreController, _timeController, _menuBackground));
 
             foreach (var state in _statesDictionary)
             {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using RandomPlatformer.ScoringSystem;
 using RandomPlatformer.UI.Menus;
+using UnityEngine;
 
 namespace RandomPlatformer.MainSceneMachine.States
 {
@@ -18,22 +19,31 @@ namespace RandomPlatformer.MainSceneMachine.States
         ///     Score controller reference.
         /// </summary>
         private readonly ScoreController _scoreController;
+        
+        /// <summary>
+        ///     Menu background reference.
+        ///     We need it to enable it when we enter the main menu state.
+        /// </summary>
+        private readonly GameObject _menuBackground;
 
         /// <summary>
         ///     Basic constructor.
         /// </summary>
         /// <param name="leaderBoard">Leaderboard reference</param>
         /// <param name="scoreController">Score controller reference</param>
-        public LeaderBoardState(LeaderBoard leaderBoard, ScoreController scoreController)
+        /// <param name="menuBackground"></param>
+        public LeaderBoardState(LeaderBoard leaderBoard, ScoreController scoreController, GameObject menuBackground)
         {
             _leaderBoard = leaderBoard;
             _scoreController = scoreController;
+            _menuBackground = menuBackground;
         }
 
         /// <inheridoc/>
         public override void OnEnterState()
         {
             _leaderBoard.Enable();
+            _menuBackground.SetActive(true);
             _leaderBoard.OnBack += OnCancel;
             _leaderBoard.OnClear += OnClear;
             
