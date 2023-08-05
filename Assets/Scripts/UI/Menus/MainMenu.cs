@@ -50,6 +50,11 @@ namespace RandomPlatformer.UI.Menus
             _leaderboardButton.onClick.AddListener(Leaderboard);
             _creditsButton.onClick.AddListener(Credits);
             _exitButton.onClick.AddListener(ExitGame);
+
+#if UNITY_WEBGL
+            // Disable the exit button as it is not supported on WebGL.
+            _exitButton.gameObject.SetActive(false);
+#endif
         }
 
         private void OnDisable()

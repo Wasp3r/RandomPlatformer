@@ -75,7 +75,10 @@ namespace RandomPlatformer.MainSceneMachine.States
         /// <inheridoc/>
         public override void OnCancel()
         {
+            // You can only exit the game when not on WebGL.
+#if !UNITY_WEBGL
             ExitGame();
+#endif
         }
 
         /// <summary>
